@@ -1,7 +1,6 @@
 :root {
   --bg: #f6f7fb;
-  --surface: rgba(255, 255, 255, 0.8);
-  --surface-strong: #ffffff;
+  --surface: rgba(255, 255, 255, 0.84);
   --text: #1f2937;
   --muted: #5f6b7a;
   --primary: #2457f5;
@@ -36,6 +35,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  font: inherit;
+}
+
 .container {
   width: min(1120px, calc(100% - 2rem));
   margin: 0 auto;
@@ -45,18 +48,38 @@ a {
   padding: 1.5rem 0 4rem;
 }
 
-.nav {
+.nav,
+.nav-controls,
+.language-switcher,
+.hero-actions {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.nav {
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 4rem;
 }
 
+.brand-group {
+  max-width: 18rem;
+}
+
 .brand {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: -0.03em;
+}
+
+.brand-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.nav-controls {
+  gap: 1rem;
 }
 
 .nav-links {
@@ -66,9 +89,33 @@ a {
   font-weight: 500;
 }
 
+.language-switcher {
+  gap: 0.4rem;
+  padding: 0.3rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.lang-button {
+  border: 0;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.lang-button.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(36, 87, 245, 0.2);
+}
+
 .hero-content {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 2rem;
   align-items: center;
 }
@@ -87,16 +134,22 @@ a {
 
 .hero h1,
 .section h2,
-.cta-panel h2 {
+.cta-panel h2,
+.panel h2,
+.hero-card h2 {
   margin: 1rem 0;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.05;
   letter-spacing: -0.05em;
+  line-height: 1.08;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .section h2,
 .cta-panel h2,
-.panel h2 {
+.panel h2,
+.hero-card h2 {
   font-size: clamp(2rem, 4vw, 3rem);
 }
 
@@ -105,13 +158,15 @@ a {
 .about p,
 .panel p,
 .contact-list,
-.faq-list p {
+.faq-list p,
+.info-card p,
+.price-card li,
+.hero-card-grid span {
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 
 .hero-actions {
-  display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin: 2rem 0;
@@ -129,7 +184,8 @@ a {
 }
 
 .button:hover,
-.whatsapp-float:hover {
+.whatsapp-float:hover,
+.lang-button:hover {
   transform: translateY(-2px);
 }
 
@@ -197,10 +253,17 @@ a {
   color: var(--primary-dark);
 }
 
-.hero-card-grid {
+.hero-card-grid,
+.services-grid,
+.pricing-cards,
+.split-layout,
+.two-column-blocks {
   display: grid;
+  gap: 1.25rem;
+}
+
+.hero-card-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
   margin-top: 1.5rem;
 }
 
@@ -218,11 +281,6 @@ a {
   margin-bottom: 0.35rem;
 }
 
-.hero-card-grid span {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
 .section {
   padding: 5rem 0;
 }
@@ -233,7 +291,6 @@ a {
 
 .split-layout,
 .two-column-blocks {
-  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem;
 }
@@ -243,11 +300,12 @@ a {
   margin-bottom: 2rem;
 }
 
-.card-grid,
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.25rem;
+.services-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pricing-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .icon {
@@ -287,10 +345,8 @@ summary {
 
 .cta-panel {
   padding: 2rem;
-  display: flex;
   justify-content: space-between;
   gap: 2rem;
-  align-items: center;
 }
 
 .contact-list {
@@ -315,15 +371,21 @@ summary {
   .hero-content,
   .split-layout,
   .two-column-blocks,
-  .cta-panel,
-  .card-grid,
-  .pricing-grid {
+  .services-grid,
+  .pricing-cards,
+  .cta-panel {
     grid-template-columns: 1fr;
     flex-direction: column;
   }
 
-  .nav {
+  .nav,
+  .nav-controls {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brand-group {
+    max-width: none;
   }
 
   .nav-links {
@@ -342,11 +404,16 @@ summary {
   }
 
   .button,
-  .nav-links {
+  .nav-links,
+  .language-switcher {
     width: 100%;
   }
 
   .hero-actions {
     flex-direction: column;
+  }
+
+  .language-switcher {
+    justify-content: center;
   }
 }

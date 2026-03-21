@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BudStart | Student Relocation Partner in Budapest</title>
+    <title>StepInBudapest | Student Relocation Partner in Budapest</title>
     <meta
       name="description"
-      content="BudStart helps Azerbaijani students move to Budapest with airport pickup, accommodation support, documentation guidance, and settling-in services."
+      content="StepInBudapest helps Azerbaijani students move to Budapest with airport pickup, accommodation support, documentation guidance, and settling-in services."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <a class="whatsapp-float" href="https://wa.me/994000000000" target="_blank" rel="noreferrer">
@@ -23,55 +23,73 @@
 
     <header class="hero">
       <nav class="nav container">
-        <div class="brand">BudStart</div>
-        <div class="nav-links">
-          <a href="#services">Services</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
+        <div class="brand-group">
+          <div class="brand">StepInBudapest</div>
+          <p class="brand-subtitle" data-i18n="brandSubtitle">
+            Trusted relocation support for Azerbaijani students.
+          </p>
+        </div>
+
+        <div class="nav-controls">
+          <div class="nav-links">
+            <a href="#services" data-i18n="navServices">Services</a>
+            <a href="#pricing" data-i18n="navPricing">Pricing</a>
+            <a href="#faq" data-i18n="navFaq">FAQ</a>
+            <a href="#contact" data-i18n="navContact">Contact</a>
+          </div>
+          <div class="language-switcher" aria-label="Language switcher">
+            <button class="lang-button active" type="button" data-lang="en">EN</button>
+            <button class="lang-button" type="button" data-lang="az">AZ</button>
+          </div>
         </div>
       </nav>
 
       <div class="hero-content container">
         <div class="hero-copy">
-          <span class="eyebrow">Trusted relocation partner for Azerbaijani students</span>
-          <h1>Start Your Student Life in Budapest — Stress-Free</h1>
-          <p>
+          <span class="eyebrow" data-i18n="eyebrow">Trusted relocation partner for Azerbaijani students</span>
+          <h1 data-i18n="heroTitle">Start Your Student Life in Budapest — Stress-Free</h1>
+          <p data-i18n="heroText">
             We help Azerbaijani students with airport pickup, accommodation, and all
             necessary documents — before and after arrival.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#contact">Get Started</a>
-            <a class="button button-secondary" href="https://wa.me/994000000000" target="_blank" rel="noreferrer">
+            <a class="button button-primary" href="#contact" data-i18n="ctaStart">Get Started</a>
+            <a
+              class="button button-secondary"
+              href="https://wa.me/994000000000"
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="ctaWhatsapp"
+            >
               Contact on WhatsApp
             </a>
           </div>
           <ul class="hero-points">
-            <li>Azerbaijani-speaking support 🇦🇿</li>
-            <li>Fast, student-friendly guidance</li>
-            <li>Local support before and after arrival</li>
+            <li data-i18n="heroPoint1">Azerbaijani-speaking support 🇦🇿</li>
+            <li data-i18n="heroPoint2">Fast, student-friendly guidance</li>
+            <li data-i18n="heroPoint3">Local support before and after arrival</li>
           </ul>
         </div>
 
         <div class="hero-card">
-          <p class="hero-card-label">Your relocation plan</p>
-          <h2>Everything organized before you land.</h2>
+          <p class="hero-card-label" data-i18n="planLabel">Your relocation plan</p>
+          <h2 data-i18n="planTitle">Everything organized before you land.</h2>
           <div class="hero-card-grid">
             <div>
-              <strong>Pickup</strong>
-              <span>Airport to accommodation</span>
+              <strong data-i18n="planPickupTitle">Pickup</strong>
+              <span data-i18n="planPickupText">Airport to accommodation</span>
             </div>
             <div>
-              <strong>Housing</strong>
-              <span>Safe, verified options</span>
+              <strong data-i18n="planHousingTitle">Housing</strong>
+              <span data-i18n="planHousingText">Safe, verified options</span>
             </div>
             <div>
-              <strong>Documents</strong>
-              <span>Residence permit, apostille, registration</span>
+              <strong data-i18n="planDocsTitle">Documents</strong>
+              <span data-i18n="planDocsText">Residence permit, apostille, registration</span>
             </div>
             <div>
-              <strong>Settling in</strong>
-              <span>SIM, bank, transport card</span>
+              <strong data-i18n="planSettlingTitle">Settling in</strong>
+              <span data-i18n="planSettlingText">SIM, bank, transport card</span>
             </div>
           </div>
         </div>
@@ -82,16 +100,16 @@
       <section class="section about">
         <div class="container split-layout">
           <div>
-            <span class="section-tag">About us</span>
-            <h2>We make moving to Budapest feel manageable from day one.</h2>
+            <span class="section-tag" data-i18n="aboutTag">About us</span>
+            <h2 data-i18n="aboutTitle">We make moving to Budapest feel manageable from day one.</h2>
           </div>
           <div>
-            <p>
+            <p data-i18n="aboutText1">
               Moving to a new country is exciting — but also confusing. We created
-              <strong>BudStart</strong> to make this process simple for Azerbaijani students
+              <strong>StepInBudapest</strong> to make this process simple for Azerbaijani students
               coming to Budapest.
             </p>
-            <p>
+            <p data-i18n="aboutText2">
               From the moment you land, we guide you step by step — just like a local
               friend would. We understand the problems because we’ve been through them.
             </p>
@@ -102,33 +120,32 @@
       <section class="section section-alt" id="services">
         <div class="container">
           <div class="section-heading">
-            <span class="section-tag">Services</span>
-            <h2>Practical support for the moments that matter most.</h2>
-            <p>Built to reduce stress, save time, and help families feel confident.</p>
+            <span class="section-tag" data-i18n="servicesTag">Services</span>
+            <h2 data-i18n="servicesTitle">Practical support for the moments that matter most.</h2>
+            <p data-i18n="servicesIntro">Built to reduce stress, save time, and help families feel confident.</p>
           </div>
-          <div class="card-grid">
+          <div class="card-grid services-grid">
             <article class="info-card">
               <div class="icon">✈️</div>
-              <h3>Airport Pickup</h3>
-              <p>We meet you at the airport and safely take you to your accommodation.</p>
+              <h3 data-i18n="service1Title">Airport Pickup</h3>
+              <p data-i18n="service1Text">We meet you at the airport and safely take you to your accommodation.</p>
             </article>
             <article class="info-card">
               <div class="icon">🏠</div>
-              <h3>Accommodation Assistance</h3>
-              <p>
-                We help you find safe and verified housing — dorm or apartment — and
-                avoid scams.
+              <h3 data-i18n="service2Title">Accommodation Assistance</h3>
+              <p data-i18n="service2Text">
+                We help you find safe and verified housing — dorm or apartment — and avoid scams.
               </p>
             </article>
             <article class="info-card">
               <div class="icon">📄</div>
-              <h3>Documentation Support</h3>
-              <p>We guide you through residence permit, apostille process, and university registration.</p>
+              <h3 data-i18n="service3Title">Documentation Support</h3>
+              <p data-i18n="service3Text">We guide you through residence permit, apostille process, and university registration.</p>
             </article>
             <article class="info-card">
               <div class="icon">📱</div>
-              <h3>Settling In</h3>
-              <p>We help you get a SIM card, bank account, and transport card.</p>
+              <h3 data-i18n="service4Title">Settling In</h3>
+              <p data-i18n="service4Text">We help you get a SIM card, bank account, and transport card.</p>
             </article>
           </div>
         </div>
@@ -137,38 +154,38 @@
       <section class="section" id="pricing">
         <div class="container">
           <div class="section-heading">
-            <span class="section-tag">Pricing</span>
-            <h2>Choose the level of support that fits your arrival plan.</h2>
-            <p>Custom packages are available depending on your needs.</p>
+            <span class="section-tag" data-i18n="pricingTag">Pricing</span>
+            <h2 data-i18n="pricingTitle">Choose the level of support that fits your arrival plan.</h2>
+            <p data-i18n="pricingIntro">Custom packages are available depending on your needs.</p>
           </div>
-          <div class="pricing-grid">
+          <div class="pricing-grid pricing-cards">
             <article class="price-card">
-              <p class="tier">Basic Package</p>
+              <p class="tier" data-i18n="priceBasicLabel">Basic Package</p>
               <h3>250 AZN</h3>
               <ul>
-                <li>Airport pickup</li>
-                <li>Initial guidance</li>
+                <li data-i18n="priceBasic1">Airport pickup</li>
+                <li data-i18n="priceBasic2">Initial guidance</li>
               </ul>
-              <a class="button button-secondary" href="#contact">Choose Basic</a>
+              <a class="button button-secondary" href="#contact" data-i18n="priceBasicCta">Choose Basic</a>
             </article>
             <article class="price-card featured">
-              <p class="tier">Standard Package</p>
+              <p class="tier" data-i18n="priceStandardLabel">Standard Package</p>
               <h3>500 AZN</h3>
               <ul>
-                <li>Airport pickup</li>
-                <li>Accommodation assistance</li>
-                <li>Basic support</li>
+                <li data-i18n="priceStandard1">Airport pickup</li>
+                <li data-i18n="priceStandard2">Accommodation assistance</li>
+                <li data-i18n="priceStandard3">Basic support</li>
               </ul>
-              <a class="button button-primary" href="#contact">Choose Standard</a>
+              <a class="button button-primary" href="#contact" data-i18n="priceStandardCta">Choose Standard</a>
             </article>
             <article class="price-card">
-              <p class="tier">Premium Package</p>
+              <p class="tier" data-i18n="pricePremiumLabel">Premium Package</p>
               <h3>800 AZN</h3>
               <ul>
-                <li>Full support (A to Z)</li>
-                <li>Documents, bank, SIM, everything handled</li>
+                <li data-i18n="pricePremium1">Full support (A to Z)</li>
+                <li data-i18n="pricePremium2">Documents, bank, SIM, everything handled</li>
               </ul>
-              <a class="button button-secondary" href="#contact">Choose Premium</a>
+              <a class="button button-secondary" href="#contact" data-i18n="pricePremiumCta">Choose Premium</a>
             </article>
           </div>
         </div>
@@ -177,25 +194,21 @@
       <section class="section section-alt">
         <div class="container two-column-blocks">
           <div class="panel">
-            <span class="section-tag">Testimonials</span>
-            <h2>Early trust signals for future growth.</h2>
-            <blockquote>
-              “Everything was organized before I arrived. I didn’t stress at all.”
-            </blockquote>
-            <blockquote>
-              “They helped me avoid a fake apartment — worth every manat.”
-            </blockquote>
-            <p class="small-note">You can replace these with real reviews as your first clients come in.</p>
+            <span class="section-tag" data-i18n="testimonialsTag">Testimonials</span>
+            <h2 data-i18n="testimonialsTitle">Early trust signals for future growth.</h2>
+            <blockquote data-i18n="testimonial1">“Everything was organized before I arrived. I didn’t stress at all.”</blockquote>
+            <blockquote data-i18n="testimonial2">“They helped me avoid a fake apartment — worth every manat.”</blockquote>
+            <p class="small-note" data-i18n="testimonialsNote">You can replace these with real reviews as your first clients come in.</p>
           </div>
 
           <div class="panel">
-            <span class="section-tag">Why choose us</span>
-            <h2>Why students and parents can rely on BudStart.</h2>
+            <span class="section-tag" data-i18n="whyTag">Why choose us</span>
+            <h2 data-i18n="whyTitle">Why students and parents can rely on StepInBudapest.</h2>
             <ul class="check-list">
-              <li>Azerbaijani-speaking support 🇦🇿</li>
-              <li>Local knowledge of Budapest</li>
-              <li>Fast response with WhatsApp support</li>
-              <li>Trusted, student-focused guidance</li>
+              <li data-i18n="why1">Azerbaijani-speaking support 🇦🇿</li>
+              <li data-i18n="why2">Local knowledge of Budapest</li>
+              <li data-i18n="why3">Fast response with WhatsApp support</li>
+              <li data-i18n="why4">Trusted, student-focused guidance</li>
             </ul>
           </div>
         </div>
@@ -204,21 +217,21 @@
       <section class="section" id="faq">
         <div class="container">
           <div class="section-heading">
-            <span class="section-tag">FAQ</span>
-            <h2>Questions families usually ask before arrival.</h2>
+            <span class="section-tag" data-i18n="faqTag">FAQ</span>
+            <h2 data-i18n="faqTitle">Questions families usually ask before arrival.</h2>
           </div>
           <div class="faq-list">
             <details>
-              <summary>When should I contact you?</summary>
-              <p>At least 2–4 weeks before arrival.</p>
+              <summary data-i18n="faq1Q">When should I contact you?</summary>
+              <p data-i18n="faq1A">At least 2–4 weeks before arrival.</p>
             </details>
             <details>
-              <summary>Do you guarantee accommodation?</summary>
-              <p>We provide verified options and guidance, but the final choice is yours.</p>
+              <summary data-i18n="faq2Q">Do you guarantee accommodation?</summary>
+              <p data-i18n="faq2A">We provide verified options and guidance, but the final choice is yours.</p>
             </details>
             <details>
-              <summary>Can parents contact you?</summary>
-              <p>Yes, we communicate with both students and parents.</p>
+              <summary data-i18n="faq3Q">Can parents contact you?</summary>
+              <p data-i18n="faq3A">Yes, we communicate with both students and parents.</p>
             </details>
           </div>
         </div>
@@ -227,20 +240,201 @@
       <section class="section cta-section" id="contact">
         <div class="container cta-panel">
           <div>
-            <span class="section-tag">Contact</span>
-            <h2>Message us now and secure your arrival plan.</h2>
-            <p>
-              Start with WhatsApp for the fastest response, or contact us by Instagram
-              and email.
+            <span class="section-tag" data-i18n="contactTag">Contact</span>
+            <h2 data-i18n="contactTitle">Message us now and secure your arrival plan.</h2>
+            <p data-i18n="contactText">
+              Start with WhatsApp for the fastest response, or contact us by Instagram and email.
             </p>
           </div>
           <div class="contact-list">
             <a href="https://wa.me/994000000000" target="_blank" rel="noreferrer">WhatsApp: +994 XX XXX XX XX</a>
-            <a href="https://instagram.com/budstart" target="_blank" rel="noreferrer">Instagram: @budstart</a>
-            <a href="mailto:info@budstart.com">Email: info@budstart.com</a>
+            <a href="https://instagram.com/stepinbudapest" target="_blank" rel="noreferrer">Instagram: @stepinbudapest</a>
+            <a href="mailto:info@stepinbudapest.com">Email: info@stepinbudapest.com</a>
           </div>
         </div>
       </section>
     </main>
+
+    <script>
+      const translations = {
+        en: {
+          brandSubtitle: 'Trusted relocation support for Azerbaijani students.',
+          navServices: 'Services',
+          navPricing: 'Pricing',
+          navFaq: 'FAQ',
+          navContact: 'Contact',
+          eyebrow: 'Trusted relocation partner for Azerbaijani students',
+          heroTitle: 'Start Your Student Life in Budapest — Stress-Free',
+          heroText: 'We help Azerbaijani students with airport pickup, accommodation, and all necessary documents — before and after arrival.',
+          ctaStart: 'Get Started',
+          ctaWhatsapp: 'Contact on WhatsApp',
+          heroPoint1: 'Azerbaijani-speaking support 🇦🇿',
+          heroPoint2: 'Fast, student-friendly guidance',
+          heroPoint3: 'Local support before and after arrival',
+          planLabel: 'Your relocation plan',
+          planTitle: 'Everything organized before you land.',
+          planPickupTitle: 'Pickup',
+          planPickupText: 'Airport to accommodation',
+          planHousingTitle: 'Housing',
+          planHousingText: 'Safe, verified options',
+          planDocsTitle: 'Documents',
+          planDocsText: 'Residence permit, apostille, registration',
+          planSettlingTitle: 'Settling in',
+          planSettlingText: 'SIM, bank, transport card',
+          aboutTag: 'About us',
+          aboutTitle: 'We make moving to Budapest feel manageable from day one.',
+          aboutText1: 'Moving to a new country is exciting — but also confusing. We created <strong>StepInBudapest</strong> to make this process simple for Azerbaijani students coming to Budapest.',
+          aboutText2: 'From the moment you land, we guide you step by step — just like a local friend would. We understand the problems because we’ve been through them.',
+          servicesTag: 'Services',
+          servicesTitle: 'Practical support for the moments that matter most.',
+          servicesIntro: 'Built to reduce stress, save time, and help families feel confident.',
+          service1Title: 'Airport Pickup',
+          service1Text: 'We meet you at the airport and safely take you to your accommodation.',
+          service2Title: 'Accommodation Assistance',
+          service2Text: 'We help you find safe and verified housing — dorm or apartment — and avoid scams.',
+          service3Title: 'Documentation Support',
+          service3Text: 'We guide you through residence permit, apostille process, and university registration.',
+          service4Title: 'Settling In',
+          service4Text: 'We help you get a SIM card, bank account, and transport card.',
+          pricingTag: 'Pricing',
+          pricingTitle: 'Choose the level of support that fits your arrival plan.',
+          pricingIntro: 'Custom packages are available depending on your needs.',
+          priceBasicLabel: 'Basic Package',
+          priceBasic1: 'Airport pickup',
+          priceBasic2: 'Initial guidance',
+          priceBasicCta: 'Choose Basic',
+          priceStandardLabel: 'Standard Package',
+          priceStandard1: 'Airport pickup',
+          priceStandard2: 'Accommodation assistance',
+          priceStandard3: 'Basic support',
+          priceStandardCta: 'Choose Standard',
+          pricePremiumLabel: 'Premium Package',
+          pricePremium1: 'Full support (A to Z)',
+          pricePremium2: 'Documents, bank, SIM, everything handled',
+          pricePremiumCta: 'Choose Premium',
+          testimonialsTag: 'Testimonials',
+          testimonialsTitle: 'Early trust signals for future growth.',
+          testimonial1: '“Everything was organized before I arrived. I didn’t stress at all.”',
+          testimonial2: '“They helped me avoid a fake apartment — worth every manat.”',
+          testimonialsNote: 'You can replace these with real reviews as your first clients come in.',
+          whyTag: 'Why choose us',
+          whyTitle: 'Why students and parents can rely on StepInBudapest.',
+          why1: 'Azerbaijani-speaking support 🇦🇿',
+          why2: 'Local knowledge of Budapest',
+          why3: 'Fast response with WhatsApp support',
+          why4: 'Trusted, student-focused guidance',
+          faqTag: 'FAQ',
+          faqTitle: 'Questions families usually ask before arrival.',
+          faq1Q: 'When should I contact you?',
+          faq1A: 'At least 2–4 weeks before arrival.',
+          faq2Q: 'Do you guarantee accommodation?',
+          faq2A: 'We provide verified options and guidance, but the final choice is yours.',
+          faq3Q: 'Can parents contact you?',
+          faq3A: 'Yes, we communicate with both students and parents.',
+          contactTag: 'Contact',
+          contactTitle: 'Message us now and secure your arrival plan.',
+          contactText: 'Start with WhatsApp for the fastest response, or contact us by Instagram and email.'
+        },
+        az: {
+          brandSubtitle: 'Azərbaycanlı tələbələr üçün etibarlı köç dəstəyi.',
+          navServices: 'Xidmətlər',
+          navPricing: 'Qiymətlər',
+          navFaq: 'FAQ',
+          navContact: 'Əlaqə',
+          eyebrow: 'Azərbaycanlı tələbələr üçün etibarlı köç tərəfdaşı',
+          heroTitle: 'Budapeştdə tələbə həyatına stresssiz başlayın',
+          heroText: 'Biz Azərbaycanlı tələbələrə hava limanı qarşılanması, yaşayış, və bütün vacib sənədlərlə bağlı gəlişdən əvvəl və sonra dəstək oluruq.',
+          ctaStart: 'Başlayaq',
+          ctaWhatsapp: 'WhatsApp ilə əlaqə',
+          heroPoint1: 'Azərbaycan dilində dəstək 🇦🇿',
+          heroPoint2: 'Sürətli və tələbə yönümlü yönləndirmə',
+          heroPoint3: 'Gəlişdən əvvəl və sonra yerli dəstək',
+          planLabel: 'Köç planınız',
+          planTitle: 'Enməzdən əvvəl hər şey hazır olsun.',
+          planPickupTitle: 'Qarşılama',
+          planPickupText: 'Hava limanından yaşayış yerinə',
+          planHousingTitle: 'Yaşayış',
+          planHousingText: 'Təhlükəsiz və yoxlanılmış seçimlər',
+          planDocsTitle: 'Sənədlər',
+          planDocsText: 'Oturum icazəsi, apostil, qeydiyyat',
+          planSettlingTitle: 'Uyğunlaşma',
+          planSettlingText: 'SIM kart, bank, nəqliyyat kartı',
+          aboutTag: 'Haqqımızda',
+          aboutTitle: 'Budapeştə köçməyi ilk gündən daha rahat edirik.',
+          aboutText1: 'Yeni ölkəyə köçmək həyəcanlıdır — amma eyni zamanda qarışıq da ola bilər. <strong>StepInBudapest</strong> platformasını Budapeştə gələn Azərbaycanlı tələbələr üçün bu prosesi sadələşdirmək üçün yaratdıq.',
+          aboutText2: 'Təyyarədən düşdüyünüz andan etibarən sizi addım-addım yönləndiririk — sanki yerli dostunuz kimi. Bu problemləri anlayırıq, çünki özümüz də bunları yaşamışıq.',
+          servicesTag: 'Xidmətlər',
+          servicesTitle: 'Ən vacib anlarda praktik dəstək.',
+          servicesIntro: 'Stressi azaltmaq, vaxt qazandırmaq və ailələrə güvən vermək üçün qurulub.',
+          service1Title: 'Hava Limanında Qarşılama',
+          service1Text: 'Sizi hava limanında qarşılayır və təhlükəsiz şəkildə yaşayış yerinizə aparırıq.',
+          service2Title: 'Yaşayış Dəstəyi',
+          service2Text: 'Yataqxana və ya mənzil üçün təhlükəsiz, yoxlanılmış variantlar tapmağa kömək edir və dələduzluqlardan qoruyuruq.',
+          service3Title: 'Sənəd Dəstəyi',
+          service3Text: 'Oturum icazəsi, apostil prosesi və universitet qeydiyyatı üzrə sizə yol göstəririk.',
+          service4Title: 'Yerləşmə Dəstəyi',
+          service4Text: 'SIM kart, bank hesabı və nəqliyyat kartı almaqda kömək edirik.',
+          pricingTag: 'Qiymətlər',
+          pricingTitle: 'Gəliş planınıza uyğun dəstək səviyyəsini seçin.',
+          pricingIntro: 'Ehtiyaclarınıza uyğun fərdi paketlər də mümkündür.',
+          priceBasicLabel: 'Basic Paket',
+          priceBasic1: 'Hava limanında qarşılama',
+          priceBasic2: 'İlkin yönləndirmə',
+          priceBasicCta: 'Basic seç',
+          priceStandardLabel: 'Standard Paket',
+          priceStandard1: 'Hava limanında qarşılama',
+          priceStandard2: 'Yaşayış dəstəyi',
+          priceStandard3: 'Əsas dəstək',
+          priceStandardCta: 'Standard seç',
+          pricePremiumLabel: 'Premium Paket',
+          pricePremium1: 'A-dan Z-yə tam dəstək',
+          pricePremium2: 'Sənədlər, bank, SIM və bütün proseslər',
+          pricePremiumCta: 'Premium seç',
+          testimonialsTag: 'Rəylər',
+          testimonialsTitle: 'İlk müştərilər üçün güvən yaradan siqnallar.',
+          testimonial1: '“Mən gəlməzdən əvvəl hər şey təşkil olunmuşdu. Heç stress yaşamadım.”',
+          testimonial2: '“Saxta mənzildən yayınmağıma kömək etdilər — hər manata dəyərdi.”',
+          testimonialsNote: 'İlk müştəriləriniz gəldikcə bunları real rəylərlə əvəz edə bilərsiniz.',
+          whyTag: 'Niyə biz?',
+          whyTitle: 'Tələbələr və valideynlər niyə StepInBudapest-ə güvənə bilər?',
+          why1: 'Azərbaycan dilində dəstək 🇦🇿',
+          why2: 'Budapeşt üzrə yerli bilik',
+          why3: 'WhatsApp üzərindən sürətli cavab',
+          why4: 'Etibarlı və tələbə yönümlü xidmət',
+          faqTag: 'FAQ',
+          faqTitle: 'Gəlişdən əvvəl ailələrin ən çox verdiyi suallar.',
+          faq1Q: 'Sizinlə nə vaxt əlaqə saxlamalıyam?',
+          faq1A: 'Ən azı gəlişdən 2–4 həftə əvvəl.',
+          faq2Q: 'Yaşayışa zəmanət verirsiniz?',
+          faq2A: 'Biz yoxlanılmış seçimlər və yönləndirmə təqdim edirik, amma son seçim sizindir.',
+          faq3Q: 'Valideynlər də sizinlə əlaqə saxlaya bilər?',
+          faq3A: 'Bəli, həm tələbələrlə, həm də valideynlərlə əlaqə saxlayırıq.',
+          contactTag: 'Əlaqə',
+          contactTitle: 'İndi yazın və gəliş planınızı öncədən qurun.',
+          contactText: 'Ən sürətli cavab üçün WhatsApp-dan başlayın, həmçinin Instagram və email vasitəsilə də yaza bilərsiniz.'
+        }
+      };
+
+      const applyLanguage = (lang) => {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          const key = element.dataset.i18n;
+          const value = translations[lang][key];
+          if (value) {
+            element.innerHTML = value;
+          }
+        });
+
+        document.querySelectorAll('.lang-button').forEach((button) => {
+          button.classList.toggle('active', button.dataset.lang === lang);
+        });
+      };
+
+      document.querySelectorAll('.lang-button').forEach((button) => {
+        button.addEventListener('click', () => applyLanguage(button.dataset.lang));
+      });
+
+      applyLanguage('en');
+    </script>
   </body>
 </html>
