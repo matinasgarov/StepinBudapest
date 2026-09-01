@@ -1,440 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StepInBudapest | Student Relocation Partner in Budapest</title>
-    <meta
-      name="description"
-      content="StepInBudapest helps Azerbaijani students move to Budapest with airport pickup, accommodation support, documentation guidance, and settling-in services."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <a class="whatsapp-float" href="https://wa.me/994000000000" target="_blank" rel="noreferrer">
-      WhatsApp
-    </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StepIn Budapest | Student Relocation Partner</title>
+  <meta name="description" content="StepIn Budapest helps Azerbaijani students move to Budapest with airport pickup, accommodation support, documentation guidance, and settling-in services." />
+  <meta name="theme-color" content="#050D22" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
-    <header class="hero">
-      <nav class="nav container">
-        <div class="brand-group">
-          <div class="brand">StepInBudapest</div>
-          <p class="brand-subtitle" data-i18n="brandSubtitle">
-            Trusted relocation support for Azerbaijani students.
-          </p>
-        </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+  <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
+  <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 
-        <div class="nav-controls">
-          <div class="nav-links">
-            <a href="#services" data-i18n="navServices">Services</a>
-            <a href="#pricing" data-i18n="navPricing">Pricing</a>
-            <a href="#faq" data-i18n="navFaq">FAQ</a>
-            <a href="#contact" data-i18n="navContact">Contact</a>
-          </div>
-          <div class="language-switcher" aria-label="Language switcher">
-            <button class="lang-button active" type="button" data-lang="en">EN</button>
-            <button class="lang-button" type="button" data-lang="az">AZ</button>
-          </div>
-        </div>
-      </nav>
+  <!-- Entrance/reveal styles apply only when JS can undo them.
+       Reload opens at the top: browsers default to restoring the previous
+       scroll position, which on a landing page means a reader can reload and
+       land mid-hero. A link to #services still jumps to its anchor. -->
+  <script>
+    document.documentElement.classList.add('js');
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
+</head>
+<body>
 
-      <div class="hero-content container">
-        <div class="hero-copy">
-          <span class="eyebrow" data-i18n="eyebrow">Trusted relocation partner for Azerbaijani students</span>
-          <h1 data-i18n="heroTitle">Start Your Student Life in Budapest — Stress-Free</h1>
-          <p data-i18n="heroText">
-            We help Azerbaijani students with airport pickup, accommodation, and all
-            necessary documents — before and after arrival.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#contact" data-i18n="ctaStart">Get Started</a>
-            <a
-              class="button button-secondary"
-              href="https://wa.me/994000000000"
-              target="_blank"
-              rel="noreferrer"
-              data-i18n="ctaWhatsapp"
-            >
-              Contact on WhatsApp
-            </a>
-          </div>
-          <ul class="hero-points">
-            <li data-i18n="heroPoint1">Azerbaijani-speaking support 🇦🇿</li>
-            <li data-i18n="heroPoint2">Fast, student-friendly guidance</li>
-            <li data-i18n="heroPoint3">Local support before and after arrival</li>
+  <a class="skip-link" href="#main" data-i18n="skipLink">Skip to content</a>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="wa-float" href="https://wa.me/994000000000" target="_blank" rel="noreferrer">
+    <span class="wa-float-ring" aria-hidden="true"></span>
+    <svg class="wa-float-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="wa-float-text" data-i18n="waFloat">WhatsApp</span>
+  </a>
+
+  <!-- NAV -->
+  <header class="site-header" id="siteHeader">
+    <div class="scroll-rail" aria-hidden="true"><span class="scroll-rail-fill" id="scrollRail"></span></div>
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path class="arch arch-1" d="M5 32v-4a4 4 0 0 1 8 0v4" />
+            <path class="arch arch-2" d="M15.5 32V19a5 5 0 0 1 10 0v13" />
+            <path class="arch arch-3" d="M28 32V12a5 5 0 0 1 10 0v20" />
+            <path class="arch-base" d="M3.5 32.5h36" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">StepIn<span class="brand-city">Budapest</span></span>
+          <span class="brand-tagline">
+            <span class="brand-rule" aria-hidden="true"></span>
+            <span data-i18n="brandTagline">Student Relocation Partner</span>
+          </span>
+        </span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services" data-i18n="navServices">Services</a></li>
+        <li><a href="#process" data-i18n="navProcess">Process</a></li>
+        <li><a href="#pricing" data-i18n="navPricing">Pricing</a></li>
+        <li><a href="#faq" data-i18n="navFaq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="lang" data-lang-menu>
+          <button class="lang-current" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+            <span data-lang-code>EN</span>
+            <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="lang-options">
+            <li><button class="lang-opt is-active" data-lang="en" type="button"><span class="lang-opt-code">EN</span><span class="lang-opt-name">English</span></button></li>
+            <li><button class="lang-opt" data-lang="az" type="button"><span class="lang-opt-code">AZ</span><span class="lang-opt-name">Azərbaycanca</span></button></li>
+            <li><button class="lang-opt" data-lang="ru" type="button"><span class="lang-opt-code">RU</span><span class="lang-opt-name">Русский</span></button></li>
           </ul>
         </div>
 
-        <div class="hero-card">
-          <p class="hero-card-label" data-i18n="planLabel">Your relocation plan</p>
-          <h2 data-i18n="planTitle">Everything organized before you land.</h2>
-          <div class="hero-card-grid">
-            <div>
-              <strong data-i18n="planPickupTitle">Pickup</strong>
-              <span data-i18n="planPickupText">Airport to accommodation</span>
+        <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Menu">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="drawer" id="mobileDrawer" hidden>
+    <ul class="drawer-links">
+      <li><a href="#services"><span class="drawer-num">01</span><span data-i18n="navServices">Services</span></a></li>
+      <li><a href="#process"><span class="drawer-num">02</span><span data-i18n="navProcess">Process</span></a></li>
+      <li><a href="#pricing"><span class="drawer-num">03</span><span data-i18n="navPricing">Pricing</span></a></li>
+      <li><a href="#faq"><span class="drawer-num">04</span><span data-i18n="navFaq">FAQ</span></a></li>
+      <li><a href="#contact"><span class="drawer-num">05</span><span data-i18n="navContact">Contact</span></a></li>
+    </ul>
+    <a class="btn btn-gold btn-block" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="navCta">WhatsApp Us</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-atmosphere" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-copy">
+
+        <h1 class="hero-title anim" data-anim="2" data-i18n="heroTitle">Zero stress for them.<br><em>Total peace of mind for you.</em></h1>
+
+        <p class="hero-sub anim" data-anim="3" data-i18n="heroSub">We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.</p>
+
+        <div class="hero-actions anim" data-anim="4">
+          <a class="btn btn-gold" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="ctaPrimary">Message us on WhatsApp</a>
+          <a class="btn btn-line" href="#services" data-i18n="ctaSecondary">What we do</a>
+        </div>
+
+        <p class="hero-note anim" data-anim="5">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span data-i18n="heroNote">Write in Azerbaijani, Russian or English. We usually answer the same day.</span>
+        </p>
+      </div>
+
+      <!-- SIGNATURE: THE ITINERARY -->
+      <aside class="itinerary anim" data-anim="6" aria-label="Arrival itinerary">
+        <header class="itin-head">
+          <p class="itin-label" data-i18n="cardLabel">Your arrival plan</p>
+          <p class="itin-ref">REF <span class="itin-ref-num">SB-2026</span></p>
+        </header>
+
+        <div class="itin-route">
+          <div class="itin-port">
+            <span class="itin-code">GYD</span>
+            <span class="itin-city" data-i18n="routeFrom">Baku</span>
+          </div>
+          <div class="itin-path" aria-hidden="true">
+            <span class="itin-dash"></span>
+            <svg class="itin-plane" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5L21 16z"/></svg>
+            <span class="itin-dash"></span>
+          </div>
+          <div class="itin-port">
+            <span class="itin-code">BUD</span>
+            <span class="itin-city" data-i18n="routeTo">Budapest</span>
+          </div>
+        </div>
+
+        <ol class="itin-steps">
+          <li class="itin-step">
+            <span class="itin-num">01</span>
+            <span class="itin-body">
+              <strong data-i18n="step1Title">Arrival</strong>
+              <span data-i18n="step1Text">We meet them at the gate</span>
+            </span>
+            <span class="itin-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </li>
+          <li class="itin-step">
+            <span class="itin-num">02</span>
+            <span class="itin-body">
+              <strong data-i18n="step2Title">Housing</strong>
+              <span data-i18n="step2Text">Seen in person, not online</span>
+            </span>
+            <span class="itin-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </li>
+          <li class="itin-step">
+            <span class="itin-num">03</span>
+            <span class="itin-body">
+              <strong data-i18n="step3Title">Documents</strong>
+              <span data-i18n="step3Text">Residence permit and apostille</span>
+            </span>
+            <span class="itin-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </li>
+          <li class="itin-step">
+            <span class="itin-num">04</span>
+            <span class="itin-body">
+              <strong data-i18n="step4Title">Settled</strong>
+              <span data-i18n="step4Text">Bank, SIM card, travel pass</span>
+            </span>
+            <span class="itin-tick" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </li>
+        </ol>
+
+        <footer class="itin-foot">
+          <span class="itin-stamp" data-i18n="itinStamp">Ready before the flight</span>
+        </footer>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TRUST TICKER -->
+  <div class="ticker" aria-label="Why families choose us">
+    <div class="ticker-track" id="tickerTrack">
+      <div class="ticker-run">
+        <span class="ticker-item"><b class="count" data-count-to="50" data-count-suffix="+">50+</b><span data-i18n="trust1Label">Students helped</span></span>
+        <span class="ticker-dot" aria-hidden="true"></span>
+        <span class="ticker-item"><span data-i18n="trust2">Azerbaijani-Speaking Team</span></span>
+        <span class="ticker-dot" aria-hidden="true"></span>
+        <span class="ticker-item"><span data-i18n="trust3">WhatsApp Support</span></span>
+        <span class="ticker-dot" aria-hidden="true"></span>
+        <span class="ticker-item"><span data-i18n="trust4">Verified Housing Options</span></span>
+        <span class="ticker-dot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- SERVICES -->
+    <section class="band band-paper section" id="services" aria-labelledby="servicesTitle">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-label"><span data-i18n="servicesLabel">Services</span></p>
+          <h2 id="servicesTitle" data-i18n="servicesTitle">What we take care of</h2>
+          <p class="section-sub" data-i18n="servicesSub">From the moment your student books their flight to the first week of classes.</p>
+        </header>
+
+        <div class="services">
+          <details class="svc reveal">
+            <summary class="svc-summary">
+              <span class="svc-rule" aria-hidden="true"></span>
+              <span class="svc-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 5.18 2 2 0 015 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 10.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17v-.08z"/></svg>
+              </span>
+              <span class="svc-head">
+                <h3 data-i18n="s1title"></h3>
+                <p class="svc-lead" data-i18n="s1text"></p>
+              </span>
+              <span class="svc-sign" aria-hidden="true"></span>
+            </summary>
+
+            <div class="svc-detail">
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcIncluded">Included</p>
+                <ul class="svc-list">
+              <li data-svc-item><span data-i18n="s1inc1"></span></li>
+              <li data-svc-item><span data-i18n="s1inc2"></span></li>
+              <li data-svc-item><span data-i18n="s1inc3"></span></li>
+              <li data-svc-item><span data-i18n="s1inc4"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcNotIncluded">Not included</p>
+                <ul class="svc-list svc-list-neg">
+              <li data-svc-item><span data-i18n="s1not1"></span></li>
+              <li data-svc-item><span data-i18n="s1not2"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcWhen">When</p>
+                <p class="svc-when" data-svc-item><span data-i18n="s1when"></span></p>
+              </div>
             </div>
-            <div>
-              <strong data-i18n="planHousingTitle">Housing</strong>
-              <span data-i18n="planHousingText">Safe, verified options</span>
+          </details>
+
+          <details class="svc reveal">
+            <summary class="svc-summary">
+              <span class="svc-rule" aria-hidden="true"></span>
+              <span class="svc-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </span>
+              <span class="svc-head">
+                <h3 data-i18n="s2title"></h3>
+                <p class="svc-lead" data-i18n="s2text"></p>
+              </span>
+              <span class="svc-sign" aria-hidden="true"></span>
+            </summary>
+
+            <div class="svc-detail">
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcIncluded">Included</p>
+                <ul class="svc-list">
+              <li data-svc-item><span data-i18n="s2inc1"></span></li>
+              <li data-svc-item><span data-i18n="s2inc2"></span></li>
+              <li data-svc-item><span data-i18n="s2inc3"></span></li>
+              <li data-svc-item><span data-i18n="s2inc4"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcNotIncluded">Not included</p>
+                <ul class="svc-list svc-list-neg">
+              <li data-svc-item><span data-i18n="s2not1"></span></li>
+              <li data-svc-item><span data-i18n="s2not2"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcWhen">When</p>
+                <p class="svc-when" data-svc-item><span data-i18n="s2when"></span></p>
+              </div>
             </div>
-            <div>
-              <strong data-i18n="planDocsTitle">Documents</strong>
-              <span data-i18n="planDocsText">Residence permit, apostille, registration</span>
+          </details>
+
+          <details class="svc reveal">
+            <summary class="svc-summary">
+              <span class="svc-rule" aria-hidden="true"></span>
+              <span class="svc-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </span>
+              <span class="svc-head">
+                <h3 data-i18n="s3title"></h3>
+                <p class="svc-lead" data-i18n="s3text"></p>
+              </span>
+              <span class="svc-sign" aria-hidden="true"></span>
+            </summary>
+
+            <div class="svc-detail">
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcIncluded">Included</p>
+                <ul class="svc-list">
+              <li data-svc-item><span data-i18n="s3inc1"></span></li>
+              <li data-svc-item><span data-i18n="s3inc2"></span></li>
+              <li data-svc-item><span data-i18n="s3inc3"></span></li>
+              <li data-svc-item><span data-i18n="s3inc4"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcNotIncluded">Not included</p>
+                <ul class="svc-list svc-list-neg">
+              <li data-svc-item><span data-i18n="s3not1"></span></li>
+              <li data-svc-item><span data-i18n="s3not2"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcWhen">When</p>
+                <p class="svc-when" data-svc-item><span data-i18n="s3when"></span></p>
+              </div>
             </div>
-            <div>
-              <strong data-i18n="planSettlingTitle">Settling in</strong>
-              <span data-i18n="planSettlingText">SIM, bank, transport card</span>
+          </details>
+
+          <details class="svc reveal">
+            <summary class="svc-summary">
+              <span class="svc-rule" aria-hidden="true"></span>
+              <span class="svc-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </span>
+              <span class="svc-head">
+                <h3 data-i18n="s4title"></h3>
+                <p class="svc-lead" data-i18n="s4text"></p>
+              </span>
+              <span class="svc-sign" aria-hidden="true"></span>
+            </summary>
+
+            <div class="svc-detail">
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcIncluded">Included</p>
+                <ul class="svc-list">
+              <li data-svc-item><span data-i18n="s4inc1"></span></li>
+              <li data-svc-item><span data-i18n="s4inc2"></span></li>
+              <li data-svc-item><span data-i18n="s4inc3"></span></li>
+              <li data-svc-item><span data-i18n="s4inc4"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcNotIncluded">Not included</p>
+                <ul class="svc-list svc-list-neg">
+              <li data-svc-item><span data-i18n="s4not1"></span></li>
+              <li data-svc-item><span data-i18n="s4not2"></span></li>
+                </ul>
+              </div>
+              <div class="svc-block" data-svc-block>
+                <p class="svc-block-label" data-i18n="svcWhen">When</p>
+                <p class="svc-when" data-svc-item><span data-i18n="s4when"></span></p>
+              </div>
             </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS — PINNED SEQUENCE -->
+    <section class="band band-ink process" id="process" aria-labelledby="howTitle">
+      <div class="process-scroll" id="processScroll">
+        <div class="process-sticky">
+          <div class="container process-inner">
+
+            <header class="process-head">
+              <p class="section-label section-label-dark"><span data-i18n="howLabel">How it works</span></p>
+              <h2 id="howTitle" data-i18n="howTitle">Simple from start to finish</h2>
+              <p class="process-counter"><span id="processCounter">01</span><span class="process-counter-total">/03</span></p>
+            </header>
+
+            <div class="process-stage">
+              <div class="process-spine" aria-hidden="true">
+                <span class="process-spine-fill" id="processSpine"></span>
+                <span class="process-node" data-node="0"></span>
+                <span class="process-node" data-node="1"></span>
+                <span class="process-node" data-node="2"></span>
+              </div>
+
+              <ol class="process-list" id="processList">
+                <li class="process-step is-active" data-step="0">
+                  <p class="process-num">01</p>
+                  <h3 data-i18n="how1title">Contact Us</h3>
+                  <p data-i18n="how1text">Tell us your arrival date and what level of support you need. We respond within hours on WhatsApp.</p>
+                </li>
+                <li class="process-step" data-step="1">
+                  <p class="process-num">02</p>
+                  <h3 data-i18n="how2title">We Prepare</h3>
+                  <p data-i18n="how2text">Housing, pickup, and documents are arranged before your student even boards the plane.</p>
+                </li>
+                <li class="process-step" data-step="2">
+                  <p class="process-num">03</p>
+                  <h3 data-i18n="how3title">Arrive Confident</h3>
+                  <p data-i18n="how3text">We're at the airport. Everything is ready. Your student starts Budapest life with confidence.</p>
+                </li>
+              </ol>
+            </div>
+
           </div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <main>
-      <section class="section about">
-        <div class="container split-layout">
-          <div>
-            <span class="section-tag" data-i18n="aboutTag">About us</span>
-            <h2 data-i18n="aboutTitle">We make moving to Budapest feel manageable from day one.</h2>
-          </div>
-          <div>
-            <p data-i18n="aboutText1">
-              Moving to a new country is exciting — but also confusing. We created
-              <strong>StepInBudapest</strong> to make this process simple for Azerbaijani students
-              coming to Budapest.
-            </p>
-            <p data-i18n="aboutText2">
-              From the moment you land, we guide you step by step — just like a local
-              friend would. We understand the problems because we’ve been through them.
-            </p>
-          </div>
-        </div>
-      </section>
+    <!-- PRICING -->
+    <section class="band band-paper section" id="pricing" aria-labelledby="pricingTitle">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-label"><span data-i18n="pricingLabel">Pricing</span></p>
+          <h2 id="pricingTitle" data-i18n="pricingTitle">Choose the right level of support</h2>
+          <p class="section-sub" data-i18n="pricingSub">Custom packages available. Contact us to discuss your specific needs.</p>
+        </header>
 
-      <section class="section section-alt" id="services">
-        <div class="container">
-          <div class="section-heading">
-            <span class="section-tag" data-i18n="servicesTag">Services</span>
-            <h2 data-i18n="servicesTitle">Practical support for the moments that matter most.</h2>
-            <p data-i18n="servicesIntro">Built to reduce stress, save time, and help families feel confident.</p>
-          </div>
-          <div class="card-grid services-grid">
-            <article class="info-card">
-              <div class="icon">✈️</div>
-              <h3 data-i18n="service1Title">Airport Pickup</h3>
-              <p data-i18n="service1Text">We meet you at the airport and safely take you to your accommodation.</p>
-            </article>
-            <article class="info-card">
-              <div class="icon">🏠</div>
-              <h3 data-i18n="service2Title">Accommodation Assistance</h3>
-              <p data-i18n="service2Text">
-                We help you find safe and verified housing — dorm or apartment — and avoid scams.
-              </p>
-            </article>
-            <article class="info-card">
-              <div class="icon">📄</div>
-              <h3 data-i18n="service3Title">Documentation Support</h3>
-              <p data-i18n="service3Text">We guide you through residence permit, apostille process, and university registration.</p>
-            </article>
-            <article class="info-card">
-              <div class="icon">📱</div>
-              <h3 data-i18n="service4Title">Settling In</h3>
-              <p data-i18n="service4Text">We help you get a SIM card, bank account, and transport card.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="pricing">
-        <div class="container">
-          <div class="section-heading">
-            <span class="section-tag" data-i18n="pricingTag">Pricing</span>
-            <h2 data-i18n="pricingTitle">Choose the level of support that fits your arrival plan.</h2>
-            <p data-i18n="pricingIntro">Custom packages are available depending on your needs.</p>
-          </div>
-          <div class="pricing-grid pricing-cards">
-            <article class="price-card">
-              <p class="tier" data-i18n="priceBasicLabel">Basic Package</p>
-              <h3>250 AZN</h3>
-              <ul>
-                <li data-i18n="priceBasic1">Airport pickup</li>
-                <li data-i18n="priceBasic2">Initial guidance</li>
-              </ul>
-              <a class="button button-secondary" href="#contact" data-i18n="priceBasicCta">Choose Basic</a>
-            </article>
-            <article class="price-card featured">
-              <p class="tier" data-i18n="priceStandardLabel">Standard Package</p>
-              <h3>500 AZN</h3>
-              <ul>
-                <li data-i18n="priceStandard1">Airport pickup</li>
-                <li data-i18n="priceStandard2">Accommodation assistance</li>
-                <li data-i18n="priceStandard3">Basic support</li>
-              </ul>
-              <a class="button button-primary" href="#contact" data-i18n="priceStandardCta">Choose Standard</a>
-            </article>
-            <article class="price-card">
-              <p class="tier" data-i18n="pricePremiumLabel">Premium Package</p>
-              <h3>800 AZN</h3>
-              <ul>
-                <li data-i18n="pricePremium1">Full support (A to Z)</li>
-                <li data-i18n="pricePremium2">Documents, bank, SIM, everything handled</li>
-              </ul>
-              <a class="button button-secondary" href="#contact" data-i18n="pricePremiumCta">Choose Premium</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-alt">
-        <div class="container two-column-blocks">
-          <div class="panel">
-            <span class="section-tag" data-i18n="testimonialsTag">Testimonials</span>
-            <h2 data-i18n="testimonialsTitle">Early trust signals for future growth.</h2>
-            <blockquote data-i18n="testimonial1">“Everything was organized before I arrived. I didn’t stress at all.”</blockquote>
-            <blockquote data-i18n="testimonial2">“They helped me avoid a fake apartment — worth every manat.”</blockquote>
-            <p class="small-note" data-i18n="testimonialsNote">You can replace these with real reviews as your first clients come in.</p>
-          </div>
-
-          <div class="panel">
-            <span class="section-tag" data-i18n="whyTag">Why choose us</span>
-            <h2 data-i18n="whyTitle">Why students and parents can rely on StepInBudapest.</h2>
-            <ul class="check-list">
-              <li data-i18n="why1">Azerbaijani-speaking support 🇦🇿</li>
-              <li data-i18n="why2">Local knowledge of Budapest</li>
-              <li data-i18n="why3">Fast response with WhatsApp support</li>
-              <li data-i18n="why4">Trusted, student-focused guidance</li>
+        <div class="plans">
+          <article class="plan reveal">
+            <div class="plan-top">
+              <p class="plan-name" data-i18n="plan1name">Basic</p>
+              <p class="plan-price"><span class="plan-figure">250</span><span class="plan-cur">AZN</span></p>
+            </div>
+            <ul class="plan-list">
+              <li data-i18n="plan1f1">Airport pickup</li>
+              <li data-i18n="plan1f2">Initial orientation guidance</li>
             </ul>
-          </div>
+            <a class="btn btn-line btn-block" href="#contact" data-i18n="plan1cta">Choose Basic</a>
+          </article>
+
+          <article class="plan plan-featured reveal">
+            <p class="plan-badge" data-i18n="planBadge">Most Popular</p>
+            <div class="plan-top">
+              <p class="plan-name" data-i18n="plan2name">Standard</p>
+              <p class="plan-price"><span class="plan-figure">500</span><span class="plan-cur">AZN</span></p>
+            </div>
+            <ul class="plan-list">
+              <li data-i18n="plan2f1">Airport pickup</li>
+              <li data-i18n="plan2f2">Accommodation assistance</li>
+              <li data-i18n="plan2f3">Documentation support</li>
+            </ul>
+            <a class="btn btn-gold btn-block" href="#contact" data-i18n="plan2cta">Choose Standard</a>
+          </article>
+
+          <article class="plan reveal">
+            <div class="plan-top">
+              <p class="plan-name" data-i18n="plan3name">Premium</p>
+              <p class="plan-price"><span class="plan-figure">800</span><span class="plan-cur">AZN</span></p>
+            </div>
+            <ul class="plan-list">
+              <li data-i18n="plan3f1">Full A-to-Z support</li>
+              <li data-i18n="plan3f2">Documents, bank, SIM — everything</li>
+              <li data-i18n="plan3f3">Monthly check-ins included</li>
+            </ul>
+            <a class="btn btn-line btn-block" href="#contact" data-i18n="plan3cta">Choose Premium</a>
+          </article>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="faq">
-        <div class="container">
-          <div class="section-heading">
-            <span class="section-tag" data-i18n="faqTag">FAQ</span>
-            <h2 data-i18n="faqTitle">Questions families usually ask before arrival.</h2>
-          </div>
-          <div class="faq-list">
-            <details>
-              <summary data-i18n="faq1Q">When should I contact you?</summary>
-              <p data-i18n="faq1A">At least 2–4 weeks before arrival.</p>
-            </details>
-            <details>
-              <summary data-i18n="faq2Q">Do you guarantee accommodation?</summary>
-              <p data-i18n="faq2A">We provide verified options and guidance, but the final choice is yours.</p>
-            </details>
-            <details>
-              <summary data-i18n="faq3Q">Can parents contact you?</summary>
-              <p data-i18n="faq3A">Yes, we communicate with both students and parents.</p>
-            </details>
-          </div>
+    <!-- FAQ -->
+    <section class="band band-paper-alt section" id="faq" aria-labelledby="faqTitle">
+      <div class="container faq-layout">
+        <header class="section-head faq-head reveal">
+          <p class="section-label"><span data-i18n="faqLabel">FAQ</span></p>
+          <h2 id="faqTitle" data-i18n="faqTitle">Questions parents ask</h2>
+        </header>
+
+        <div class="faq-list">
+          <details class="faq reveal">
+            <summary><span data-i18n="faq1q">When should I contact you?</span><span class="faq-sign" aria-hidden="true"></span></summary>
+            <div class="faq-body"><p data-i18n="faq1a">At least 2–4 weeks before your student's arrival date so we have time to arrange everything properly.</p></div>
+          </details>
+          <details class="faq reveal">
+            <summary><span data-i18n="faq2q">Will someone be with my child when they land?</span><span class="faq-sign" aria-hidden="true"></span></summary>
+            <div class="faq-body"><p data-i18n="faq2a">Yes — we personally meet every student at Budapest Airport, no exceptions.</p></div>
+          </details>
+          <details class="faq reveal">
+            <summary><span data-i18n="faq3q">How do I know my child is safe after arrival?</span><span class="faq-sign" aria-hidden="true"></span></summary>
+            <div class="faq-body"><p data-i18n="faq3a">We provide regular check-ins and are reachable on WhatsApp at any time. Parents can contact us directly.</p></div>
+          </details>
+          <details class="faq reveal">
+            <summary><span data-i18n="faq4q">Do you guarantee accommodation?</span><span class="faq-sign" aria-hidden="true"></span></summary>
+            <div class="faq-body"><p data-i18n="faq4a">We provide thoroughly vetted options and guide the final choice. We never recommend anything we haven't verified.</p></div>
+          </details>
+          <details class="faq reveal">
+            <summary><span data-i18n="faq5q">Can parents contact you directly?</span><span class="faq-sign" aria-hidden="true"></span></summary>
+            <div class="faq-body"><p data-i18n="faq5a">Yes — we communicate with both students and parents throughout the entire process.</p></div>
+          </details>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section cta-section" id="contact">
-        <div class="container cta-panel">
-          <div>
-            <span class="section-tag" data-i18n="contactTag">Contact</span>
-            <h2 data-i18n="contactTitle">Message us now and secure your arrival plan.</h2>
-            <p data-i18n="contactText">
-              Start with WhatsApp for the fastest response, or contact us by Instagram and email.
-            </p>
-          </div>
-          <div class="contact-list">
-            <a href="https://wa.me/994000000000" target="_blank" rel="noreferrer">WhatsApp: +994 XX XXX XX XX</a>
-            <a href="https://instagram.com/stepinbudapest" target="_blank" rel="noreferrer">Instagram: @stepinbudapest</a>
-            <a href="mailto:info@stepinbudapest.com">Email: info@stepinbudapest.com</a>
-          </div>
+    <!-- CONTACT -->
+    <section class="band band-ink section contact" id="contact" aria-labelledby="contactTitle">
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="container contact-inner">
+        <div class="contact-copy reveal">
+          <p class="section-label section-label-dark"><span data-i18n="contactLabel">Get in touch</span></p>
+          <h2 id="contactTitle" data-i18n="contactTitle">Ready to start? Message us today.</h2>
+          <p class="section-sub section-sub-dark" data-i18n="contactSub">WhatsApp is the fastest way to reach us. We typically respond within a few hours.</p>
         </div>
-      </section>
-    </main>
 
-    <script>
-      const translations = {
-        en: {
-          brandSubtitle: 'Trusted relocation support for Azerbaijani students.',
-          navServices: 'Services',
-          navPricing: 'Pricing',
-          navFaq: 'FAQ',
-          navContact: 'Contact',
-          eyebrow: 'Trusted relocation partner for Azerbaijani students',
-          heroTitle: 'Start Your Student Life in Budapest — Stress-Free',
-          heroText: 'We help Azerbaijani students with airport pickup, accommodation, and all necessary documents — before and after arrival.',
-          ctaStart: 'Get Started',
-          ctaWhatsapp: 'Contact on WhatsApp',
-          heroPoint1: 'Azerbaijani-speaking support 🇦🇿',
-          heroPoint2: 'Fast, student-friendly guidance',
-          heroPoint3: 'Local support before and after arrival',
-          planLabel: 'Your relocation plan',
-          planTitle: 'Everything organized before you land.',
-          planPickupTitle: 'Pickup',
-          planPickupText: 'Airport to accommodation',
-          planHousingTitle: 'Housing',
-          planHousingText: 'Safe, verified options',
-          planDocsTitle: 'Documents',
-          planDocsText: 'Residence permit, apostille, registration',
-          planSettlingTitle: 'Settling in',
-          planSettlingText: 'SIM, bank, transport card',
-          aboutTag: 'About us',
-          aboutTitle: 'We make moving to Budapest feel manageable from day one.',
-          aboutText1: 'Moving to a new country is exciting — but also confusing. We created <strong>StepInBudapest</strong> to make this process simple for Azerbaijani students coming to Budapest.',
-          aboutText2: 'From the moment you land, we guide you step by step — just like a local friend would. We understand the problems because we’ve been through them.',
-          servicesTag: 'Services',
-          servicesTitle: 'Practical support for the moments that matter most.',
-          servicesIntro: 'Built to reduce stress, save time, and help families feel confident.',
-          service1Title: 'Airport Pickup',
-          service1Text: 'We meet you at the airport and safely take you to your accommodation.',
-          service2Title: 'Accommodation Assistance',
-          service2Text: 'We help you find safe and verified housing — dorm or apartment — and avoid scams.',
-          service3Title: 'Documentation Support',
-          service3Text: 'We guide you through residence permit, apostille process, and university registration.',
-          service4Title: 'Settling In',
-          service4Text: 'We help you get a SIM card, bank account, and transport card.',
-          pricingTag: 'Pricing',
-          pricingTitle: 'Choose the level of support that fits your arrival plan.',
-          pricingIntro: 'Custom packages are available depending on your needs.',
-          priceBasicLabel: 'Basic Package',
-          priceBasic1: 'Airport pickup',
-          priceBasic2: 'Initial guidance',
-          priceBasicCta: 'Choose Basic',
-          priceStandardLabel: 'Standard Package',
-          priceStandard1: 'Airport pickup',
-          priceStandard2: 'Accommodation assistance',
-          priceStandard3: 'Basic support',
-          priceStandardCta: 'Choose Standard',
-          pricePremiumLabel: 'Premium Package',
-          pricePremium1: 'Full support (A to Z)',
-          pricePremium2: 'Documents, bank, SIM, everything handled',
-          pricePremiumCta: 'Choose Premium',
-          testimonialsTag: 'Testimonials',
-          testimonialsTitle: 'Early trust signals for future growth.',
-          testimonial1: '“Everything was organized before I arrived. I didn’t stress at all.”',
-          testimonial2: '“They helped me avoid a fake apartment — worth every manat.”',
-          testimonialsNote: 'You can replace these with real reviews as your first clients come in.',
-          whyTag: 'Why choose us',
-          whyTitle: 'Why students and parents can rely on StepInBudapest.',
-          why1: 'Azerbaijani-speaking support 🇦🇿',
-          why2: 'Local knowledge of Budapest',
-          why3: 'Fast response with WhatsApp support',
-          why4: 'Trusted, student-focused guidance',
-          faqTag: 'FAQ',
-          faqTitle: 'Questions families usually ask before arrival.',
-          faq1Q: 'When should I contact you?',
-          faq1A: 'At least 2–4 weeks before arrival.',
-          faq2Q: 'Do you guarantee accommodation?',
-          faq2A: 'We provide verified options and guidance, but the final choice is yours.',
-          faq3Q: 'Can parents contact you?',
-          faq3A: 'Yes, we communicate with both students and parents.',
-          contactTag: 'Contact',
-          contactTitle: 'Message us now and secure your arrival plan.',
-          contactText: 'Start with WhatsApp for the fastest response, or contact us by Instagram and email.'
-        },
-        az: {
-          brandSubtitle: 'Azərbaycanlı tələbələr üçün etibarlı köç dəstəyi.',
-          navServices: 'Xidmətlər',
-          navPricing: 'Qiymətlər',
-          navFaq: 'FAQ',
-          navContact: 'Əlaqə',
-          eyebrow: 'Azərbaycanlı tələbələr üçün etibarlı köç tərəfdaşı',
-          heroTitle: 'Budapeştdə tələbə həyatına stresssiz başlayın',
-          heroText: 'Biz Azərbaycanlı tələbələrə hava limanı qarşılanması, yaşayış, və bütün vacib sənədlərlə bağlı gəlişdən əvvəl və sonra dəstək oluruq.',
-          ctaStart: 'Başlayaq',
-          ctaWhatsapp: 'WhatsApp ilə əlaqə',
-          heroPoint1: 'Azərbaycan dilində dəstək 🇦🇿',
-          heroPoint2: 'Sürətli və tələbə yönümlü yönləndirmə',
-          heroPoint3: 'Gəlişdən əvvəl və sonra yerli dəstək',
-          planLabel: 'Köç planınız',
-          planTitle: 'Enməzdən əvvəl hər şey hazır olsun.',
-          planPickupTitle: 'Qarşılama',
-          planPickupText: 'Hava limanından yaşayış yerinə',
-          planHousingTitle: 'Yaşayış',
-          planHousingText: 'Təhlükəsiz və yoxlanılmış seçimlər',
-          planDocsTitle: 'Sənədlər',
-          planDocsText: 'Oturum icazəsi, apostil, qeydiyyat',
-          planSettlingTitle: 'Uyğunlaşma',
-          planSettlingText: 'SIM kart, bank, nəqliyyat kartı',
-          aboutTag: 'Haqqımızda',
-          aboutTitle: 'Budapeştə köçməyi ilk gündən daha rahat edirik.',
-          aboutText1: 'Yeni ölkəyə köçmək həyəcanlıdır — amma eyni zamanda qarışıq da ola bilər. <strong>StepInBudapest</strong> platformasını Budapeştə gələn Azərbaycanlı tələbələr üçün bu prosesi sadələşdirmək üçün yaratdıq.',
-          aboutText2: 'Təyyarədən düşdüyünüz andan etibarən sizi addım-addım yönləndiririk — sanki yerli dostunuz kimi. Bu problemləri anlayırıq, çünki özümüz də bunları yaşamışıq.',
-          servicesTag: 'Xidmətlər',
-          servicesTitle: 'Ən vacib anlarda praktik dəstək.',
-          servicesIntro: 'Stressi azaltmaq, vaxt qazandırmaq və ailələrə güvən vermək üçün qurulub.',
-          service1Title: 'Hava Limanında Qarşılama',
-          service1Text: 'Sizi hava limanında qarşılayır və təhlükəsiz şəkildə yaşayış yerinizə aparırıq.',
-          service2Title: 'Yaşayış Dəstəyi',
-          service2Text: 'Yataqxana və ya mənzil üçün təhlükəsiz, yoxlanılmış variantlar tapmağa kömək edir və dələduzluqlardan qoruyuruq.',
-          service3Title: 'Sənəd Dəstəyi',
-          service3Text: 'Oturum icazəsi, apostil prosesi və universitet qeydiyyatı üzrə sizə yol göstəririk.',
-          service4Title: 'Yerləşmə Dəstəyi',
-          service4Text: 'SIM kart, bank hesabı və nəqliyyat kartı almaqda kömək edirik.',
-          pricingTag: 'Qiymətlər',
-          pricingTitle: 'Gəliş planınıza uyğun dəstək səviyyəsini seçin.',
-          pricingIntro: 'Ehtiyaclarınıza uyğun fərdi paketlər də mümkündür.',
-          priceBasicLabel: 'Basic Paket',
-          priceBasic1: 'Hava limanında qarşılama',
-          priceBasic2: 'İlkin yönləndirmə',
-          priceBasicCta: 'Basic seç',
-          priceStandardLabel: 'Standard Paket',
-          priceStandard1: 'Hava limanında qarşılama',
-          priceStandard2: 'Yaşayış dəstəyi',
-          priceStandard3: 'Əsas dəstək',
-          priceStandardCta: 'Standard seç',
-          pricePremiumLabel: 'Premium Paket',
-          pricePremium1: 'A-dan Z-yə tam dəstək',
-          pricePremium2: 'Sənədlər, bank, SIM və bütün proseslər',
-          pricePremiumCta: 'Premium seç',
-          testimonialsTag: 'Rəylər',
-          testimonialsTitle: 'İlk müştərilər üçün güvən yaradan siqnallar.',
-          testimonial1: '“Mən gəlməzdən əvvəl hər şey təşkil olunmuşdu. Heç stress yaşamadım.”',
-          testimonial2: '“Saxta mənzildən yayınmağıma kömək etdilər — hər manata dəyərdi.”',
-          testimonialsNote: 'İlk müştəriləriniz gəldikcə bunları real rəylərlə əvəz edə bilərsiniz.',
-          whyTag: 'Niyə biz?',
-          whyTitle: 'Tələbələr və valideynlər niyə StepInBudapest-ə güvənə bilər?',
-          why1: 'Azərbaycan dilində dəstək 🇦🇿',
-          why2: 'Budapeşt üzrə yerli bilik',
-          why3: 'WhatsApp üzərindən sürətli cavab',
-          why4: 'Etibarlı və tələbə yönümlü xidmət',
-          faqTag: 'FAQ',
-          faqTitle: 'Gəlişdən əvvəl ailələrin ən çox verdiyi suallar.',
-          faq1Q: 'Sizinlə nə vaxt əlaqə saxlamalıyam?',
-          faq1A: 'Ən azı gəlişdən 2–4 həftə əvvəl.',
-          faq2Q: 'Yaşayışa zəmanət verirsiniz?',
-          faq2A: 'Biz yoxlanılmış seçimlər və yönləndirmə təqdim edirik, amma son seçim sizindir.',
-          faq3Q: 'Valideynlər də sizinlə əlaqə saxlaya bilər?',
-          faq3A: 'Bəli, həm tələbələrlə, həm də valideynlərlə əlaqə saxlayırıq.',
-          contactTag: 'Əlaqə',
-          contactTitle: 'İndi yazın və gəliş planınızı öncədən qurun.',
-          contactText: 'Ən sürətli cavab üçün WhatsApp-dan başlayın, həmçinin Instagram və email vasitəsilə də yaza bilərsiniz.'
-        }
-      };
+        <div class="contact-links reveal">
+          <a class="clink clink-primary" href="https://wa.me/994000000000" target="_blank" rel="noreferrer">
+            <span class="clink-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </span>
+            <span class="clink-body">
+              <span class="clink-kind">WhatsApp</span>
+              <span class="clink-value">+994 XX XXX XX XX</span>
+            </span>
+            <span class="clink-arrow" aria-hidden="true">→</span>
+          </a>
 
-      const applyLanguage = (lang) => {
-        document.documentElement.lang = lang;
-        document.querySelectorAll('[data-i18n]').forEach((element) => {
-          const key = element.dataset.i18n;
-          const value = translations[lang][key];
-          if (value) {
-            element.innerHTML = value;
-          }
-        });
+          <a class="clink" href="https://instagram.com/stepinbudapest" target="_blank" rel="noreferrer">
+            <span class="clink-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </span>
+            <span class="clink-body">
+              <span class="clink-kind">Instagram</span>
+              <span class="clink-value">@stepinbudapest</span>
+            </span>
+            <span class="clink-arrow" aria-hidden="true">→</span>
+          </a>
 
-        document.querySelectorAll('.lang-button').forEach((button) => {
-          button.classList.toggle('active', button.dataset.lang === lang);
-        });
-      };
+          <a class="clink" href="mailto:info@stepinbudapest.com">
+            <span class="clink-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span class="clink-body">
+              <span class="clink-kind">Email</span>
+              <span class="clink-value">info@stepinbudapest.com</span>
+            </span>
+            <span class="clink-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-      document.querySelectorAll('.lang-button').forEach((button) => {
-        button.addEventListener('click', () => applyLanguage(button.dataset.lang));
-      });
+  </main>
 
-      applyLanguage('en');
-    </script>
-  </body>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand-block">
+        <span class="brand-name footer-brand">StepIn<span class="brand-city">Budapest</span></span>
+        <p class="footer-copy" data-i18n="footerCopy">© 2026 StepIn Budapest. All rights reserved.</p>
+      </div>
+
+      <div class="lang lang-foot" data-lang-menu>
+        <button class="lang-current" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <span data-lang-code>EN</span>
+          <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="lang-options">
+          <li><button class="lang-opt is-active" data-lang="en" type="button"><span class="lang-opt-code">EN</span><span class="lang-opt-name">English</span></button></li>
+          <li><button class="lang-opt" data-lang="az" type="button"><span class="lang-opt-code">AZ</span><span class="lang-opt-name">Azərbaycanca</span></button></li>
+          <li><button class="lang-opt" data-lang="ru" type="button"><span class="lang-opt-code">RU</span><span class="lang-opt-name">Русский</span></button></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js?v=17"></script>
+</body>
 </html>

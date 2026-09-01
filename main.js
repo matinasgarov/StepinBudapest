@@ -1,0 +1,556 @@
+/* =========================================================
+   StepIn Budapest — translations and interaction
+   No dependencies. All motion respects prefers-reduced-motion.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* -------------------------------------------------------
+     TRANSLATIONS
+     To add a string: add the key to en, az and ru below,
+     then put data-i18n="key" on the element.
+  ------------------------------------------------------- */
+  var translations = {
+    en: {
+      skipLink: 'Skip to content',
+      waFloat: 'WhatsApp',
+      brandTagline: 'Student Relocation Partner',
+      navServices: 'Services', navProcess: 'Process', navPricing: 'Pricing',
+      navFaq: 'FAQ', navContact: 'Contact', navCta: 'WhatsApp Us',
+
+      heroTitle: 'Zero stress for them.<br><em>Total peace of mind for you.</em>',
+      heroSub: 'We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.',
+      ctaPrimary: 'Message us on WhatsApp', ctaSecondary: 'What we do',
+      heroNote: 'Write in Azerbaijani, Russian or English. We usually answer the same day.',
+
+      cardLabel: 'Your arrival plan',
+      routeFrom: 'Baku', routeTo: 'Budapest',
+      itinStamp: 'Ready before the flight',
+      step1Title: 'Arrival', step1Text: 'We meet them at the gate',
+      step2Title: 'Housing', step2Text: 'Seen in person, not online',
+      step3Title: 'Documents', step3Text: 'Residence permit and apostille',
+      step4Title: 'Settled', step4Text: 'Bank, SIM card, travel pass',
+
+      trust1Label: 'Students helped',
+      trust2: 'Azerbaijani-Speaking Team',
+      trust3: 'WhatsApp Support', trust4: 'Verified Housing Options',
+
+      servicesLabel: 'Services', servicesTitle: 'What we take care of',
+      servicesSub: 'From the moment your student books their flight to the first week of classes.',
+      s1title: 'Airport Pickup', s1text: 'We personally meet your student at Budapest Airport and take them safely to their accommodation.',
+      s2title: 'Accommodation', s2text: 'Safe, verified housing — dorm or apartment. We vet every option so you never worry about scams.',
+      s3title: 'Documentation', s3text: 'Residence permit, apostille, and university registration — we guide every step of the paperwork.',
+      s4title: 'Settling In', s4text: 'SIM card, bank account, transport card — we handle the practical setup so your student can focus on starting.',
+
+
+      svcIncluded: 'Included', svcNotIncluded: 'Not included', svcWhen: 'When',
+      s1inc1: 'We meet them in person in the arrivals hall — they are never left to find their own way through an unfamiliar airport',
+      s1inc2: 'We travel with them straight to their accommodation and make sure they get inside safely',
+      s1inc3: '', s1inc4: '', s1not1: '', s1not2: '', s1when: '',
+      s2inc1: 'A choice between a dormitory room or a private apartment, matched to your budget',
+      s2inc2: 'Every listing is visited and checked by our own team before we ever show it to you',
+      s2inc3: '', s2inc4: '', s2not1: '', s2not2: '', s2when: '',
+      s3inc1: 'Residence permit application, prepared and submitted on their behalf',
+      s3inc2: 'Legal representation and guardianship (Guardian) service',
+      s3inc3: 'University registration, completed before the semester starts',
+      s3inc4: 'Apostille coordination for their academic and personal documents', s3not1: '', s3not2: '', s3when: '',
+      s4inc1: 'A local SIM card, so they can call, text, and use data right away',
+      s4inc2: 'A Hungarian bank account, opened in their name',
+      s4inc3: 'A student transport card for the metro, tram, and bus',
+      s4inc4: '', s4not1: '', s4not2: '', s4when: '',
+
+      howLabel: 'How it works', howTitle: 'Simple from start to finish',
+      how1title: 'Contact Us', how1text: 'When are you arriving? What kind of support do you need? Message us and we will reply on WhatsApp quickly.',
+      how2title: 'We Prepare Everything', how2text: 'Your home, your documents, and the pickup plan — everything is fully ready before your child boards the plane.',
+      how3title: 'Arrive at Ease', how3text: 'We will be waiting at the airport. Do not worry — we are with them at every step. They will never be alone in Budapest.',
+
+      pricingLabel: 'Pricing', pricingTitle: 'Choose the right level of support',
+      pricingSub: 'Custom packages available. Contact us to discuss your specific needs.',
+      plan1name: 'Basic', plan1f1: 'Airport pickup', plan1f2: 'Initial orientation guidance', plan1cta: 'Choose Basic',
+      planBadge: 'Most Popular',
+      plan2name: 'Standard', plan2f1: 'Airport pickup', plan2f2: 'Accommodation assistance', plan2f3: 'Documentation support', plan2cta: 'Choose Standard',
+      plan3name: 'Premium', plan3f1: 'Full A-to-Z support', plan3f2: 'Documents, bank, SIM — everything', plan3f3: 'Monthly check-ins included', plan3cta: 'Choose Premium',
+
+      faqLabel: 'FAQ', faqTitle: 'Questions parents ask',
+      faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
+      faq2q: 'Will someone be with my child when they land?', faq2a: 'Yes — we personally meet every student at Budapest Airport, no exceptions.',
+      faq3q: 'How do I know my child is safe after arrival?', faq3a: 'We provide regular check-ins and are reachable on WhatsApp at any time. Parents can contact us directly.',
+      faq4q: 'Do you guarantee accommodation?', faq4a: 'We provide thoroughly vetted options and guide the final choice. We never recommend anything we haven\'t verified.',
+      faq5q: 'Can parents contact you directly?', faq5a: 'Yes — we communicate with both students and parents throughout the entire process.',
+
+      contactLabel: 'Get in touch', contactTitle: 'Ready to start? Message us today.',
+      contactSub: 'WhatsApp is the fastest way to reach us. We typically respond within a few hours.',
+      footerCopy: '© 2026 StepIn Budapest. All rights reserved.'
+    },
+
+    az: {
+      skipLink: 'Məzmuna keç',
+      waFloat: 'WhatsApp',
+      brandTagline: 'Tələbə Köç Tərəfdaşı',
+      navServices: 'Xidmətlər', navProcess: 'Proses', navPricing: 'Qiymətlər',
+      navFaq: 'FAQ', navContact: 'Əlaqə', navCta: 'WhatsApp',
+
+      heroTitle: 'Onlar üçün sıfır stress.<br><em>Sizin üçün tam rahatlıq.</em>',
+      heroSub: 'Övladınızı hava limanında qarşılayır, təhlükəsiz mənzilin açarlarını təhvil verir və xaricdəki yeni həyatı üçün bütün sənədləri həll edirik.',
+      ctaPrimary: 'WhatsApp-da yazın', ctaSecondary: 'Nə edirik',
+      heroNote: 'Azərbaycanca, rusca və ya ingiliscə yazın. Adətən elə həmin gün cavab veririk.',
+
+      cardLabel: 'Gəliş planınız',
+      routeFrom: 'Bakı', routeTo: 'Budapeşt',
+      itinStamp: 'Uçuşdan əvvəl hazırdır',
+      step1Title: 'Gəliş', step1Text: 'Onu çıxışda qarşılayırıq',
+      step2Title: 'Yaşama', step2Text: 'Onlayn yox, öz gözümüzlə',
+      step3Title: 'Sənədlər', step3Text: 'Oturum icazəsi və apostil',
+      step4Title: 'Yerləşmə', step4Text: 'Bank, SIM kart, nəqliyyat kartı',
+
+      trust1Label: 'Tələbəyə kömək edildi',
+      trust2: 'Azərbaycanca Danışan Komanda',
+      trust3: 'WhatsApp Dəstəyi', trust4: 'Yoxlanılmış Yaşayış Seçimləri',
+
+      servicesLabel: 'Xidmətlər', servicesTitle: 'Biz nəylə məşğul oluruq',
+      servicesSub: 'Tələbəniz bilet aldığı andan dərslərinin ilk həftəsinə qədər.',
+      s1title: 'Hava Limanı Qarşılaması', s1text: 'Tələbənizi Budapeşt hava limanında şəxsən qarşılayır və təhlükəsiz şəkildə yaşayış yerinə aparırıq.',
+      s2title: 'Yaşama', s2text: 'Təhlükəsiz, yoxlanılmış yaşayış — yataqxana və ya mənzil. Hər variantı yoxlayırıq ki, fırıldaqçılıqdan narahat olmayasınız.',
+      s3title: 'Sənədlər', s3text: 'Oturum icazəsi, apostil və universitet qeydiyyatı — bütün sənəd işlərini addım-addım rəhbərlik edirik.',
+      s4title: 'Yerləşmə', s4text: 'SIM kart, bank hesabı, nəqliyyat kartı — praktik qurulumu biz edirik ki, tələbəniz başlamağa fokuslanabilsin.',
+
+
+      svcIncluded: 'Daxildir', svcNotIncluded: 'Daxil deyil', svcWhen: 'Nə vaxt',
+      s1inc1: 'Tələbəni Budapeşt hava limanının gəliş zalında şəxsən qarşılayırıq — o, tanış olmayan hava limanında tək qalmır',
+      s1inc2: 'Yaşayış yerinə qədər onunla birlikdə gedir və təhlükəsiz daxil olduğuna əmin oluruq',
+      s1inc3: '', s1inc4: '', s1not1: '', s1not2: '', s1when: '',
+      s2inc1: 'Büdcənizə uyğun yataqxana otağı və ya ayrıca mənzil seçimi',
+      s2inc2: 'Sizə göstərməzdən əvvəl hər mənzili öz komandamız şəxsən yoxlayır',
+      s2inc3: '', s2inc4: '', s2not1: '', s2not2: '', s2when: '',
+      s3inc1: 'Oturum icazəsi üçün müraciətin hazırlanması və təqdim edilməsi',
+      s3inc2: 'Hüquqi nümayəndəlik və qəyyumluq (Guardian) xidməti',
+      s3inc3: 'Semestr başlamazdan əvvəl tamamlanan universitet qeydiyyatı',
+      s3inc4: 'Akademik və şəxsi sənədlər üçün apostil koordinasiyası', s3not1: '', s3not2: '', s3when: '',
+      s4inc1: 'Yerli SIM kart — zəng, mesaj və internetdən dərhal istifadə üçün',
+      s4inc2: 'Onun adına açılan macar bank hesabı',
+      s4inc3: 'Metro, tramvay və avtobus üçün tələbə nəqliyyat kartı',
+      s4inc4: '', s4not1: '', s4not2: '', s4when: '',
+
+      howLabel: 'Necə işləyir', howTitle: 'Başdan sona sadədir',
+      how1title: 'Bizimlə Əlaqə', how1text: 'Nə vaxt gəlirsiniz? Necə bir dəstəyə ehtiyacınız var? Yazın, WhatsApp-da tez bir zamanda cavab verək.',
+      how2title: 'Hər Şeyi Hazırlayırıq', how2text: 'Eviniz, sənədləriniz və qarşılama planı — hər şey övladınız təyyarəyə minməmişdən qabaq tam hazır olur.',
+      how3title: 'Rahat Gəlin', how3text: 'Hava limanında qarşılayacağıq. Narahat olmayın, hər addımda yanındayıq — Budapeştdə heç vaxt tək qalmayacaq.',
+
+      pricingLabel: 'Qiymətlər', pricingTitle: 'Uyğun dəstək səviyyəsini seçin',
+      pricingSub: 'Fərdi paketlər mövcuddur. Ehtiyaclarınızı müzakirə etmək üçün bizimlə əlaqə saxlayın.',
+      plan1name: 'Basic', plan1f1: 'Hava limanı qarşılaması', plan1f2: 'İlkin orientasiya rəhbərliyi', plan1cta: 'Basic seçin',
+      planBadge: 'Ən Populyar',
+      plan2name: 'Standard', plan2f1: 'Hava limanı qarşılaması', plan2f2: 'Yaşayış dəstəyi', plan2f3: 'Sənəd dəstəyi', plan2cta: 'Standard seçin',
+      plan3name: 'Premium', plan3f1: 'A-dan Z-yə tam dəstək', plan3f2: 'Sənədlər, bank, SIM — hər şey', plan3f3: 'Aylıq yoxlama daxildir', plan3cta: 'Premium seçin',
+
+      faqLabel: 'FAQ', faqTitle: 'Valideynlərin soruşduğu suallar',
+      faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
+      faq2q: 'Uşağım endikdə yanında biri olacaqmı?', faq2a: 'Bəli — hər tələbəni Budapeşt hava limanında şəxsən qarşılayırıq, istisnasız.',
+      faq3q: 'Gəlişdən sonra uşağımın təhlükəsiz olduğunu necə biləcəyəm?', faq3a: 'Müntəzəm yoxlama edirik və istənilən vaxt WhatsApp-da əlçatanıq. Valideynlər birbaşa bizimlə əlaqə saxlaya bilər.',
+      faq4q: 'Yaşayışa zəmanət verirsiniz?', faq4a: 'Hərtərəfli yoxlanılmış variantlar təqdim edir və son seçimi rəhbərlik edirik. Yoxlamadığımız heç nəyi tövsiyə etmirik.',
+      faq5q: 'Valideynlər birbaşa sizinlə əlaqə saxlaya bilər?', faq5a: 'Bəli — bütün proses boyu həm tələbələrlə, həm də valideynlərlə əlaqə saxlayırıq.',
+
+      contactLabel: 'Əlaqə', contactTitle: 'Başlamağa hazırsınız? Bu gün yazın.',
+      contactSub: 'WhatsApp bizimlə əlaqə saxlamağın ən sürətli yoludur. Bir neçə saat içində cavab veririk.',
+      footerCopy: '© 2026 StepIn Budapest. Bütün hüquqlar qorunur.'
+    },
+
+    ru: {
+      skipLink: 'Перейти к содержанию',
+      waFloat: 'WhatsApp',
+      brandTagline: 'Партнёр по переезду студентов',
+      navServices: 'Услуги', navProcess: 'Процесс', navPricing: 'Цены',
+      navFaq: 'FAQ', navContact: 'Контакты', navCta: 'WhatsApp',
+
+      heroTitle: 'Ноль стресса для него.<br><em>Полное спокойствие для вас.</em>',
+      heroSub: 'Встречаем вашего ребёнка в аэропорту, передаём ключи от безопасной квартиры и оформляем все документы для его новой жизни за границей.',
+      ctaPrimary: 'Написать в WhatsApp', ctaSecondary: 'Что мы делаем',
+      heroNote: 'Пишите по-азербайджански, по-русски или по-английски. Обычно отвечаем в тот же день.',
+
+      cardLabel: 'Ваш план прибытия',
+      routeFrom: 'Баку', routeTo: 'Будапешт',
+      itinStamp: 'Готово до вылета',
+      step1Title: 'Прилёт', step1Text: 'Встречаем на выходе',
+      step2Title: 'Жильё', step2Text: 'Смотрим сами, не по фото',
+      step3Title: 'Документы', step3Text: 'Вид на жительство и апостиль',
+      step4Title: 'Обустройство', step4Text: 'Банк, SIM-карта, проездной',
+
+      trust1Label: 'студентам помогли',
+      trust2: 'Команда говорит по-азербайджански',
+      trust3: 'Поддержка в WhatsApp', trust4: 'Проверенные варианты жилья',
+
+      servicesLabel: 'Услуги', servicesTitle: 'Что мы берём на себя',
+      servicesSub: 'С момента покупки билета до первой недели занятий.',
+      s1title: 'Трансфер из аэропорта', s1text: 'Мы лично встречаем вашего студента в аэропорту Будапешта и безопасно доставляем до жилья.',
+      s2title: 'Жильё', s2text: 'Безопасное, проверенное жильё — общежитие или квартира. Мы проверяем каждый вариант, чтобы вы не беспокоились о мошенничестве.',
+      s3title: 'Документы', s3text: 'Вид на жительство, апостиль и регистрация в университете — мы сопровождаем каждый шаг оформления.',
+      s4title: 'Обустройство', s4text: 'SIM-карта, банковский счёт, транспортная карта — мы берём на себя практическую сторону, чтобы студент мог сосредоточиться на учёбе.',
+
+
+      svcIncluded: 'Входит', svcNotIncluded: 'Не входит', svcWhen: 'Когда',
+      s1inc1: 'Встречаем лично в зале прилёта — он не остаётся один в незнакомом аэропорту',
+      s1inc2: 'Едем вместе с ним до жилья и убеждаемся, что он благополучно заселился',
+      s1inc3: '', s1inc4: '', s1not1: '', s1not2: '', s1when: '',
+      s2inc1: 'Комната в общежитии или отдельная квартира — по вашему бюджету',
+      s2inc2: 'Каждый вариант жилья наша команда осматривает лично, прежде чем показать вам',
+      s2inc3: '', s2inc4: '', s2not1: '', s2not2: '', s2when: '',
+      s3inc1: 'Подготовка и подача заявления на вид на жительство',
+      s3inc2: 'Юридическое представительство и услуга опекунства (Guardian)',
+      s3inc3: 'Регистрация в университете — до начала семестра',
+      s3inc4: 'Оформление апостиля на учебные и личные документы', s3not1: '', s3not2: '', s3when: '',
+      s4inc1: 'Местная SIM-карта — звонки, сообщения и интернет с первого дня',
+      s4inc2: 'Банковский счёт в венгерском банке, открытый на его имя',
+      s4inc3: 'Студенческий проездной на метро, трамвай и автобус',
+      s4inc4: '', s4not1: '', s4not2: '', s4when: '',
+
+      howLabel: 'Как это работает', howTitle: 'Просто от начала до конца',
+      how1title: 'Свяжитесь с нами', how1text: 'Когда вы прилетаете? Какая поддержка вам нужна? Напишите нам — мы быстро ответим в WhatsApp.',
+      how2title: 'Готовим всё', how2text: 'Жильё, документы и план встречи — всё полностью готово до того, как ваш ребёнок сядет в самолёт.',
+      how3title: 'Прилетайте спокойно', how3text: 'Мы будем ждать в аэропорту. Не волнуйтесь — мы рядом на каждом шаге. Он никогда не останется один в Будапеште.',
+
+      pricingLabel: 'Цены', pricingTitle: 'Выберите нужный уровень поддержки',
+      pricingSub: 'Доступны индивидуальные пакеты. Свяжитесь с нами, чтобы обсудить ваши конкретные потребности.',
+      plan1name: 'Базовый', plan1f1: 'Трансфер из аэропорта', plan1f2: 'Первичный инструктаж', plan1cta: 'Выбрать базовый',
+      planBadge: 'Популярный выбор',
+      plan2name: 'Стандарт', plan2f1: 'Трансфер из аэропорта', plan2f2: 'Помощь с жильём', plan2f3: 'Помощь с документами', plan2cta: 'Выбрать стандарт',
+      plan3name: 'Премиум', plan3f1: 'Полная поддержка от А до Я', plan3f2: 'Документы, банк, SIM — всё включено', plan3f3: 'Ежемесячные проверки включены', plan3cta: 'Выбрать премиум',
+
+      faqLabel: 'FAQ', faqTitle: 'Вопросы родителей',
+      faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',
+      faq2q: 'Будет ли кто-то рядом с моим ребёнком по прилёте?', faq2a: 'Да — мы лично встречаем каждого студента в аэропорту Будапешта, без исключений.',
+      faq3q: 'Как я узнаю, что мой ребёнок в безопасности после прибытия?', faq3a: 'Мы регулярно выходим на связь и доступны в WhatsApp в любое время. Родители могут напрямую связаться с нами.',
+      faq4q: 'Вы гарантируете жильё?', faq4a: 'Мы предоставляем тщательно проверенные варианты и помогаем сделать финальный выбор. Мы никогда не рекомендуем то, чего не проверили.',
+      faq5q: 'Могут ли родители напрямую с вами связаться?', faq5a: 'Да — мы общаемся как со студентами, так и с родителями на протяжении всего процесса.',
+
+      contactLabel: 'Связаться', contactTitle: 'Готовы начать? Напишите нам сегодня.',
+      contactSub: 'WhatsApp — самый быстрый способ связаться с нами. Обычно мы отвечаем в течение нескольких часов.',
+      footerCopy: '© 2026 StepIn Budapest. Все права защищены.'
+    }
+  };
+
+  var SUPPORTED = ['en', 'az', 'ru'];
+  var STORE_KEY = 'stepin-lang';
+  // Keys whose value is allowed to contain markup. Keep this list minimal.
+  var RICH_KEYS = ['heroTitle'];
+
+  /* -------------------------------------------------------
+     LANGUAGE
+  ------------------------------------------------------- */
+  function readStoredLang() {
+    try {
+      var saved = localStorage.getItem(STORE_KEY);
+      if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
+    } catch (e) { /* private mode — fall through to detection */ }
+
+    var nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return SUPPORTED.indexOf(nav) !== -1 ? nav : 'en';
+  }
+
+  function applyLanguage(lang) {
+    var dict = translations[lang] || translations.en;
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.dataset.i18n;
+      var val = dict[key];
+      if (val === undefined) return;
+      // Only heroTitle carries markup (<br>, <em>). Everything else is set as
+      // plain text, so a stray '<' in a translation can never become an element.
+      if (RICH_KEYS.indexOf(key) !== -1) el.innerHTML = val;
+      else el.textContent = val;
+    });
+
+    document.querySelectorAll('.lang-opt').forEach(function (opt) {
+      opt.classList.toggle('is-active', opt.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-lang-code]').forEach(function (el) {
+      el.textContent = lang.toUpperCase();
+    });
+
+    hideEmptySlots();
+
+    try { localStorage.setItem(STORE_KEY, lang); } catch (e) { /* non-fatal */ }
+  }
+
+  /* A slot with an empty translation hides itself, and a block with no
+     visible slots hides too. This is what lets the service detail ship
+     before every fact is confirmed — unwritten content simply isn't there. */
+  function hideEmptySlots() {
+    document.querySelectorAll('[data-svc-item]').forEach(function (item) {
+      var holder = item.querySelector('[data-i18n]') || item;
+      item.hidden = holder.textContent.trim() === '';
+    });
+    document.querySelectorAll('[data-svc-block]').forEach(function (block) {
+      var items = block.querySelectorAll('[data-svc-item]');
+      var shown = 0;
+      items.forEach(function (i) { if (!i.hidden) shown++; });
+      block.hidden = shown === 0;
+    });
+    document.querySelectorAll('.svc').forEach(function (card) {
+      var blocks = card.querySelectorAll('[data-svc-block]');
+      var shown = 0;
+      blocks.forEach(function (b) { if (!b.hidden) shown++; });
+      // Nothing to reveal? Don't pretend the card opens.
+      card.classList.toggle('is-flat', shown === 0);
+    });
+  }
+
+  /* Language menu: hover opens it via CSS. Click/tap and keyboard are
+     handled here so it also works without a pointer. */
+  document.querySelectorAll('[data-lang-menu]').forEach(function (menu) {
+    var trigger = menu.querySelector('.lang-current');
+
+    function close() {
+      menu.removeAttribute('data-open');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    if (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = menu.hasAttribute('data-open');
+        if (open) { close(); return; }
+        menu.setAttribute('data-open', '');
+        trigger.setAttribute('aria-expanded', 'true');
+      });
+    }
+
+    menu.querySelectorAll('.lang-opt').forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        applyLanguage(opt.dataset.lang);
+        close();
+        if (trigger) trigger.blur();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) close();
+    });
+    menu.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { close(); if (trigger) trigger.focus(); }
+    });
+  });
+
+  applyLanguage(readStoredLang());
+
+  /* -------------------------------------------------------
+     MOBILE DRAWER
+  ------------------------------------------------------- */
+  var toggle = document.getElementById('navToggle');
+  var drawer = document.getElementById('mobileDrawer');
+
+  function setDrawer(open) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      drawer.hidden = false;
+      requestAnimationFrame(function () { drawer.classList.add('is-open'); });
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer.classList.remove('is-open');
+      document.body.style.overflow = '';
+      window.setTimeout(function () {
+        if (toggle.getAttribute('aria-expanded') === 'false') drawer.hidden = true;
+      }, reduceMotion ? 0 : 320);
+    }
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      setDrawer(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+  }
+  if (drawer) {
+    drawer.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setDrawer(false); });
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setDrawer(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 900) setDrawer(false);
+  });
+
+  /* -------------------------------------------------------
+     SCROLL RAIL + HEADER STATE
+  ------------------------------------------------------- */
+  var rail = document.getElementById('scrollRail');
+  var header = document.getElementById('siteHeader');
+
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    if (rail) rail.style.width = pct + '%';
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 20);
+    updateProcess();
+  }
+
+  /* -------------------------------------------------------
+     PINNED PROCESS SEQUENCE
+     A tall scroll container drives a sticky stage: the spine
+     fills and each step lights as it comes into range.
+  ------------------------------------------------------- */
+  var processScroll = document.getElementById('processScroll');
+  var spine = document.getElementById('processSpine');
+  var counter = document.getElementById('processCounter');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.process-step'));
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.process-node'));
+
+  function updateProcess() {
+    if (!processScroll || !steps.length) return;
+
+    // Below 900px the section is a plain stacked list — nothing to drive.
+    if (window.innerWidth <= 900) return;
+
+    var rect = processScroll.getBoundingClientRect();
+    var travel = rect.height - window.innerHeight;
+    if (travel <= 0) return;
+
+    var progress = Math.min(Math.max(-rect.top / travel, 0), 1);
+    var index = Math.min(Math.floor(progress * steps.length), steps.length - 1);
+
+    if (spine) spine.style.height = (progress * 100) + '%';
+
+    steps.forEach(function (step, i) { step.classList.toggle('is-active', i === index); });
+    nodes.forEach(function (node, i) { node.classList.toggle('is-on', i <= index); });
+
+    if (counter) counter.textContent = '0' + (index + 1);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* -------------------------------------------------------
+     REVEAL ON SCROLL
+  ------------------------------------------------------- */
+  var revealTargets = document.querySelectorAll('.reveal');
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    // Stagger siblings inside each group so rows cascade.
+    document.querySelectorAll('.services, .plans, .faq-list, .contact-inner')
+      .forEach(function (group) {
+        group.querySelectorAll(':scope > .reveal').forEach(function (el, i) {
+          el.style.transitionDelay = (i * 0.09) + 's';
+        });
+      });
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealTargets.forEach(function (el) { revealObserver.observe(el); });
+  }
+
+  /* -------------------------------------------------------
+     ITINERARY — STEPS ILLUMINATE IN SEQUENCE
+  ------------------------------------------------------- */
+  var itinSteps = document.querySelectorAll('.itin-step');
+
+  if (reduceMotion) {
+    itinSteps.forEach(function (s) { s.classList.add('is-lit'); });
+  } else {
+    itinSteps.forEach(function (step, i) {
+      window.setTimeout(function () { step.classList.add('is-lit'); }, 900 + i * 260);
+    });
+  }
+
+  /* -------------------------------------------------------
+     TICKER — duplicate the run so the marquee loops seamlessly
+  ------------------------------------------------------- */
+  var tickerTrack = document.getElementById('tickerTrack');
+  if (tickerTrack && !reduceMotion) {
+    var run = tickerTrack.querySelector('.ticker-run');
+    if (run) tickerTrack.appendChild(run.cloneNode(true));
+  }
+
+  /* -------------------------------------------------------
+     COUNT UP
+  ------------------------------------------------------- */
+  function countUp(el) {
+    var target = parseInt(el.dataset.countTo, 10) || 0;
+    var suffix = el.dataset.countSuffix || '';
+    var duration = 1400;
+    var start = null;
+
+    function frame(now) {
+      if (start === null) start = now;
+      var p = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var counters = document.querySelectorAll('.count');
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var countObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target);
+        countObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { countObserver.observe(el); });
+  }
+
+  /* -------------------------------------------------------
+     FAQ — animate open/close height
+  ------------------------------------------------------- */
+  document.querySelectorAll('.faq, .svc').forEach(function (item) {
+    var body = item.querySelector('.faq-body, .svc-detail');
+    if (!body) return;
+
+    var summary = item.querySelector('summary');
+    if (!summary) return;
+
+    /* A card with nothing to reveal doesn't pretend to open. Tested per click,
+       not once at startup: hideEmptySlots() recomputes is-flat on every language
+       switch, so a card can be empty in one language and full in the next. */
+    summary.addEventListener('click', function (e) {
+      if (item.classList.contains('is-flat')) { e.preventDefault(); }
+    });
+
+    /* Reduced motion: hand <details> back to the browser and collapse nothing.
+       The height/overflow pair below is what drives the open/close animation —
+       setting it without the animation to undo it leaves an opened panel clipped
+       to zero height, i.e. every FAQ answer silently invisible. */
+    if (reduceMotion) return;
+
+    body.style.overflow = 'hidden';
+    if (!item.open) body.style.height = '0px';
+
+    summary.addEventListener('click', function (e) {
+      if (item.classList.contains('is-flat')) return;
+      e.preventDefault();
+
+      if (item.open) {
+        body.style.height = body.scrollHeight + 'px';
+        requestAnimationFrame(function () {
+          body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
+          body.style.height = '0px';
+        });
+        window.setTimeout(function () { item.open = false; }, 340);
+      } else {
+        item.open = true;
+        body.style.height = '0px';
+        requestAnimationFrame(function () {
+          body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
+          body.style.height = body.scrollHeight + 'px';
+        });
+        window.setTimeout(function () { body.style.height = 'auto'; }, 340);
+      }
+    });
+  });
+
+})();

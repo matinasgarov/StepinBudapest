@@ -1,0 +1,6 @@
+# Source images the hero crops were made from. Large, unreferenced by the site,
+# and kept locally only — hero-budapest*.webp are the delivered files.
+ChatGPT Image *.png
+
+# Tooling cache
+.superpowers/
