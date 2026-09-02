@@ -14,7 +14,7 @@
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=22" />
+  <link rel="stylesheet" href="styles.css?v=23" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -426,72 +426,91 @@
 
         <div class="plans">
           <div class="plan-slot reveal">
-          <article class="plan">
-            <div class="plan-top">
-              <p class="plan-name" data-i18n="plan1name">Basic</p>
-              <p class="plan-price"><span class="plan-figure">250</span><span class="plan-cur">AZN</span></p>
-              <p class="plan-scope" data-i18n="plan1scope">From landing to their front door</p>
-            </div>
-            <ul class="plan-list">
-              <li data-i18n="plan1f1">Airport pickup</li>
-              <li data-i18n="plan1f2">Initial orientation guidance</li>
-              <li data-i18n="plan1f3">Orientation on arrival</li>
-            </ul>
-            <a class="btn btn-line btn-block" href="#contact" data-i18n="plan1cta">Choose Basic</a>
-          </article>
+            <article class="plan">
+              <div class="plan-face">
+                <div class="plan-top">
+                  <p class="plan-name" data-i18n="plan1name">Basic</p>
+                  <p class="plan-price"><span class="plan-figure">250</span><span class="plan-cur">AZN</span></p>
+                  <p class="plan-scope" data-i18n="plan1scope">From landing to their front door</p>
+                </div>
+                <a class="btn btn-line btn-block" href="#contact" data-i18n="plan1cta">Choose Basic</a>
+              </div>
+              <div class="plan-detail">
+                <p class="plan-detail-label" data-i18n="planIncludes">What is included</p>
+                <ul class="plan-list">
+                  <li data-i18n="plan1f1">Airport pickup</li>
+                  <li data-i18n="plan1f2">Initial orientation guidance</li>
+                  <li data-i18n="plan1f3">Orientation on arrival</li>
+                </ul>
+              </div>
+            </article>
           </div>
 
           <div class="plan-slot reveal">
-          <article class="plan plan-featured">
-            <p class="plan-badge" data-i18n="planBadge">Most Popular</p>
-            <div class="plan-top">
-              <p class="plan-name" data-i18n="plan2name">Standard</p>
-              <p class="plan-price"><span class="plan-figure">500</span><span class="plan-cur">AZN</span></p>
-              <p class="plan-scope" data-i18n="plan2scope">From before the flight to their first week</p>
-            </div>
-            <ul class="plan-list">
-              <li data-i18n="plan2f1">Airport pickup</li>
-              <li data-i18n="plan2f2">Accommodation assistance</li>
-              <li data-i18n="plan2f3">Documentation support</li>
-            </ul>
-            <a class="btn btn-gold btn-block" href="#contact" data-i18n="plan2cta">Choose Standard</a>
-          </article>
+            <article class="plan plan-featured">
+              <p class="plan-badge" data-i18n="planBadge">Most Popular</p>
+              <div class="plan-face">
+                <div class="plan-top">
+                  <p class="plan-name" data-i18n="plan2name">Standard</p>
+                  <p class="plan-price"><span class="plan-figure">500</span><span class="plan-cur">AZN</span></p>
+                  <p class="plan-scope" data-i18n="plan2scope">From before the flight to their first week</p>
+                </div>
+                <a class="btn btn-gold btn-block" href="#contact" data-i18n="plan2cta">Choose Standard</a>
+              </div>
+              <div class="plan-detail">
+                <p class="plan-detail-label" data-i18n="planIncludes">What is included</p>
+                <ul class="plan-list">
+                  <li data-i18n="plan2f1">Airport pickup</li>
+                  <li data-i18n="plan2f2">Accommodation assistance</li>
+                  <li data-i18n="plan2f3">Documentation support</li>
+                </ul>
+              </div>
+            </article>
           </div>
 
           <div class="plan-slot reveal">
-          <article class="plan">
-            <div class="plan-top">
-              <p class="plan-name" data-i18n="plan3name">Premium</p>
-              <p class="plan-price"><span class="plan-figure">800</span><span class="plan-cur">AZN</span></p>
-              <p class="plan-scope" data-i18n="plan3scope">From before the flight to fully settled</p>
-            </div>
-            <ul class="plan-list">
-              <li data-i18n="plan3f1">Full A-to-Z support</li>
-              <li data-i18n="plan3f2">Documents, bank, SIM — everything</li>
-              <li data-i18n="plan3f3">Monthly check-ins included</li>
-            </ul>
-            <a class="btn btn-line btn-block" href="#contact" data-i18n="plan3cta">Choose Premium</a>
-          </article>
+            <article class="plan">
+              <div class="plan-face">
+                <div class="plan-top">
+                  <p class="plan-name" data-i18n="plan3name">Premium</p>
+                  <p class="plan-price"><span class="plan-figure">800</span><span class="plan-cur">AZN</span></p>
+                  <p class="plan-scope" data-i18n="plan3scope">From before the flight to fully settled</p>
+                </div>
+                <a class="btn btn-line btn-block" href="#contact" data-i18n="plan3cta">Choose Premium</a>
+              </div>
+              <div class="plan-detail">
+                <p class="plan-detail-label" data-i18n="planIncludes">What is included</p>
+                <ul class="plan-list">
+                  <li data-i18n="plan3f1">Full A-to-Z support</li>
+                  <li data-i18n="plan3f2">Bank account, SIM and transport card</li>
+                  <li data-i18n="plan3f3">Documentation and legal guardianship</li>
+                </ul>
+              </div>
+            </article>
           </div>
 
           <div class="plan-slot reveal">
-          <article class="plan plan-custom">
-            <div class="plan-top">
-              <p class="plan-name" data-i18n="plan4name">Build your own</p>
-              <p class="plan-quote" data-i18n="plan4price">You choose</p>
-              <p class="plan-scope" data-i18n="plan4scope">Pick only what you need and we will price it</p>
-            </div>
-            <fieldset class="plan-pick">
-              <legend class="plan-pick-legend" data-i18n="plan4legend">What do you need?</legend>
-              <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick1">Airport pickup</span></label>
-              <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick2">Accommodation</span></label>
-              <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick3">Documents</span></label>
-              <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick4">Legal guardianship</span></label>
-              <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick5">Bank, SIM, transport</span></label>
-            </fieldset>
-            <a class="btn btn-line btn-block" id="customCta" href="https://wa.me/994000000000"
-               target="_blank" rel="noreferrer" data-i18n="plan4cta">Send my choices</a>
-          </article>
+            <article class="plan plan-custom">
+              <div class="plan-face">
+                <div class="plan-top">
+                  <p class="plan-name" data-i18n="plan4name">Build your own</p>
+                  <p class="plan-quote" data-i18n="plan4price">You choose</p>
+                  <p class="plan-scope" data-i18n="plan4scope">Pick only what you need and we will price it</p>
+                </div>
+                <a class="btn btn-line btn-block" id="customCta" href="https://wa.me/994000000000"
+                   target="_blank" rel="noreferrer" data-i18n="plan4cta">Send my choices</a>
+              </div>
+              <div class="plan-detail">
+                <fieldset class="plan-pick">
+                  <legend class="plan-pick-legend" data-i18n="plan4legend">What do you need?</legend>
+                  <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick1">Airport pickup</span></label>
+                  <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick2">Accommodation</span></label>
+                  <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick3">Documents</span></label>
+                  <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick4">Legal guardianship</span></label>
+                  <label class="pick"><input type="checkbox" data-pick /><span data-i18n="pick5">Bank, SIM, transport</span></label>
+                </fieldset>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -600,6 +619,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=20"></script>
+  <script src="main.js?v=21"></script>
 </body>
 </html>

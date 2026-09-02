@@ -1259,19 +1259,17 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--s3);
-  /* Stretch, not start. The tiers no longer carry equal amounts of text, and
-     ragged card bottoms with buttons at four different heights read as an
-     accident. Equal heights with the CTA pinned to the bottom reads as a set. */
   align-items: stretch;
 }
-/* Pin every CTA to the bottom of its card so they sit on one line. */
-.plan > .btn { margin-top: auto; }
+.plan-slot { display: flex; }
+.plan-slot > .plan { flex: 1 1 auto; min-width: 0; }
 
 .plan {
+  /* A shell now. The padding lives on .plan-face and .plan-detail so the rule
+     between them can run the full height of the card. */
   display: flex;
   flex-direction: column;
-  gap: var(--s3);
-  padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+  padding: 0;
   background: var(--paper);
   border: 1px solid var(--paper-line);
   border-radius: var(--radius);
@@ -1368,60 +1366,41 @@ h3 {
   color: var(--on-ink);
 }
 
-/* Peek, then the whole card ------------------------------
-   Four columns cannot hold the full detail at a readable measure, and four
-   tall cards are not scannable. So each card shows a two-line precis of every
-   point, and opens to the full text on hover or keyboard focus.
-
-   The card is lifted out of flow to grow. That is what stops the grid from
-   reflowing: the row height is still held by the three cards that stayed put,
-   so nothing moves except the card being read. Compact heights are near
-   identical by construction (three points, two lines each), so removing any
-   one of them from the row does not change its height.
-
-   Only where a pointer can hover. On touch every card stays fully expanded —
-   a hover-only reveal would be invisible to a parent on a phone, which is
-   most of this audience. */
-.plan-slot { position: relative; }
-.plan-slot > .plan { height: 100%; }
-
-@media (hover: hover) and (min-width: 901px) {
-  /* Clamp the list as one block and fade its foot, rather than truncating each
-     point separately. Three ellipses in a column read as three errors, and
-     per-line clipping leaves half a line of ascenders showing whenever the
-     text lands awkwardly. One fade says "there is more" once, cleanly. */
-  .plan-list {
-    max-height: 10.5rem;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
-  }
-
-  .plan-slot:hover,
-  .plan-slot:focus-within { z-index: 20; }
-
-  /* Lifting the card out of flow is what stops the grid reflowing: the row
-     height is still held by the three cards that stayed put. */
-  .plan-slot:hover > .plan,
-  .plan-slot:focus-within > .plan {
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: auto;
-    min-height: 100%;
-  }
-  .plan-slot:hover .plan-list,
-  .plan-slot:focus-within .plan-list {
-    max-height: none;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .plan-slot:hover > .plan { box-shadow: var(--shadow-lg); }
-  .plan-slot:hover > .plan-featured,
-  .plan-slot:focus-within > .plan-featured {
-    box-shadow: var(--cast-lg), var(--shadow-gold), var(--rise);
-  }
+/* Face and detail ----------------------------------------
+   The face is what the card always shows: name, price, the scope line and the
+   CTA. The detail is the full list, and on a pointer device it is folded to
+   zero width until the card is hovered. */
+.plan-face {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
 }
+.plan-face > .btn { margin-top: auto; }
+
+.plan-detail {
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(1.5rem, 1rem + 1vw, 2rem);
+  border-top: 1px solid var(--paper-line);
+}
+/* The contents keep their own width while the panel is folded shut, so the
+   text does not reflow to one word per line and drag the card's height with
+   it as the panel opens and closes. */
+.plan-detail > * { min-width: 16rem; }
+.plan-featured .plan-detail { border-color: var(--navy-line); }
+
+.plan-detail-label {
+  margin-bottom: var(--s2);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+.plan-featured .plan-detail-label { color: var(--gold); }
 
 /* The scope line under each price. It says how long we are involved, which is
    what makes a number feel like a period of work rather than a single task. */
@@ -1439,6 +1418,75 @@ h3 {
 .plan-list { gap: 0.95rem; }
 .plan-list li { line-height: 1.5; font-size: 0.9rem; }
 .plan-list li::before { top: 0.55em; }
+
+/* Opening sideways ---------------------------------------
+   Hovering a card widens it and squeezes the other three, and the space it
+   gains is exactly the detail panel unfolding beside the face.
+
+   The arithmetic: every slot is flex 1 1 0, so at rest each takes a quarter.
+   The hovered slot grows to 2.45 while its face stays at 1 and its detail
+   grows to 1.45 — so the face keeps the width it had and the panel occupies
+   everything the card gained. Nothing inside the face moves as it opens.
+
+   min-width on the slot stops the other three being squeezed past the point
+   where their price and button still read.
+
+   Pointer devices only. On touch the detail sits under the face, always open,
+   because there is no hover to reveal it with. */
+@media (hover: hover) and (min-width: 1081px) {
+  .plans { display: flex; }
+
+  .plan-slot {
+    flex: 1 1 0;
+    min-width: 11.5rem;
+    transition: flex-grow 0.45s var(--ease-out);
+  }
+  .plan-slot:hover,
+  .plan-slot:focus-within { flex-grow: 2.45; }
+
+  .plan { flex-direction: row; }
+
+  .plan-detail {
+    flex: 0 1 0;
+    padding-inline: 0;
+    opacity: 0;
+    border-top: 0;
+    border-left: 1px solid transparent;
+    transition: flex-grow 0.45s var(--ease-out),
+                padding-inline 0.45s var(--ease-out),
+                opacity 0.28s var(--ease);
+  }
+  .plan-slot:hover .plan-detail,
+  .plan-slot:focus-within .plan-detail {
+    flex-grow: 1.45;
+    padding-inline: clamp(1.5rem, 1rem + 1vw, 2rem);
+    opacity: 1;
+    border-left-color: var(--paper-line);
+  }
+  .plan-slot:hover .plan-featured .plan-detail,
+  .plan-slot:focus-within .plan-featured .plan-detail {
+    border-left-color: var(--navy-line);
+  }
+}
+
+/* Stacked layout (no pointer, or too narrow for the sideways open).
+   The detail has to come between the price and the button: a CTA sitting above
+   the list of what you get asks for the decision before making the case.
+   display: contents dissolves the face so its two children become flex items
+   of the card and can be ordered around the panel. Padding moves with them. */
+@media (max-width: 1080px), (hover: none) {
+  .plan-face { display: contents; }
+  .plan-top {
+    padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+    padding-bottom: var(--s3);
+  }
+  .plan-detail { order: 2; }
+  .plan-face > .btn {
+    order: 3;
+    margin: 0 clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem)
+              clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+  }
+}
 
 /* Build-your-own tier ------------------------------------ */
 .plan-quote {
@@ -1737,6 +1785,7 @@ h3 {
 @media (max-width: 1080px) {
   /* Four price columns crush their labels below this. Two rows of two. */
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plan-detail > * { min-width: 0; }
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
   .itinerary { max-width: 30rem; }
   .faq-layout { grid-template-columns: 1fr; }

@@ -88,29 +88,32 @@ default to restoring the last scroll position on reload, which on a one-page sit
 refreshing drops the reader into the middle of the hero instead of at the headline.
 Fragment links (`#services`) are unaffected — the browser handles those separately.
 
-### Pricing cards: peek, then the whole card
+### Pricing cards: opening sideways
 
-Four columns cannot hold the full tier copy at a readable measure, and four tall cards
-are not scannable. So each card shows a clamped precis and opens to the full text on
-hover or keyboard focus.
+Each card is a `.plan-slot` holding a `.plan`, and the `.plan` is split into a
+`.plan-face` (name, price, scope line, CTA) and a `.plan-detail` (the full list). On a
+pointer device the detail is folded to zero width; hovering the card widens it and
+squeezes the other three, and the width it gains is the panel unfolding beside the face.
 
-Each card sits in a `.plan-slot`. On hover the `.plan` inside is switched to
-`position: absolute; inset: 0 0 auto 0` so it grows downward **out of flow** — that is
-what stops the grid reflowing, because the row height is still held by the three cards
-that stayed put. Nothing on the page moves except the card being read. Compact heights
-are near identical by construction, so removing any one card from the row does not
-change the row height. `.plan-slot` must keep `position: relative` or the expanded card
-will size itself against the section instead of its own column.
+The arithmetic matters. Every slot is `flex: 1 1 0`, so at rest each takes a quarter. The
+hovered slot grows to `2.45` while its face stays at `1` and its detail grows to `1.45`
+— so the face keeps exactly the width it had and the panel takes everything the card
+gained. Nothing inside the face shifts as it opens. `min-width: 11.5rem` on the slot
+stops the other three squeezing past the point where their price and button still read.
 
-The precis is a `max-height` plus a `mask-image` fade on `.plan-list` as a whole, not
-`-webkit-line-clamp` per bullet. Clamping each bullet put three ellipses in a column
-(which read as three errors) and left half-lines of ascenders showing whenever the text
-landed awkwardly.
+`.plan-detail > *` carries `min-width: 16rem` so the panel's contents keep their measure
+while it is folded shut. Without it the text reflows to one word per line, the panel
+becomes enormously tall, and since a zero-width flex item still contributes height, the
+whole row grows. **Changing that value changes the card height** — it is what the row
+height is derived from. Verify after touching it that `.plans` height, `document`
+height and the FAQ's offset are identical at rest and with each of the four cards open;
+they should be, and that is the whole point of the mechanism.
 
-All of this is inside `@media (hover: hover) and (min-width: 901px)`. On touch every
-card stays fully expanded — a hover-only reveal would be invisible to a parent on a
-phone, which is most of this audience. `:focus-within` is included alongside `:hover` so
-tabbing to a card's button opens it too.
+Below 1081px, or with no pointer, the panel sits under the face instead. There
+`.plan-face` becomes `display: contents` so its two children become flex items of the
+card and `order` can place the detail between the price and the button — a CTA above
+the list of what you get asks for the decision before making the case. The padding moves
+onto `.plan-top` and the button when that happens.
 
 `.reveal` lives on `.plan-slot`, not on `.plan`: the stagger in `main.js` matches
 `:scope > .reveal` inside `.plans`, so it has to be the direct grid child.
