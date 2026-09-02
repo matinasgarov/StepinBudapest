@@ -90,30 +90,44 @@ Fragment links (`#services`) are unaffected — the browser handles those separa
 
 ### Pricing cards: opening sideways
 
-Each card is a `.plan-slot` holding a `.plan`, and the `.plan` is split into a
-`.plan-face` (name, price, scope line, CTA) and a `.plan-detail` (the full list). On a
-pointer device the detail is folded to zero width; hovering the card widens it and
-squeezes the other three, and the width it gains is the panel unfolding beside the face.
+Each card is a `.plan-slot` holding a `.plan`, split into a `.plan-face` (name, price,
+scope line, CTA) and a `.plan-detail` (the full list). On a pointer device at 1200px and
+up the panel is folded shut; hovering widens the card and squeezes the other three, and
+the width it gains is the panel unfolding beside the face.
 
-The arithmetic matters. Every slot is `flex: 1 1 0`, so at rest each takes a quarter. The
-hovered slot grows to `2.45` while its face stays at `1` and its detail grows to `1.45`
-— so the face keeps exactly the width it had and the panel takes everything the card
-gained. Nothing inside the face shifts as it opens. `min-width: 11.5rem` on the slot
-stops the other three squeezing past the point where their price and button still read.
+**The panel is a fixed width (`--pd`), and the card grows by exactly that.** This is the
+part to preserve. The panel's text then has one measure open or shut, so it never
+reflows — which means the row never changes height — and it is never clipped, because
+the width it is laid out at is precisely the width it opens to. An earlier version let
+the panel take a proportional share and pinned its contents with a `min-width` guess;
+whenever the guess exceeded the width the panel actually opened to, the text overflowed
+and was cut off mid-word.
 
-`.plan-detail > *` carries `min-width: 16rem` so the panel's contents keep their measure
-while it is folded shut. Without it the text reflows to one word per line, the panel
-becomes enormously tall, and since a zero-width flex item still contributes height, the
-whole row grows. **Changing that value changes the card height** — it is what the row
-height is derived from. Verify after touching it that `.plans` height, `document`
-height and the FAQ's offset are identical at rest and with each of the four cards open;
-they should be, and that is the whole point of the mechanism.
+**Why `calc(var(--pd) * 4 / 3)`.** Slots are `flex: 1 1 0`, so free space is shared four
+ways. A slot given basis B ends up `B + (free - B)/4` wide — that is `B * 3/4` wider than
+its resting quarter. To gain exactly one panel width P, B must be `P * 4/3`. That keeps
+the face at precisely its resting width, so nothing inside it moves as the panel appears.
+**Change the number of cards and this fraction changes.**
 
-Below 1081px, or with no pointer, the panel sits under the face instead. There
+`.plan-slot` needs an explicit `min-width` (11rem). Flex items default to
+`min-width: auto`, which floors a slot at its own min-content width — about 199px here.
+That floor starves the opening card: it cannot take the width it asked for, so its face
+shrinks and its text reflows as the panel appears. An explicit floor below the natural
+one lets the squeezed slots give up the width.
+
+`.plan-face > .btn` overrides `.btn`'s `white-space: nowrap; overflow: hidden`, which
+silently truncates a long label in a squeezed card. Labels here have to wrap.
+
+**After touching any of this, verify three things** at rest and with each card open:
+`.plans` height, `document.scrollHeight` and the FAQ's offset are unchanged; the face's
+width is unchanged; and each panel child's `scrollWidth` equals its `clientWidth`. Those
+three are the whole contract.
+
+Below 1200px, or with no pointer, the panel sits under the face instead. There
 `.plan-face` becomes `display: contents` so its two children become flex items of the
-card and `order` can place the detail between the price and the button — a CTA above
-the list of what you get asks for the decision before making the case. The padding moves
-onto `.plan-top` and the button when that happens.
+card and `order` can place the detail between the price and the button — a CTA above the
+list of what you get asks for the decision before making the case. Padding moves onto
+`.plan-top` and the button when that happens.
 
 `.reveal` lives on `.plan-slot`, not on `.plan`: the stagger in `main.js` matches
 `:scope > .reveal` inside `.plans`, so it has to be the direct grid child.

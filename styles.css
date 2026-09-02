@@ -1386,10 +1386,6 @@ h3 {
   padding: clamp(1.5rem, 1rem + 1vw, 2rem);
   border-top: 1px solid var(--paper-line);
 }
-/* The contents keep their own width while the panel is folded shut, so the
-   text does not reflow to one word per line and drag the card's height with
-   it as the panel opens and closes. */
-.plan-detail > * { min-width: 16rem; }
 .plan-featured .plan-detail { border-color: var(--navy-line); }
 
 .plan-detail-label {
@@ -1420,48 +1416,78 @@ h3 {
 .plan-list li::before { top: 0.55em; }
 
 /* Opening sideways ---------------------------------------
-   Hovering a card widens it and squeezes the other three, and the space it
+   Hovering a card widens it and squeezes the other three, and the width it
    gains is exactly the detail panel unfolding beside the face.
 
-   The arithmetic: every slot is flex 1 1 0, so at rest each takes a quarter.
-   The hovered slot grows to 2.45 while its face stays at 1 and its detail
-   grows to 1.45 — so the face keeps the width it had and the panel occupies
-   everything the card gained. Nothing inside the face moves as it opens.
+   The panel is a FIXED width, and the card grows by exactly that much, so the
+   panel's text has one measure whether it is open or shut. An earlier version
+   let the panel share the card's width proportionally and pinned its contents
+   with a min-width guess; when the guess exceeded the width the panel actually
+   opened to, the text overflowed and was clipped mid-word.
 
-   min-width on the slot stops the other three being squeezed past the point
-   where their price and button still read.
-
-   Pointer devices only. On touch the detail sits under the face, always open,
-   because there is no hover to reveal it with. */
-@media (hover: hover) and (min-width: 1081px) {
+   Why the 4/3. Slots are `flex: 1 1 0`, so free space is shared four ways. A
+   slot given basis B ends up B + (free - B)/4 wide, i.e. B*3/4 wider than its
+   resting quarter. To gain exactly one panel width P, B must be P * 4/3.
+   That keeps the face at precisely its resting width, so nothing inside it
+   moves as the panel appears. Change the number of cards and this changes. */
+@media (hover: hover) and (min-width: 1200px) {
   .plans { display: flex; }
 
   .plan-slot {
+    --pd: 18rem;            /* open panel width, padding included */
+    --pd-pad: 1.5rem;
     flex: 1 1 0;
-    min-width: 11.5rem;
-    transition: flex-grow 0.45s var(--ease-out);
+    /* Flex items default to min-width: auto, which floors a slot at its own
+       min-content width (~199px here). That floor starved the opened card and
+       shrank its face, so the face's text reflowed as the panel appeared. An
+       explicit floor below the natural one lets the three squeezed slots give
+       up the width the open one needs, while still stopping them collapsing. */
+    min-width: 11rem;
+    transition: flex-basis 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
   .plan-slot:hover,
-  .plan-slot:focus-within { flex-grow: 2.45; }
+  .plan-slot:focus-within { flex-basis: calc(var(--pd) * 4 / 3); }
 
   .plan { flex-direction: row; }
+  .plan-face { padding: clamp(1.5rem, 1rem + 1vw, 2rem); }
+
+  /* .btn is nowrap + overflow:hidden, which silently truncates a long label —
+     "Seçimlərimi göndər" lost both ends in a squeezed card. Inside a price card
+     the label has to survive the squeeze, so let it wrap and drop the side
+     padding it no longer has room for. */
+  .plan-face > .btn {
+    white-space: normal;
+    padding-inline: 1rem;
+    line-height: 1.25;
+  }
 
   .plan-detail {
-    flex: 0 1 0;
+    flex: 0 0 0;
     padding-inline: 0;
     opacity: 0;
     border-top: 0;
     border-left: 1px solid transparent;
-    transition: flex-grow 0.45s var(--ease-out),
-                padding-inline 0.45s var(--ease-out),
-                opacity 0.28s var(--ease);
+    transition: flex-basis 0.55s cubic-bezier(0.25, 0.8, 0.25, 1),
+                padding-inline 0.55s cubic-bezier(0.25, 0.8, 0.25, 1),
+                border-left-color 0.4s var(--ease),
+                opacity 0.3s var(--ease);
   }
+  /* One fixed measure, open or shut: no reflow, so the row never changes
+     height, and no clipping, because this is exactly what the panel opens to. */
+  .plan-detail > * { width: calc(var(--pd) - var(--pd-pad) * 2); }
+
   .plan-slot:hover .plan-detail,
   .plan-slot:focus-within .plan-detail {
-    flex-grow: 1.45;
-    padding-inline: clamp(1.5rem, 1rem + 1vw, 2rem);
+    flex-basis: var(--pd);
+    padding-inline: var(--pd-pad);
     opacity: 1;
     border-left-color: var(--paper-line);
+    /* Hold the text back until there is room for it, then fade it in. Closing
+       drops it immediately so it never lingers over a shrinking panel. */
+    transition: flex-basis 0.55s cubic-bezier(0.25, 0.8, 0.25, 1),
+                padding-inline 0.55s cubic-bezier(0.25, 0.8, 0.25, 1),
+                border-left-color 0.4s var(--ease),
+                opacity 0.4s var(--ease) 0.18s;
   }
   .plan-slot:hover .plan-featured .plan-detail,
   .plan-slot:focus-within .plan-featured .plan-detail {
@@ -1469,12 +1495,17 @@ h3 {
   }
 }
 
+/* Two up once there is no longer room to open sideways. */
+@media (max-width: 1199px) {
+  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* Stacked layout (no pointer, or too narrow for the sideways open).
    The detail has to come between the price and the button: a CTA sitting above
    the list of what you get asks for the decision before making the case.
    display: contents dissolves the face so its two children become flex items
    of the card and can be ordered around the panel. Padding moves with them. */
-@media (max-width: 1080px), (hover: none) {
+@media (max-width: 1199px), (hover: none) {
   .plan-face { display: contents; }
   .plan-top {
     padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
@@ -1784,8 +1815,6 @@ h3 {
 --------------------------------------------------------- */
 @media (max-width: 1080px) {
   /* Four price columns crush their labels below this. Two rows of two. */
-  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .plan-detail > * { min-width: 0; }
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
   .itinerary { max-width: 30rem; }
   .faq-layout { grid-template-columns: 1fr; }
