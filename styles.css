@@ -1257,7 +1257,7 @@ h3 {
 --------------------------------------------------------- */
 .plans {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--s3);
   align-items: start;
 }
@@ -1362,6 +1362,70 @@ h3 {
   border-color: rgba(244, 246, 251, 0.28);
   color: var(--on-ink);
 }
+
+/* Build-your-own tier ------------------------------------ */
+.plan-quote {
+  font-family: var(--display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.plan-pick { border: 0; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.plan-pick-legend {
+  padding: 0;
+  margin-bottom: 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+.pick {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--muted);
+  cursor: pointer;
+}
+.pick:hover { color: var(--text); }
+
+/* A real checkbox underneath — keyboard and screen readers get the native
+   control, the box below is only its appearance. */
+.pick input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 17px;
+  height: 17px;
+  margin: 0.16em 0 0;
+  background: var(--paper);
+  border: 1.5px solid var(--paper-line);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+.pick input:hover { border-color: var(--gold-ink); }
+.pick input:checked { background: var(--gold-ink); border-color: var(--gold-ink); }
+.pick input:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1.5px;
+  width: 4px;
+  height: 9px;
+  border: solid var(--paper);
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg);
+}
+.pick input:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+.pick:has(input:checked) { color: var(--text); }
 
 /* ---------------------------------------------------------
    FAQ
@@ -1594,6 +1658,8 @@ h3 {
    RESPONSIVE
 --------------------------------------------------------- */
 @media (max-width: 1080px) {
+  /* Four price columns crush their labels below this. Two rows of two. */
+  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
   .itinerary { max-width: 30rem; }
   .faq-layout { grid-template-columns: 1fr; }

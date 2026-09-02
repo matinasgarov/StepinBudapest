@@ -88,6 +88,23 @@ default to restoring the last scroll position on reload, which on a one-page sit
 refreshing drops the reader into the middle of the hero instead of at the headline.
 Fragment links (`#services`) are unaffected — the browser handles those separately.
 
+### Build your own package
+
+The fourth pricing card (`.plan-custom`) is a set of native checkboxes whose ticks are
+composed into the first WhatsApp message, so a parent never has to write one. The label
+text is read from the DOM at build time rather than from a fixed list, so the message
+comes out in whatever language is on screen. `updateCustomLink()` runs on every tick and
+at the end of `applyLanguage()` — miss the second call and switching language leaves a
+stale message behind the button.
+
+Newlines in that message are `String.fromCharCode(10)`, not `
+`, on purpose. Editing
+this file through shell heredocs has repeatedly eaten the backslash and produced a real
+line break inside a string literal, which is a syntax error. Keep it escape-free.
+
+Four price columns only fit at full width; the grid drops to 2×2 below 1080px and to one
+column below 900px, where `.plan-featured { order: -1 }` floats Standard to the top.
+
 ### Internationalization
 
 Translations live in the `translations` object in `main.js`, with `en`, `az`, and `ru`. Elements carry `data-i18n="key"`.
@@ -118,7 +135,9 @@ Headless screenshots on Windows have two traps worth knowing:
 
 ## Known placeholders
 
-The WhatsApp number `994000000000` (4 occurrences in `index.html`) and the displayed `+994 XX XXX XX XX` are placeholders. Replace before launch.
+The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**
+plus `CUSTOM_WA` in `main.js` (the build-your-own card), and the displayed
+`+994 XX XXX XX XX`. Replace all seven before launch.
 
 ## Deployment
 

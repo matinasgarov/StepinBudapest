@@ -77,6 +77,12 @@
       plan1name: 'Basic', plan1f1: 'Airport pickup and transfer to your address', plan1f2: 'For students who already have their accommodation', plan1cta: 'Choose Basic',
       planBadge: 'Most Popular',
       plan2name: 'Standard', plan2f1: 'Airport pickup', plan2f2: 'Accommodation assistance', plan2f3: 'Documentation and legal guardianship', plan2cta: 'Choose Standard',
+      plan4name: 'Build your own', plan4price: 'You choose', plan4legend: 'What do you need?',
+      pick1: 'Airport pickup', pick2: 'Accommodation', pick3: 'Documents',
+      pick4: 'Legal guardianship', pick5: 'Bank, SIM, transport',
+      plan4cta: 'Send my choices',
+      waPick: 'Hello! I would like a package with:',
+      waPickNone: 'Hello! I would like to put together my own package.',
       plan3name: 'Premium', plan3f1: 'Full A-to-Z support', plan3f2: 'Bank account, SIM and transport card', plan3f3: 'Documentation and legal guardianship', plan3cta: 'Choose Premium',
 
       faqLabel: 'FAQ', faqTitle: 'Questions parents ask',
@@ -155,6 +161,12 @@
       plan1name: 'Basic', plan1f1: 'Hava limanı qarşılaması və ünvanınıza çatdırılma', plan1f2: 'Yaşayış yeri artıq hazır olan tələbələr üçün', plan1cta: 'Basic seçin',
       planBadge: 'Ən Populyar',
       plan2name: 'Standard', plan2f1: 'Hava limanı qarşılaması', plan2f2: 'Yaşayış dəstəyi', plan2f3: 'Sənəd və hüquqi qəyyumluq dəstəyi', plan2cta: 'Standard seçin',
+      plan4name: 'Öz paketini hazırla', plan4price: 'Siz seçin', plan4legend: 'Nəyə ehtiyacınız var?',
+      pick1: 'Hava limanı qarşılaması', pick2: 'Yaşayış dəstəyi', pick3: 'Sənəd dəstəyi',
+      pick4: 'Hüquqi qəyyumluq', pick5: 'Bank, SIM, nəqliyyat',
+      plan4cta: 'Seçimlərimi göndər',
+      waPick: 'Salam! Aşağıdakıları əhatə edən paket istəyirəm:',
+      waPickNone: 'Salam! Öz paketimi hazırlamaq istəyirəm.',
       plan3name: 'Premium', plan3f1: 'A-dan Z-yə tam dəstək', plan3f2: 'Bank hesabı, SIM və nəqliyyat kartı', plan3f3: 'Sənəd və hüquqi qəyyumluq dəstəyi', plan3cta: 'Premium seçin',
 
       faqLabel: 'FAQ', faqTitle: 'Valideynlərin soruşduğu suallar',
@@ -233,6 +245,12 @@
       plan1name: 'Базовый', plan1f1: 'Встреча в аэропорту и трансфер по вашему адресу', plan1f2: 'Для студентов, у которых жильё уже есть', plan1cta: 'Выбрать базовый',
       planBadge: 'Популярный выбор',
       plan2name: 'Стандарт', plan2f1: 'Трансфер из аэропорта', plan2f2: 'Помощь с жильём', plan2f3: 'Документы и юридическое опекунство', plan2cta: 'Выбрать стандарт',
+      plan4name: 'Соберите свой пакет', plan4price: 'Вы выбираете', plan4legend: 'Что вам нужно?',
+      pick1: 'Встреча в аэропорту', pick2: 'Помощь с жильём', pick3: 'Документы',
+      pick4: 'Юридическое опекунство', pick5: 'Банк, SIM, проездной',
+      plan4cta: 'Отправить мой выбор',
+      waPick: 'Здравствуйте! Хочу пакет со следующим:',
+      waPickNone: 'Здравствуйте! Хочу собрать свой пакет.',
       plan3name: 'Премиум', plan3f1: 'Полная поддержка от А до Я', plan3f2: 'Банковский счёт, SIM-карта и проездной', plan3f3: 'Документы и юридическое опекунство', plan3cta: 'Выбрать премиум',
 
       faqLabel: 'FAQ', faqTitle: 'Вопросы родителей',
@@ -288,9 +306,42 @@
     });
 
     hideEmptySlots();
+    updateCustomLink();
 
     try { localStorage.setItem(STORE_KEY, lang); } catch (e) { /* non-fatal */ }
   }
+
+  /* -------------------------------------------------------
+     BUILD YOUR OWN PACKAGE
+     The ticks become the first WhatsApp message, so a parent never has to
+     compose one. Rebuilt on every tick and on every language switch, so the
+     message always matches what is on screen.
+  ------------------------------------------------------- */
+  var CUSTOM_WA = '994000000000';
+
+  function updateCustomLink() {
+    var cta = document.getElementById('customCta');
+    if (!cta) return;
+
+    var dict = translations[document.documentElement.lang] || translations.en;
+    var chosen = [];
+    document.querySelectorAll('[data-pick]').forEach(function (box) {
+      if (!box.checked) return;
+      var label = box.parentNode.querySelector('span');
+      if (label) chosen.push(label.textContent.trim());
+    });
+
+    var NL = String.fromCharCode(10);
+    var text = chosen.length
+      ? dict.waPick + NL + chosen.map(function (c) { return '- ' + c; }).join(NL)
+      : dict.waPickNone;
+
+    cta.href = 'https://wa.me/' + CUSTOM_WA + '?text=' + encodeURIComponent(text);
+  }
+
+  document.querySelectorAll('[data-pick]').forEach(function (box) {
+    box.addEventListener('change', updateCustomLink);
+  });
 
   /* A slot with an empty translation hides itself, and a block with no
      visible slots hides too. This is what lets the service detail ship
