@@ -1368,6 +1368,61 @@ h3 {
   color: var(--on-ink);
 }
 
+/* Peek, then the whole card ------------------------------
+   Four columns cannot hold the full detail at a readable measure, and four
+   tall cards are not scannable. So each card shows a two-line precis of every
+   point, and opens to the full text on hover or keyboard focus.
+
+   The card is lifted out of flow to grow. That is what stops the grid from
+   reflowing: the row height is still held by the three cards that stayed put,
+   so nothing moves except the card being read. Compact heights are near
+   identical by construction (three points, two lines each), so removing any
+   one of them from the row does not change its height.
+
+   Only where a pointer can hover. On touch every card stays fully expanded —
+   a hover-only reveal would be invisible to a parent on a phone, which is
+   most of this audience. */
+.plan-slot { position: relative; }
+.plan-slot > .plan { height: 100%; }
+
+@media (hover: hover) and (min-width: 901px) {
+  /* Clamp the list as one block and fade its foot, rather than truncating each
+     point separately. Three ellipses in a column read as three errors, and
+     per-line clipping leaves half a line of ascenders showing whenever the
+     text lands awkwardly. One fade says "there is more" once, cleanly. */
+  .plan-list {
+    max-height: 10.5rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+  }
+
+  .plan-slot:hover,
+  .plan-slot:focus-within { z-index: 20; }
+
+  /* Lifting the card out of flow is what stops the grid reflowing: the row
+     height is still held by the three cards that stayed put. */
+  .plan-slot:hover > .plan,
+  .plan-slot:focus-within > .plan {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: auto;
+    min-height: 100%;
+  }
+  .plan-slot:hover .plan-list,
+  .plan-slot:focus-within .plan-list {
+    max-height: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .plan-slot:hover > .plan { box-shadow: var(--shadow-lg); }
+  .plan-slot:hover > .plan-featured,
+  .plan-slot:focus-within > .plan-featured {
+    box-shadow: var(--cast-lg), var(--shadow-gold), var(--rise);
+  }
+}
+
 /* The scope line under each price. It says how long we are involved, which is
    what makes a number feel like a period of work rather than a single task. */
 .plan-scope {

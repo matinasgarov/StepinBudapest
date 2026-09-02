@@ -88,6 +88,33 @@ default to restoring the last scroll position on reload, which on a one-page sit
 refreshing drops the reader into the middle of the hero instead of at the headline.
 Fragment links (`#services`) are unaffected — the browser handles those separately.
 
+### Pricing cards: peek, then the whole card
+
+Four columns cannot hold the full tier copy at a readable measure, and four tall cards
+are not scannable. So each card shows a clamped precis and opens to the full text on
+hover or keyboard focus.
+
+Each card sits in a `.plan-slot`. On hover the `.plan` inside is switched to
+`position: absolute; inset: 0 0 auto 0` so it grows downward **out of flow** — that is
+what stops the grid reflowing, because the row height is still held by the three cards
+that stayed put. Nothing on the page moves except the card being read. Compact heights
+are near identical by construction, so removing any one card from the row does not
+change the row height. `.plan-slot` must keep `position: relative` or the expanded card
+will size itself against the section instead of its own column.
+
+The precis is a `max-height` plus a `mask-image` fade on `.plan-list` as a whole, not
+`-webkit-line-clamp` per bullet. Clamping each bullet put three ellipses in a column
+(which read as three errors) and left half-lines of ascenders showing whenever the text
+landed awkwardly.
+
+All of this is inside `@media (hover: hover) and (min-width: 901px)`. On touch every
+card stays fully expanded — a hover-only reveal would be invisible to a parent on a
+phone, which is most of this audience. `:focus-within` is included alongside `:hover` so
+tabbing to a card's button opens it too.
+
+`.reveal` lives on `.plan-slot`, not on `.plan`: the stagger in `main.js` matches
+`:scope > .reveal` inside `.plans`, so it has to be the direct grid child.
+
 ### Build your own package
 
 The fourth pricing card (`.plan-custom`) is a set of native checkboxes whose ticks are
