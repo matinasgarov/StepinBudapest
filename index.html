@@ -14,7 +14,7 @@
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -429,10 +429,12 @@
             <div class="plan-top">
               <p class="plan-name" data-i18n="plan1name">Basic</p>
               <p class="plan-price"><span class="plan-figure">250</span><span class="plan-cur">AZN</span></p>
+              <p class="plan-scope" data-i18n="plan1scope">From landing to their front door</p>
             </div>
             <ul class="plan-list">
               <li data-i18n="plan1f1">Airport pickup</li>
               <li data-i18n="plan1f2">Initial orientation guidance</li>
+              <li data-i18n="plan1f3">Orientation on arrival</li>
             </ul>
             <a class="btn btn-line btn-block" href="#contact" data-i18n="plan1cta">Choose Basic</a>
           </article>
@@ -442,6 +444,7 @@
             <div class="plan-top">
               <p class="plan-name" data-i18n="plan2name">Standard</p>
               <p class="plan-price"><span class="plan-figure">500</span><span class="plan-cur">AZN</span></p>
+              <p class="plan-scope" data-i18n="plan2scope">From before the flight to their first week</p>
             </div>
             <ul class="plan-list">
               <li data-i18n="plan2f1">Airport pickup</li>
@@ -455,6 +458,7 @@
             <div class="plan-top">
               <p class="plan-name" data-i18n="plan3name">Premium</p>
               <p class="plan-price"><span class="plan-figure">800</span><span class="plan-cur">AZN</span></p>
+              <p class="plan-scope" data-i18n="plan3scope">From before the flight to fully settled</p>
             </div>
             <ul class="plan-list">
               <li data-i18n="plan3f1">Full A-to-Z support</li>
@@ -468,6 +472,7 @@
             <div class="plan-top">
               <p class="plan-name" data-i18n="plan4name">Build your own</p>
               <p class="plan-quote" data-i18n="plan4price">You choose</p>
+              <p class="plan-scope" data-i18n="plan4scope">Pick only what you need and we will price it</p>
             </div>
             <fieldset class="plan-pick">
               <legend class="plan-pick-legend" data-i18n="plan4legend">What do you need?</legend>
@@ -587,6 +592,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=19"></script>
+  <script src="main.js?v=20"></script>
 </body>
 </html>

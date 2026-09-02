@@ -1259,8 +1259,13 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--s3);
-  align-items: start;
+  /* Stretch, not start. The tiers no longer carry equal amounts of text, and
+     ragged card bottoms with buttons at four different heights read as an
+     accident. Equal heights with the CTA pinned to the bottom reads as a set. */
+  align-items: stretch;
 }
+/* Pin every CTA to the bottom of its card so they sit on one line. */
+.plan > .btn { margin-top: auto; }
 
 .plan {
   display: flex;
@@ -1362,6 +1367,23 @@ h3 {
   border-color: rgba(244, 246, 251, 0.28);
   color: var(--on-ink);
 }
+
+/* The scope line under each price. It says how long we are involved, which is
+   what makes a number feel like a period of work rather than a single task. */
+.plan-scope {
+  margin-top: 0.55rem;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--gold-ink);
+}
+.plan-featured .plan-scope { color: var(--gold); }
+
+/* Longer bullets need room to breathe and a tick that stays put on line one. */
+.plan-list { gap: 0.95rem; }
+.plan-list li { line-height: 1.5; font-size: 0.9rem; }
+.plan-list li::before { top: 0.55em; }
 
 /* Build-your-own tier ------------------------------------ */
 .plan-quote {
