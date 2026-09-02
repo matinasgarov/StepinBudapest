@@ -20,11 +20,10 @@ one of the few things on a page that a sceptical parent will read as honest.
 - 
 
 **Not included** — what a parent might assume but shouldn't
-- 
-- 
+- (none — nothing to exclude here)
 
 **When** — one line, relative to their arrival
-> 
+> STILL NEEDED
 
 ---
 
@@ -36,12 +35,11 @@ one of the few things on a page that a sceptical parent will read as honest.
 - 
 - 
 
-**Not included** — e.g. deposit? agency fee? rent itself?
-- 
-- 
+**Not included** ✔ answered — rent, deposit and any agency fee are paid by the
+family directly. Now live on the site.
 
 **When**
-> 
+> STILL NEEDED
 
 ---
 
@@ -53,12 +51,11 @@ one of the few things on a page that a sceptical parent will read as honest.
 - University registration ✔ already live
 - 
 
-**Not included** — e.g. government fees? translation costs?
-- 
-- 
+**Not included** ✔ answered — government, apostille, translation and university
+fees are paid by the family directly. Now live on the site.
 
 **When**
-> 
+> STILL NEEDED
 
 ---
 
@@ -70,12 +67,11 @@ one of the few things on a page that a sceptical parent will read as honest.
 - Transport card ✔ already live
 - 
 
-**Not included**
-- 
-- 
+**Not included** ✔ answered — SIM plan charges, bank minimums and transport fares
+are paid by the family directly. Now live on the site.
 
 **When**
-> 
+> STILL NEEDED
 
 ---
 
@@ -86,11 +82,15 @@ These came up while building and the site currently has no answer:
 1. **What happens if the flight is delayed or diverted?** This is the first thing an
    anxious parent imagines. A single sentence would do a lot of work.
 2. **What if the housing falls through after arrival?** Do you re-house them?
-3. **Are the prices per student, one-off?** Basic at 250 AZN — does that include anything
-   beyond the pickup itself?
-4. **How long does support last?** Premium mentions "monthly check-ins" — for how many
-   months?
+3. **Are the prices per student, one-off?** Still unanswered, and it is the one a parent
+   will ask first. Worth one line under the price.
+4. ~~How long does support last?~~ ✔ resolved — monthly check-ins removed from Premium,
+   and the FAQ answer that promised them to everyone was corrected to match.
 5. **What does "verified housing" actually involve?** One concrete sentence turns a claim
-   into evidence.
+   into evidence. Still the weakest claim on the page.
+
+**Answered and now live:** Basic is for students who already have their accommodation ·
+guardianship sits in Standard and Premium · all third-party fees are paid by the family
+directly.
 
 Answer any of these and I'll work them into the FAQ or the service detail.
