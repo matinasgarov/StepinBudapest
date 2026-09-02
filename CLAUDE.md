@@ -32,8 +32,16 @@ Three files, no build:
 
 Defined as tokens at the top of `styles.css`. Two rules matter most:
 
-- **Gold is structural, never a fill.** Use it for hairlines, active states, numerals, and single accents. `--gold` (`#C9A227`) is for dark backgrounds only — it fails contrast on light. On light backgrounds use `--gold-ink` (`#8A6D14`).
+- **Gold is structural, never a fill.** Use it for hairlines, active states, numerals, and single accents. `--gold` (`#E3B341`, 10.1:1 on `--ink`) is for dark backgrounds only — it fails contrast on light. On light backgrounds use `--gold-ink` (`#8A6D14`, 4.7:1 on `--paper`). The gold is deliberately matched to the lit Parliament in the hero photograph; an accent duller than the image it sits on reads as muddy.
+- **Depth on dark is not the same as depth on light.** `--shadow-md`/`--shadow-lg` are navy at low opacity and do nothing on the ink bands — a navy shadow on a navy surface is invisible, which is what made the dark half of the page read as flat. Elevation on dark needs three things together: a surface lighter than its ground, a lit top edge (`--rise`), and a genuinely black cast shadow (`--cast-md`/`--cast-lg`). Gold that should read as lit rather than printed gets `--emit`. Use the `--rise`/`--cast-*` pair on dark, the `--shadow-*` pair on light.
 - **Sections alternate dark → light → dark** via `.band-ink` / `.band-paper` / `.band-paper-alt`, so the page reads as chapters. `.section` controls vertical padding; `.band-*` controls background. Keep those responsibilities separate — don't add padding to a `.band-*` rule.
+
+`.band-ink` carries two pseudo-element layers: `::before` is a wide, very low-contrast
+lift giving the band a light source, `::after` is fine SVG grain that kills gradient
+banding and gives the surface material. Both are `pointer-events: none` and sit under
+`.band-ink > *`, which is raised to `z-index: 1`. The hero repeats the grain via
+`.hero::after` — it is the largest dark surface on the page, and without it the
+photograph has texture while the flat navy around it does not, so the seam shows.
 
 The **itinerary** (`.itinerary` in the hero) is the signature element: a typed travel-document motif (`GYD → BUD`, mono codes, hairline rules, dashed route). Its vocabulary recurs as the `.process-spine` in the pinned Process section. Changes to one should keep the other consistent.
 

@@ -15,10 +15,10 @@
   --navy-line:  #1C3566;
 
   /* Gold — structural, never a fill */
-  --gold:       #C9A227;   /* on dark only: 8.0:1 on --ink */
-  --gold-lift:  #E8C766;
-  --gold-ink:   #8A6D14;   /* on light: 4.7:1 on --paper */
-  --gold-haze:  rgba(201, 162, 39, 0.14);
+  --gold:       #E3B341;   /* on dark only: 10.1:1 on --ink */
+  --gold-lift:  #F7DE9B;
+  --gold-ink:   #8A6D14;   /* on light: 4.7:1 on --paper — unchanged */
+  --gold-haze:  rgba(227, 179, 65, 0.16);
 
   /* Paper family — light bands */
   --paper:      #FBFAF7;
@@ -45,7 +45,17 @@
 
   --shadow-md: 0 10px 40px rgba(5, 13, 34, 0.10);
   --shadow-lg: 0 30px 80px rgba(5, 13, 34, 0.16);
-  --shadow-gold: 0 24px 70px rgba(201, 162, 39, 0.18);
+  --shadow-gold: 0 24px 70px rgba(227, 179, 65, 0.20);
+
+  /* Depth on DARK surfaces. A navy shadow on a navy band is invisible, which is
+     why the ink sections read as flat sheets. Elevation on dark has to come from
+     three things at once: a surface lighter than its ground, a lit top edge, and
+     a genuinely black shadow beneath. */
+  --rise:    inset 0 1px 0 rgba(244, 246, 251, 0.10);
+  --cast-md: 0 18px 40px -12px rgba(0, 0, 0, 0.60);
+  --cast-lg: 0 44px 90px -24px rgba(0, 0, 0, 0.75);
+  /* Gold that emits rather than prints. */
+  --emit:    0 0 22px rgba(227, 179, 65, 0.30);
 
   --ease:      cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
@@ -168,6 +178,30 @@ h3 {
 .band-paper-alt { background: var(--paper-alt); }
 .band-ink       { background: var(--ink); color: var(--on-ink); position: relative; }
 
+/* The ink bands were a single flat fill edge to edge. A wide, very low-contrast
+   lift behind the content gives the surface a light source; the grain on top
+   kills the gradient banding and gives it material. Both sit under the content
+   and never intercept a pointer. */
+.band-ink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(28, 53, 102, 0.42), transparent 74%),
+    radial-gradient(60% 50% at 82% 88%, rgba(227, 179, 65, 0.06), transparent 76%);
+  pointer-events: none;
+}
+.band-ink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.band-ink > * { position: relative; z-index: 1; }
+
 /* ---------------------------------------------------------
    BUTTONS
 --------------------------------------------------------- */
@@ -193,14 +227,16 @@ h3 {
 .btn-block { display: flex; width: 100%; }
 
 .btn-gold {
-  background: var(--gold);
+  background: linear-gradient(180deg, var(--gold-lift), var(--gold) 55%);
   color: var(--ink);
-  box-shadow: 0 6px 24px rgba(201, 162, 39, 0.28);
+  box-shadow: 0 8px 26px rgba(227, 179, 65, 0.34), var(--emit),
+              inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 .btn-gold:hover {
-  background: var(--gold-lift);
+  background: linear-gradient(180deg, #FFF0C8, var(--gold-lift) 60%);
   transform: translateY(-3px);
-  box-shadow: 0 14px 40px rgba(201, 162, 39, 0.38);
+  box-shadow: 0 18px 44px rgba(227, 179, 65, 0.44), 0 0 34px rgba(227, 179, 65, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 .btn-gold:active { transform: translateY(-1px); }
 
@@ -289,7 +325,7 @@ h3 {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--gold-ink), var(--gold), var(--gold-lift));
-  box-shadow: 0 0 12px rgba(201, 162, 39, 0.6);
+  box-shadow: 0 0 12px rgba(227, 179, 65, 0.6);
 }
 
 /* Three zones: brand left, links optically centred in the bar,
@@ -612,13 +648,27 @@ h3 {
   background-repeat: no-repeat;
 }
 
+/* Same grain as the ink bands. The hero is the largest dark surface on the
+   page; without it the photo has texture and the flat navy around it doesn't,
+   and the seam between them shows. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Ambient drifting glow */
 .hero-atmosphere {
   position: absolute;
   inset: -30%;
   background:
     radial-gradient(38% 44% at 22% 28%, rgba(28, 53, 102, 0.85), transparent 70%),
-    radial-gradient(30% 36% at 76% 62%, rgba(201, 162, 39, 0.16), transparent 72%),
+    radial-gradient(30% 36% at 76% 62%, rgba(227, 179, 65, 0.16), transparent 72%),
     radial-gradient(46% 50% at 58% 8%, rgba(11, 30, 69, 0.9), transparent 75%);
   filter: blur(20px);
   opacity: 0.5;
@@ -730,12 +780,15 @@ h3 {
   width: 100%;
   min-width: 0;
   padding: var(--s4);
-  background: linear-gradient(155deg, rgba(11, 30, 69, 0.88), rgba(5, 13, 34, 0.93));
-  backdrop-filter: blur(8px) saturate(1.1);
-  -webkit-backdrop-filter: blur(8px) saturate(1.1);
-  border: 1px solid var(--navy-line);
+  /* A travel document is a physical thing. Lifting it off the photograph with a
+     lit top edge and a real cast shadow serves the metaphor — it reads as a card
+     lying on the scene rather than a rectangle drawn over it. */
+  background: linear-gradient(155deg, rgba(18, 40, 86, 0.86), rgba(6, 16, 40, 0.94));
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  border: 1px solid rgba(140, 168, 224, 0.22);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--cast-lg), var(--rise);
 }
 /* Perforated left edge — the document tell */
 .itinerary::before {
@@ -872,6 +925,7 @@ h3 {
   color: var(--ink);
   background: var(--gold);
   border-color: var(--gold);
+  box-shadow: var(--emit);
 }
 
 .itin-foot {
@@ -882,7 +936,7 @@ h3 {
 .itin-stamp {
   display: inline-block;
   padding: 0.3rem 0.7rem;
-  border: 1px dashed rgba(201, 162, 39, 0.5);
+  border: 1px dashed rgba(227, 179, 65, 0.5);
   border-radius: 4px;
   font-family: var(--mono);
   font-size: 0.6rem;
@@ -963,7 +1017,7 @@ h3 {
 .svc[open] {
   grid-column: 1 / -1;
   transform: none;
-  border-color: rgba(201, 162, 39, 0.45);
+  border-color: rgba(227, 179, 65, 0.45);
   box-shadow: var(--shadow-md);
 }
 
@@ -1007,7 +1061,7 @@ h3 {
 .svc-icon svg { width: 24px; height: 24px; }
 .svc:hover .svc-icon {
   transform: translateY(-3px) rotate(-5deg);
-  background: rgba(201, 162, 39, 0.22);
+  background: rgba(227, 179, 65, 0.22);
 }
 
 .svc-head { min-width: 0; }
@@ -1143,7 +1197,7 @@ h3 {
   height: 0%;
   background: linear-gradient(180deg, var(--gold), var(--gold-lift));
   border-radius: 2px;
-  box-shadow: 0 0 14px rgba(201, 162, 39, 0.55);
+  box-shadow: 0 0 14px rgba(227, 179, 65, 0.55);
   transition: height 0.15s linear;
 }
 .process-node {
@@ -1164,7 +1218,7 @@ h3 {
 .process-node.is-on {
   background: var(--gold);
   border-color: var(--gold);
-  box-shadow: 0 0 0 5px rgba(201, 162, 39, 0.18);
+  box-shadow: 0 0 0 5px rgba(227, 179, 65, 0.18), var(--emit);
 }
 
 .process-list { display: grid; gap: clamp(1.5rem, 1rem + 2vw, 2.75rem); }
@@ -1221,7 +1275,7 @@ h3 {
 }
 .plan:hover {
   transform: translateY(-5px);
-  border-color: rgba(201, 162, 39, 0.45);
+  border-color: rgba(227, 179, 65, 0.45);
   box-shadow: var(--shadow-md);
 }
 
@@ -1229,7 +1283,7 @@ h3 {
   position: relative;
   background: var(--ink);
   border-color: var(--gold);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--cast-lg), var(--shadow-gold), var(--rise);
 }
 .plan-featured:hover { border-color: var(--gold-lift); }
 
@@ -1329,7 +1383,7 @@ h3 {
   overflow: hidden;
   transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.faq[open] { border-color: rgba(201, 162, 39, 0.45); box-shadow: var(--shadow-md); }
+.faq[open] { border-color: rgba(227, 179, 65, 0.45); box-shadow: var(--shadow-md); }
 
 .faq summary {
   display: flex;
@@ -1407,9 +1461,9 @@ h3 {
 .clink:hover {
   transform: translateX(6px);
   border-color: var(--gold);
-  background: rgba(201, 162, 39, 0.09);
+  background: rgba(227, 179, 65, 0.09);
 }
-.clink-primary { border-color: rgba(201, 162, 39, 0.55); background: rgba(201, 162, 39, 0.08); }
+.clink-primary { border-color: rgba(227, 179, 65, 0.55); background: rgba(227, 179, 65, 0.08); }
 
 .clink-icon {
   display: grid;
