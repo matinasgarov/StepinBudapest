@@ -164,7 +164,7 @@ is where a parent stops and asks who they are actually handing their child to, s
 faces answer that question exactly where it gets asked. It also keeps the band
 alternation intact without touching any existing section: paper -> ink -> paper-alt -> ink.
 
-**Nothing about a real person renders until it is confirmed.** `pt1..3name/role/line`
+**Nothing about a real person renders until it is confirmed.** `pt1..4name/role/line`
 ship as empty strings in all three languages, and `hidePartnerSlots()` in `main.js`
 hides any card whose **name** is empty, then hides the whole section *and both nav
 links* if no card survives. A partner card is an assertion that a named human will
