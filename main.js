@@ -19,6 +19,7 @@
       brandTagline: 'Student Relocation Partner',
       navServices: 'Services', navProcess: 'Process', navPricing: 'Pricing',
       navFaq: 'FAQ', navContact: 'Contact', navCta: 'WhatsApp Us',
+      navPartners: 'Partners',
 
       heroTitle: 'Zero stress for them.<br><em>Total peace of mind for you.</em>',
       heroSub: 'We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.',
@@ -102,6 +103,13 @@
       plan3f3: 'Apostille coordination for their academic and personal documents, so nothing is rejected later over a missing stamp',
       plan3cta: 'Choose Premium',
 
+      partnersLabel: 'In Budapest',
+      partnersTitle: 'The people who will be there',
+      partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest, and each one answers for their part of the move.',
+      pt1name: '', pt1role: '', pt1line: '',
+      pt2name: '', pt2role: '', pt2line: '',
+      pt3name: '', pt3role: '', pt3line: '',
+
       faqLabel: 'FAQ', faqTitle: 'Questions parents ask',
       faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
       faq2q: 'Will someone be with my child when they land?', faq2a: 'Yes — we personally meet every student at Budapest Airport, no exceptions.',
@@ -120,6 +128,7 @@
       brandTagline: 'Tələbə Köç Tərəfdaşı',
       navServices: 'Xidmətlər', navProcess: 'Proses', navPricing: 'Qiymətlər',
       navFaq: 'FAQ', navContact: 'Əlaqə', navCta: 'WhatsApp',
+      navPartners: 'Partnyorlar',
 
       heroTitle: 'Onlar üçün sıfır stress.<br><em>Sizin üçün tam rahatlıq.</em>',
       heroSub: 'Övladınızı hava limanında qarşılayır, təhlükəsiz mənzilin açarlarını təhvil verir və xaricdəki yeni həyatı üçün bütün sənədləri həll edirik.',
@@ -138,8 +147,8 @@
       trust2: 'Azərbaycanca Danışan Komanda',
       trust3: 'WhatsApp Dəstəyi', trust4: 'Yoxlanılmış Yaşayış Seçimləri',
 
-      servicesLabel: 'Xidmətlər', servicesTitle: 'Biz nəylə məşğul oluruq',
-      servicesSub: 'Tələbəniz bilet aldığı andan dərslərinin ilk həftəsinə qədər.',
+      servicesLabel: 'Xidmətlər', servicesTitle: 'Biz nə ilə məşğul oluruq',
+      servicesSub: 'Tələbəniz bilet aldığı andan fəaliyyətimiz başlayır.',
       s1title: 'Hava Limanı Qarşılaması', s1text: 'Tələbənizi Budapeşt hava limanında şəxsən qarşılayır və təhlükəsiz şəkildə yaşayış yerinə aparırıq.',
       s2title: 'Yaşama', s2text: 'Təhlükəsiz, yoxlanılmış yaşayış — yataqxana və ya mənzil. Hər variantı yoxlayırıq ki, fırıldaqçılıqdan narahat olmayasınız.',
       s3title: 'Sənədlər', s3text: 'Oturum icazəsi, apostil və universitet qeydiyyatı — bütün sənəd işlərini addım-addım rəhbərlik edirik.',
@@ -203,6 +212,13 @@
       plan3f3: 'Akademik və şəxsi sənədlər üçün apostil koordinasiyası ki, sonradan çatışmayan möhürə görə heç nə rədd edilməsin',
       plan3cta: 'Premium seçin',
 
+      partnersLabel: 'Budapeştdə',
+      partnersTitle: 'Orada olacaq insanlar',
+      partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri köçün öz hissəsinə cavabdehdir.',
+      pt1name: '', pt1role: '', pt1line: '',
+      pt2name: '', pt2role: '', pt2line: '',
+      pt3name: '', pt3role: '', pt3line: '',
+
       faqLabel: 'FAQ', faqTitle: 'Valideynlərin soruşduğu suallar',
       faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
       faq2q: 'Uşağım endikdə yanında biri olacaqmı?', faq2a: 'Bəli — hər tələbəni Budapeşt hava limanında şəxsən qarşılayırıq, istisnasız.',
@@ -221,6 +237,7 @@
       brandTagline: 'Партнёр по переезду студентов',
       navServices: 'Услуги', navProcess: 'Процесс', navPricing: 'Цены',
       navFaq: 'FAQ', navContact: 'Контакты', navCta: 'WhatsApp',
+      navPartners: 'Партнёры',
 
       heroTitle: 'Ноль стресса для него.<br><em>Полное спокойствие для вас.</em>',
       heroSub: 'Встречаем вашего ребёнка в аэропорту, передаём ключи от безопасной квартиры и оформляем все документы для его новой жизни за границей.',
@@ -304,6 +321,13 @@
       plan3f3: 'Оформление апостиля на учебные и личные документы, чтобы позже ничего не отклонили из-за недостающей печати',
       plan3cta: 'Выбрать премиум',
 
+      partnersLabel: 'В Будапеште',
+      partnersTitle: 'Люди, которые будут рядом',
+      partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште и отвечают за свою часть переезда.',
+      pt1name: '', pt1role: '', pt1line: '',
+      pt2name: '', pt2role: '', pt2line: '',
+      pt3name: '', pt3role: '', pt3line: '',
+
       faqLabel: 'FAQ', faqTitle: 'Вопросы родителей',
       faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',
       faq2q: 'Будет ли кто-то рядом с моим ребёнком по прилёте?', faq2a: 'Да — мы лично встречаем каждого студента в аэропорту Будапешта, без исключений.',
@@ -357,6 +381,7 @@
     });
 
     hideEmptySlots();
+    hidePartnerSlots();
     updateCustomLink();
 
     try { localStorage.setItem(STORE_KEY, lang); } catch (e) { /* non-fatal */ }
@@ -397,6 +422,52 @@
   /* A slot with an empty translation hides itself, and a block with no
      visible slots hides too. This is what lets the service detail ship
      before every fact is confirmed — unwritten content simply isn't there. */
+  /* Partners follow the same principle as the service slots, for a stronger
+     reason: a card with no name is a person we have not confirmed, so it does
+     not render at all. If none are filled in, the section and its nav links go
+     with them — the page never shows an invented person, and never links to an
+     empty chapter.
+
+     The monogram is derived from whichever name is on screen, so a Cyrillic
+     transliteration follows for free and there is no second key to forget.
+     Once a real photograph has a src it replaces the monogram in the same
+     grid cell, which is why adding one changes no layout. */
+  function hidePartnerSlots() {
+    var shown = 0;
+
+    document.querySelectorAll('[data-partner]').forEach(function (card) {
+      var holder = card.querySelector('[data-partner-name] [data-i18n]');
+      var name = holder ? holder.textContent.trim() : '';
+
+      card.hidden = name === '';
+      if (!card.hidden) shown++;
+
+      var photo = card.querySelector('[data-partner-photo]');
+      var mono = card.querySelector('[data-partner-monogram]');
+      var hasPhoto = !!(photo && photo.getAttribute('src'));
+
+      if (photo) {
+        photo.hidden = !hasPhoto;
+        photo.alt = hasPhoto ? name : '';
+      }
+      if (mono) {
+        mono.hidden = hasPhoto;
+        mono.textContent = name.charAt(0).toUpperCase();
+      }
+
+      card.querySelectorAll('[data-partner-item]').forEach(function (item) {
+        var h = item.querySelector('[data-i18n]') || item;
+        item.hidden = h.textContent.trim() === '';
+      });
+    });
+
+    var section = document.querySelector('[data-partners-section]');
+    if (section) section.hidden = shown === 0;
+    document.querySelectorAll('[data-partners-nav]').forEach(function (li) {
+      li.hidden = shown === 0;
+    });
+  }
+
   function hideEmptySlots() {
     document.querySelectorAll('[data-svc-item]').forEach(function (item) {
       var holder = item.querySelector('[data-i18n]') || item;
@@ -574,7 +645,7 @@
     revealTargets.forEach(function (el) { el.classList.add('is-visible'); });
   } else {
     // Stagger siblings inside each group so rows cascade.
-    document.querySelectorAll('.services, .plans, .faq-list, .contact-inner')
+    document.querySelectorAll('.services, .plans, .partners, .faq-list, .contact-inner')
       .forEach(function (group) {
         group.querySelectorAll(':scope > .reveal').forEach(function (el, i) {
           el.style.transitionDelay = (i * 0.09) + 's';

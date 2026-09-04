@@ -1602,6 +1602,124 @@ h3 {
 .pick:has(input:checked) { color: var(--text); }
 
 /* ---------------------------------------------------------
+   PARTNERS
+   The one section about people rather than services, placed right
+   after the price because the price is exactly where a parent stops
+   and asks who they are actually handing their child to.
+
+   Each card is built as a credential, not a team photo: a mono role
+   label, hairline rules, and the same BUD locator the itinerary uses.
+   Depth follows the dark recipe — a surface lighter than the band, a
+   lit top edge, and a genuinely black cast. A navy shadow on this
+   band would be invisible.
+
+   The portrait is a 1:1 slot that holds a monogram until a real
+   photograph exists. It is sized by the slot, not by the image, so
+   adding a file later changes nothing about the layout.
+--------------------------------------------------------- */
+.partners {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--s4);
+}
+
+.partner {
+  display: flex;
+  flex-direction: column;
+  background: var(--ink-raise);
+  border: 1px solid var(--navy-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--cast-md), var(--rise);
+}
+.js .partners > .partner {
+  /* .js .reveal sets the transition shorthand on this same element, so a
+     bare `.partner { transition }` would be discarded. Restate the reveal's
+     own properties alongside the hover ones. See the pricing slots. */
+  transition: transform 0.5s var(--ease-out),
+              box-shadow 0.5s var(--ease-out),
+              border-color 0.5s var(--ease-out),
+              opacity 0.75s var(--ease-out);
+}
+@media (hover: hover) {
+  .partner:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--cast-lg), var(--rise);
+    border-color: var(--gold);
+  }
+}
+
+.partner-portrait {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(28, 53, 102, 0.55), transparent 70%),
+    var(--navy);
+  border-bottom: 1px solid var(--navy-line);
+}
+/* Photo and monogram share one cell, so swapping in a file needs no layout. */
+.partner-photo,
+.partner-monogram { grid-area: 1 / 1; }
+/* `hidden` alone loses to an explicit display value. */
+.partner[hidden],
+.partner-photo[hidden],
+.partner-monogram[hidden] { display: none; }
+.partner-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.partner-monogram {
+  font-family: var(--display);
+  /* Sized to read as a deliberate typographic plate rather than a letter
+     adrift in an empty square. A photograph will cover it entirely. */
+  font-size: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: var(--emit);
+}
+.partner-loc {
+  position: absolute;
+  left: var(--s2);
+  bottom: var(--s2);
+  padding: 0.25rem 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--muted-ink);
+  background: rgba(5, 13, 34, 0.62);
+  border: 1px solid var(--navy-line);
+  border-radius: 999px;
+}
+
+.partner-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--s3);
+}
+.partner-role {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.partner-name { font-size: 1.2rem; letter-spacing: -0.01em; }
+.partner-line {
+  margin-top: 0.35rem;
+  padding-top: var(--s2);
+  border-top: 1px solid var(--navy-line);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted-ink);
+}
+
+/* ---------------------------------------------------------
    FAQ
 --------------------------------------------------------- */
 .faq-layout {
@@ -1855,6 +1973,20 @@ h3 {
 
 @media (max-width: 720px) {
   .container { width: calc(100% - 2.5rem); }
+
+  /* One column of full-width 1:1 portraits would be a screen tall each.
+     Turn the card on its side and let the portrait become a chip. */
+  .partners { grid-template-columns: 1fr; }
+  .partner { flex-direction: row; }
+  .partner-portrait {
+    flex: 0 0 96px;
+    aspect-ratio: auto;
+    border-bottom: 0;
+    border-right: 1px solid var(--navy-line);
+  }
+  .partner-monogram { font-size: 2rem; }
+  .partner-loc { display: none; }
+  .partner-body { flex: 1 1 auto; }
   .hero {
     background-image:
       linear-gradient(to bottom, rgba(5, 13, 34, 0) 84%, var(--ink) 100%),

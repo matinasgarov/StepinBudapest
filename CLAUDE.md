@@ -156,6 +156,38 @@ line break inside a string literal, which is a syntax error. Keep it escape-free
 Four price columns only fit at full width; the grid drops to 2×2 below 1080px and to one
 column below 900px, where `.plan-featured { order: -1 }` floats Standard to the top.
 
+### Partners section
+
+`#partners` is the page's only section about people rather than services, and it
+sits between Pricing and FAQ. That placement is deliberate on two counts. The price
+is where a parent stops and asks who they are actually handing their child to, so the
+faces answer that question exactly where it gets asked. It also keeps the band
+alternation intact without touching any existing section: paper -> ink -> paper-alt -> ink.
+
+**Nothing about a real person renders until it is confirmed.** `pt1..3name/role/line`
+ship as empty strings in all three languages, and `hidePartnerSlots()` in `main.js`
+hides any card whose **name** is empty, then hides the whole section *and both nav
+links* if no card survives. A partner card is an assertion that a named human will
+meet someone's child; an invented one would poison every other claim on the page.
+Fill the keys in and the section appears on its own.
+
+The monogram is derived from whatever name is on screen (`name.charAt(0)`), so a
+Cyrillic transliteration follows for free and there is no second key to forget.
+
+The portrait is a 1:1 slot. The photo `<img>` and the monogram occupy the same grid
+cell (`grid-area: 1 / 1`), so **adding a real photograph changes no layout** — set
+`src` and `hidePartnerSlots()` swaps which one is hidden. Note that `hidden` alone
+loses to an explicit `display` value, which is why `.partner[hidden]` and friends
+are spelled out.
+
+`.js .partners > .partner` carries the transition, not `.partner` — same trap as the
+pricing slots. `.js .reveal` sets the `transition` shorthand on the same element at
+equal specificity and later in the file, so a bare `.partner { transition }` is
+silently discarded. Restate `opacity` alongside the hover properties.
+
+Below 720px the card turns on its side and the portrait becomes a 96px chip — one
+column of full-width 1:1 portraits would be most of a screen each.
+
 ### Internationalization
 
 Translations live in the `translations` object in `main.js`, with `en`, `az`, and `ru`. Elements carry `data-i18n="key"`.

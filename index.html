@@ -25,7 +25,7 @@
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=26" />
+  <link rel="stylesheet" href="styles.css?v=27" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -73,6 +73,7 @@
         <li><a href="#services" data-i18n="navServices">Services</a></li>
         <li><a href="#process" data-i18n="navProcess">Process</a></li>
         <li><a href="#pricing" data-i18n="navPricing">Pricing</a></li>
+        <li data-partners-nav><a href="#partners" data-i18n="navPartners">Partners</a></li>
         <li><a href="#faq" data-i18n="navFaq">FAQ</a></li>
       </ul>
 
@@ -102,8 +103,9 @@
       <li><a href="#services"><span class="drawer-num">01</span><span data-i18n="navServices">Services</span></a></li>
       <li><a href="#process"><span class="drawer-num">02</span><span data-i18n="navProcess">Process</span></a></li>
       <li><a href="#pricing"><span class="drawer-num">03</span><span data-i18n="navPricing">Pricing</span></a></li>
-      <li><a href="#faq"><span class="drawer-num">04</span><span data-i18n="navFaq">FAQ</span></a></li>
-      <li><a href="#contact"><span class="drawer-num">05</span><span data-i18n="navContact">Contact</span></a></li>
+      <li data-partners-nav><a href="#partners"><span class="drawer-num">04</span><span data-i18n="navPartners">Partners</span></a></li>
+      <li><a href="#faq"><span class="drawer-num">05</span><span data-i18n="navFaq">FAQ</span></a></li>
+      <li><a href="#contact"><span class="drawer-num">06</span><span data-i18n="navContact">Contact</span></a></li>
     </ul>
     <a class="btn btn-gold btn-block" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="navCta">WhatsApp Us</a>
   </div>
@@ -527,6 +529,58 @@
       </div>
     </section>
 
+    <!-- PARTNERS -->
+    <section class="band band-ink section" id="partners" aria-labelledby="partnersTitle" data-partners-section>
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-label section-label-dark"><span data-i18n="partnersLabel">In Budapest</span></p>
+          <h2 id="partnersTitle" data-i18n="partnersTitle"></h2>
+          <p class="section-sub section-sub-dark" data-i18n="partnersSub"></p>
+        </header>
+
+        <div class="partners">
+          <article class="partner reveal" data-partner>
+            <div class="partner-portrait">
+              <img class="partner-photo" alt="" data-partner-photo hidden />
+              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
+              <span class="partner-loc" aria-hidden="true">BUD</span>
+            </div>
+            <div class="partner-body">
+              <p class="partner-role" data-partner-item><span data-i18n="pt1role"></span></p>
+              <h3 class="partner-name" data-partner-name><span data-i18n="pt1name"></span></h3>
+              <p class="partner-line" data-partner-item><span data-i18n="pt1line"></span></p>
+            </div>
+          </article>
+
+          <article class="partner reveal" data-partner>
+            <div class="partner-portrait">
+              <img class="partner-photo" alt="" data-partner-photo hidden />
+              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
+              <span class="partner-loc" aria-hidden="true">BUD</span>
+            </div>
+            <div class="partner-body">
+              <p class="partner-role" data-partner-item><span data-i18n="pt2role"></span></p>
+              <h3 class="partner-name" data-partner-name><span data-i18n="pt2name"></span></h3>
+              <p class="partner-line" data-partner-item><span data-i18n="pt2line"></span></p>
+            </div>
+          </article>
+
+          <article class="partner reveal" data-partner>
+            <div class="partner-portrait">
+              <img class="partner-photo" alt="" data-partner-photo hidden />
+              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
+              <span class="partner-loc" aria-hidden="true">BUD</span>
+            </div>
+            <div class="partner-body">
+              <p class="partner-role" data-partner-item><span data-i18n="pt3role"></span></p>
+              <h3 class="partner-name" data-partner-name><span data-i18n="pt3name"></span></h3>
+              <p class="partner-line" data-partner-item><span data-i18n="pt3line"></span></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section class="band band-paper-alt section" id="faq" aria-labelledby="faqTitle">
       <div class="container faq-layout">
@@ -630,6 +684,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=22"></script>
+  <script src="main.js?v=23"></script>
 </body>
 </html>
