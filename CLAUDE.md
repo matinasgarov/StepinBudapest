@@ -252,6 +252,13 @@ Headless screenshots on Windows have two traps worth knowing:
 
 ## Known placeholders
 
+The three **partners** (`pt1..3name/role/line` in `main.js`) are invented people,
+sitting in one flagged block per language. They claim a named human meets students at
+the airport and acts as legal guardian to minors — replace them with the real
+partners before this page is shown to a parent. Blanking a name hides that card;
+blanking all three hides the section and its nav links.
+
+
 The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**
 plus `CUSTOM_WA` in `main.js` (the build-your-own card), and the displayed
 `+994 XX XXX XX XX`. Replace all seven before launch.

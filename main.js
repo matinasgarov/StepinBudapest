@@ -106,9 +106,22 @@
       partnersLabel: 'In Budapest',
       partnersTitle: 'The people who will be there',
       partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest, and each one answers for their part of the move.',
-      pt1name: '', pt1role: '', pt1line: '',
-      pt2name: '', pt2role: '', pt2line: '',
-      pt3name: '', pt3role: '', pt3line: '',
+      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
+         These three are invented. They are here so the section renders
+         while the real partners are being confirmed. Shipping them to a
+         parent would be claiming a named human will meet their child at
+         Budapest airport and act as legal guardian to a minor. Blank the
+         name out and the card disappears on its own; blank all three and
+         so does the section. Tracked in CLAUDE.md under Known placeholders. */
+      pt1name: 'Aysel Məmmədova',
+      pt1role: 'Airport & arrivals',
+      pt1line: 'Meets every student at the gate and does not leave until they are inside their new flat.',
+      pt2name: 'Márton Kovács',
+      pt2role: 'Housing',
+      pt2line: 'Inspects every flat in person before a student is ever shown it.',
+      pt3name: 'Nigar Əliyeva',
+      pt3role: 'Legal guardian',
+      pt3line: 'The named guardian on file for students who arrive under 18.',
 
       faqLabel: 'FAQ', faqTitle: 'Questions parents ask',
       faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
@@ -215,9 +228,22 @@
       partnersLabel: 'Budapeştdə',
       partnersTitle: 'Orada olacaq insanlar',
       partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri köçün öz hissəsinə cavabdehdir.',
-      pt1name: '', pt1role: '', pt1line: '',
-      pt2name: '', pt2role: '', pt2line: '',
-      pt3name: '', pt3role: '', pt3line: '',
+      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
+         These three are invented. They are here so the section renders
+         while the real partners are being confirmed. Shipping them to a
+         parent would be claiming a named human will meet their child at
+         Budapest airport and act as legal guardian to a minor. Blank the
+         name out and the card disappears on its own; blank all three and
+         so does the section. Tracked in CLAUDE.md under Known placeholders. */
+      pt1name: 'Aysel Məmmədova',
+      pt1role: 'Hava limanı və qarşılama',
+      pt1line: 'Hər tələbəni çıxışda qarşılayır və onlar yeni evlərinə girənə qədər yanlarından ayrılmır.',
+      pt2name: 'Márton Kovács',
+      pt2role: 'Yaşayış',
+      pt2line: 'Hər mənzili tələbəyə göstərilməzdən əvvəl şəxsən yoxlayır.',
+      pt3name: 'Nigar Əliyeva',
+      pt3role: 'Qanuni qəyyum',
+      pt3line: '18 yaşdan kiçik gələn tələbələr üçün rəsmi qeydiyyatda olan qəyyum.',
 
       faqLabel: 'FAQ', faqTitle: 'Valideynlərin soruşduğu suallar',
       faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
@@ -324,9 +350,22 @@
       partnersLabel: 'В Будапеште',
       partnersTitle: 'Люди, которые будут рядом',
       partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште и отвечают за свою часть переезда.',
-      pt1name: '', pt1role: '', pt1line: '',
-      pt2name: '', pt2role: '', pt2line: '',
-      pt3name: '', pt3role: '', pt3line: '',
+      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
+         These three are invented. They are here so the section renders
+         while the real partners are being confirmed. Shipping them to a
+         parent would be claiming a named human will meet their child at
+         Budapest airport and act as legal guardian to a minor. Blank the
+         name out and the card disappears on its own; blank all three and
+         so does the section. Tracked in CLAUDE.md under Known placeholders. */
+      pt1name: 'Айсель Мамедова',
+      pt1role: 'Аэропорт и встреча',
+      pt1line: 'Встречает каждого студента на выходе и не уезжает, пока он не окажется в своей новой квартире.',
+      pt2name: 'Мартон Ковач',
+      pt2role: 'Жильё',
+      pt2line: 'Лично осматривает каждую квартиру, прежде чем её покажут студенту.',
+      pt3name: 'Нигяр Алиева',
+      pt3role: 'Законный опекун',
+      pt3line: 'Официально оформленный опекун для студентов, приезжающих до 18 лет.',
 
       faqLabel: 'FAQ', faqTitle: 'Вопросы родителей',
       faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',
