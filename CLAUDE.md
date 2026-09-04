@@ -130,7 +130,14 @@ list of what you get asks for the decision before making the case. Padding moves
 `.plan-top` and the button when that happens.
 
 `.reveal` lives on `.plan-slot`, not on `.plan`: the stagger in `main.js` matches
-`:scope > .reveal` inside `.plans`, so it has to be the direct grid child.
+`:scope > .reveal` inside `.plans`, so it has to be the direct grid child. **That has a
+trap.** `.js .reveal` sets the `transition` shorthand on the very same element, at
+(0,2,0) and later in the file, so a plain `.plan-slot { transition: ... }` is silently
+discarded and the card snaps open with no animation at all. The slot's transition is
+therefore written as `.js .plans > .plan-slot` (0,3,0) and must restate the reveal's own
+`opacity` and `transform` transitions alongside `flex-basis`, or the entrance stagger
+breaks instead. If the open ever feels instant again, check
+`getComputedStyle(slot).transitionProperty` first — it should list `flex-basis`.
 
 ### Build your own package
 

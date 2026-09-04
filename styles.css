@@ -1443,7 +1443,20 @@ h3 {
        explicit floor below the natural one lets the three squeezed slots give
        up the width the open one needs, while still stopping them collapsing. */
     min-width: 11rem;
-    transition: flex-basis 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  /* `.js .reveal` sets `transition` on this very element — .reveal lives on the
+     slot so the entrance stagger can find it — and at (0,2,0) it ties with
+     `.plan-slot`, wins on source order, and silently drops the flex-basis
+     transition: the card snapped to its open width in one frame. Matching that
+     specificity and restating the reveal's own transitions fixes it. `.js` is
+     in the selector because `.js .reveal` is declared LATER in this file, so
+     matching (0,2,0) is not enough — it has to be beaten outright. Anything
+     that sets `transition` here must carry all three properties. */
+  .plans > .plan-slot,
+  .js .plans > .plan-slot {
+    transition: flex-basis 0.55s cubic-bezier(0.25, 0.8, 0.25, 1),
+                opacity 0.75s var(--ease-out),
+                transform 0.75s var(--ease-out);
   }
   .plan-slot:hover,
   .plan-slot:focus-within { flex-basis: calc(var(--pd) * 4 / 3); }
