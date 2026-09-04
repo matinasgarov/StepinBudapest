@@ -1618,8 +1618,11 @@ h3 {
    adding a file later changes nothing about the layout.
 --------------------------------------------------------- */
 .partners {
+  /* Four fixed columns rather than auto-fit: auto-fit would drop the fourth
+     card onto a row of its own at some widths, and a lone card under a row of
+     three reads as an afterthought. The count steps 4 -> 2 -> 1 instead. */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--s4);
 }
 
@@ -1952,6 +1955,7 @@ h3 {
 @media (max-width: 1080px) {
   /* Four price columns crush their labels below this. Two rows of two. */
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
+  .partners { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .itinerary { max-width: 30rem; }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-head { position: static; }

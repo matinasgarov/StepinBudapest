@@ -122,6 +122,9 @@
       pt3name: 'Nigar Əliyeva',
       pt3role: 'Legal guardian',
       pt3line: 'The named guardian on file for students who arrive under 18.',
+      pt4name: 'Elvin Hüseynov',
+      pt4role: 'Documents & registration',
+      pt4line: 'Handles the residence permit, address card and bank paperwork end to end.',
 
       faqLabel: 'FAQ', faqTitle: 'Questions parents ask',
       faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
@@ -244,6 +247,9 @@
       pt3name: 'Nigar Əliyeva',
       pt3role: 'Qanuni qəyyum',
       pt3line: '18 yaşdan kiçik gələn tələbələr üçün rəsmi qeydiyyatda olan qəyyum.',
+      pt4name: 'Elvin Hüseynov',
+      pt4role: 'Sənədlər və qeydiyyat',
+      pt4line: 'Yaşayış icazəsi, ünvan kartı və bank sənədlərini əvvəldən sona qədər aparır.',
 
       faqLabel: 'FAQ', faqTitle: 'Valideynlərin soruşduğu suallar',
       faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
@@ -366,6 +372,9 @@
       pt3name: 'Нигяр Алиева',
       pt3role: 'Законный опекун',
       pt3line: 'Официально оформленный опекун для студентов, приезжающих до 18 лет.',
+      pt4name: 'Эльвин Гусейнов',
+      pt4role: 'Документы и регистрация',
+      pt4line: 'Ведёт вид на жительство, адресную карту и банковские документы от начала до конца.',
 
       faqLabel: 'FAQ', faqTitle: 'Вопросы родителей',
       faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',

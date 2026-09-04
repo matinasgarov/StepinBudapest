@@ -185,6 +185,10 @@ pricing slots. `.js .reveal` sets the `transition` shorthand on the same element
 equal specificity and later in the file, so a bare `.partner { transition }` is
 silently discarded. Restate `opacity` alongside the hover properties.
 
+The grid is four fixed columns, stepping to two below 1080px and one below 720px.
+Auto-fit was wrong here: at some widths it dropped the fourth card onto a row of
+its own, and a lone card under a row of three reads as an afterthought.
+
 Below 720px the card turns on its side and the portrait becomes a 96px chip — one
 column of full-width 1:1 portraits would be most of a screen each.
 
@@ -252,11 +256,11 @@ Headless screenshots on Windows have two traps worth knowing:
 
 ## Known placeholders
 
-The three **partners** (`pt1..3name/role/line` in `main.js`) are invented people,
+The four **partners** (`pt1..4name/role/line` in `main.js`) are invented people,
 sitting in one flagged block per language. They claim a named human meets students at
 the airport and acts as legal guardian to minors — replace them with the real
 partners before this page is shown to a parent. Blanking a name hides that card;
-blanking all three hides the section and its nav links.
+blanking all four hides the section and its nav links.
 
 
 The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**

@@ -25,7 +25,7 @@
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=28" />
+  <link rel="stylesheet" href="styles.css?v=29" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -577,6 +577,19 @@
               <p class="partner-line" data-partner-item><span data-i18n="pt3line"></span></p>
             </div>
           </article>
+
+          <article class="partner reveal" data-partner>
+            <div class="partner-portrait">
+              <img class="partner-photo" alt="" data-partner-photo hidden />
+              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
+              <span class="partner-loc" aria-hidden="true">BUD</span>
+            </div>
+            <div class="partner-body">
+              <p class="partner-role" data-partner-item><span data-i18n="pt4role"></span></p>
+              <h3 class="partner-name" data-partner-name><span data-i18n="pt4name"></span></h3>
+              <p class="partner-line" data-partner-item><span data-i18n="pt4line"></span></p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -684,6 +697,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=24"></script>
+  <script src="main.js?v=25"></script>
 </body>
 </html>
