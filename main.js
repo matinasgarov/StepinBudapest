@@ -500,12 +500,35 @@
   var rail = document.getElementById('scrollRail');
   var header = document.getElementById('siteHeader');
 
+  /* Scroll events can fire many times per frame. This used to run the whole
+     handler on each one, and it interleaved reads and writes — scrollHeight,
+     then a style write, then getBoundingClientRect — so the browser was forced
+     to re-lay-out mid-handler, repeatedly, while scrolling. Now it runs once
+     per frame, and reads everything before it writes anything. */
   function onScroll() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    // --- read ---
+    var y = window.scrollY;
+    var vh = window.innerHeight;
+    var max = document.documentElement.scrollHeight - vh;
+    var procRect = (processScroll && window.innerWidth > 900)
+      ? processScroll.getBoundingClientRect()
+      : null;
+
+    // --- write ---
+    var pct = max > 0 ? (y / max) * 100 : 0;
     if (rail) rail.style.width = pct + '%';
-    if (header) header.classList.toggle('is-scrolled', window.scrollY > 20);
-    updateProcess();
+    if (header) header.classList.toggle('is-scrolled', y > 20);
+    updateProcess(procRect, vh);
+  }
+
+  var scrollQueued = false;
+  function queueScroll() {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    window.requestAnimationFrame(function () {
+      scrollQueued = false;
+      onScroll();
+    });
   }
 
   /* -------------------------------------------------------
@@ -519,14 +542,12 @@
   var steps = Array.prototype.slice.call(document.querySelectorAll('.process-step'));
   var nodes = Array.prototype.slice.call(document.querySelectorAll('.process-node'));
 
-  function updateProcess() {
-    if (!processScroll || !steps.length) return;
+  /* The rect and viewport height are measured once by onScroll, alongside every
+     other read, and handed in — so this never triggers a second layout pass. */
+  function updateProcess(rect, vh) {
+    if (!rect || !steps.length) return;
 
-    // Below 900px the section is a plain stacked list — nothing to drive.
-    if (window.innerWidth <= 900) return;
-
-    var rect = processScroll.getBoundingClientRect();
-    var travel = rect.height - window.innerHeight;
+    var travel = rect.height - vh;
     if (travel <= 0) return;
 
     var progress = Math.min(Math.max(-rect.top / travel, 0), 1);
@@ -540,8 +561,8 @@
     if (counter) counter.textContent = '0' + (index + 1);
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('scroll', queueScroll, { passive: true });
+  window.addEventListener('resize', queueScroll);
   onScroll();
 
   /* -------------------------------------------------------

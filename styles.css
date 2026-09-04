@@ -674,6 +674,11 @@ h3 {
   opacity: 0.5;
   animation: drift 26s var(--ease) infinite alternate;
   pointer-events: none;
+  /* A 20px blur over an element 160% the size of the hero, transformed every
+     frame for 26s. Without a promotion hint the browser re-applies the blur on
+     each frame; with it the layer is rasterized once and only the transform
+     runs on the compositor. */
+  will-change: transform;
 }
 @keyframes drift {
   0%   { transform: translate3d(0, 0, 0) scale(1); }

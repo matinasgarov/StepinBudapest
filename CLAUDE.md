@@ -177,6 +177,40 @@ Entrance styles (`.anim`, `.reveal`, `.itin-step`) are scoped under `.js`, which
 
 The Process section uses a 300vh scroll container driving a sticky stage. Below 900px it degrades to a plain stacked list — the JS scroll driver bails out at that width.
 
+## Performance
+
+The page is 217KB of local files, and none of it is the bottleneck. The slowest thing on
+it by an order of magnitude is the **Google Fonts stylesheet** — a 1KB file that costs
+~420-470ms of DNS, TLS and round trip to a third-party origin. It used to be a plain
+`<link rel="stylesheet">`, so it blocked first paint for all of that.
+
+It now loads as `media="print"` with an `onload` swap, preceded by
+`<link rel="preload" as="style">` and followed by a `<noscript>` copy. That takes it off
+the critical path entirely: `domContentLoaded` went 584ms to ~120ms and `load` 951ms to
+~440ms, measured cold-cache over localhost. `display=swap` is in the request, so text
+paints in the fallback stack and swaps when the webfonts land. **Don't turn this back
+into a plain stylesheet link.**
+
+Only request weights that `styles.css` actually uses. Inter Tight 300 and Fraunces
+italic 600 were being downloaded and never applied. Note that Fraunces' latin-ext subset
+covers `ə`, so Playfair Display is only fetched for Cyrillic — `unicode-range` means it
+costs Azerbaijani and English readers nothing.
+
+`onScroll` runs once per animation frame via `requestAnimationFrame`, not once per scroll
+event, and it performs every read (`scrollY`, `innerHeight`, `scrollHeight`, the process
+section's rect) before any write. It previously interleaved them — read `scrollHeight`,
+write a style, then call `getBoundingClientRect` — which forced a synchronous re-layout
+in the middle of the handler, several times per frame while scrolling. `updateProcess`
+takes the rect as an argument for that reason; **don't have it measure anything itself.**
+
+`.hero-atmosphere` carries `will-change: transform` because it is a 20px blur over an
+element 160% the size of the hero, transformed continuously for 26 seconds. Without the
+hint the blur is re-applied every frame.
+
+Still expensive and deliberately left alone, since removing them changes the design:
+`backdrop-filter` on `.itinerary` (blur 14px) and on `.site-header.is-scrolled`
+(blur 20px), and the two SVG grain layers.
+
 ## Testing changes
 
 Headless screenshots on Windows have two traps worth knowing:
