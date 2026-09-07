@@ -8,31 +8,53 @@
    TOKENS
 --------------------------------------------------------- */
 :root {
-  /* Ink family — dark bands */
-  --ink:        #050D22;
-  --ink-raise:  #0B1733;
-  --navy:       #0B1E45;
-  --navy-line:  #1C3566;
+  /* ---------------------------------------------------------
+     ELECTRIC
+     One flat system. Colour is either ground, text, hairline or signal —
+     there is no elevation layer, because nothing on this page is raised.
 
-  /* Gold — structural, never a fill */
-  --gold:       #E3B341;   /* on dark only: 10.1:1 on --ink */
-  --gold-lift:  #F7DE9B;
-  --gold-ink:   #8A6D14;   /* on light: 4.7:1 on --paper — unchanged */
-  --gold-haze:  rgba(227, 179, 65, 0.16);
+     The accent exists twice, and the two are not interchangeable:
+     --accent is bright enough to sit on the ink band (5.8:1 on --ink) and
+     fails on white; --accent-ink is the deep version for light grounds
+     (7.8:1 on --paper). Using the bright one on paper is the single
+     easiest way to break this palette.
+  --------------------------------------------------------- */
+
+  /* Ink family — dark bands */
+  --ink:        #080E20;
+  --ink-raise:  #101B38;
+  --navy:       #0D1830;
+  --navy-line:  #1E2C50;
+
+  /* Signal */
+  --accent:      #4C82FF;
+  --accent-lift: #6E9AFF;
+  --accent-ink:  #1B45C4;
+  --accent-haze: rgba(76, 130, 255, 0.14);
+
+  /* The old gold names still appear in rules that have not been renamed.
+     They are aliases now, not a second colour — delete them once nothing
+     references them. */
+  --gold:      var(--accent);
+  --gold-lift: var(--accent-lift);
+  --gold-ink:  var(--accent-ink);
+  --gold-haze: var(--accent-haze);
 
   /* Paper family — light bands */
-  --paper:      #FBFAF7;
-  --paper-alt:  #F1EFE9;
-  --paper-line: rgba(16, 22, 37, 0.12);
+  --paper:      #FFFFFF;
+  --paper-alt:  #EEF2FC;
+  --paper-line: #D9E0F0;
 
   /* Text */
-  --text:       #101625;
-  --muted:      #5C6577;   /* 5.6:1 on --paper */
-  --on-ink:     #F4F6FB;
-  --muted-ink:  #93A0BC;   /* 7.4:1 on --ink */
+  --text:       #080E20;
+  --muted:      #5A6480;   /* 6.4:1 on --paper */
+  --on-ink:     #F4F7FF;
+  --muted-ink:  #93A2C8;   /* 7.6:1 on --ink */
 
-  /* Type */
-  --display: 'Fraunces', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  /* Type — one family. Size carries the hierarchy, never weight, and
+     Inter Tight covers Cyrillic and the Azerbaijani schwa, so there is no
+     per-glyph fallback the way the old serif stack needed. */
+  --display: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --body:    'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
@@ -40,47 +62,20 @@
   --s1: 0.5rem;  --s2: 1rem;    --s3: 1.5rem;  --s4: 2rem;
   --s5: 3rem;    --s6: 4rem;    --s7: 6rem;    --s8: 8rem;
 
-
-  /* -------------------------------------------------------
-     ELECTRIC — the new system.
-     Prefixed --n- while the page converts section by section, so the
-     sections that have not moved yet keep the old tokens and nothing
-     breaks in between. The two sets collapse into one at the end.
-
-     The accent exists twice on purpose, the same rule the old gold
-     followed: --n-accent is bright enough to sit on the ink band
-     (5.8:1) and would fail on white; --n-accent-ink is the deeper
-     version for light grounds (7.8:1). Never swap them.
-  ------------------------------------------------------- */
-  --n-ink:        #080E20;
-  --n-ink-soft:   #101B38;
-  --n-line-dark:  #1E2C50;
-  --n-paper:      #FFFFFF;
-  --n-paper-alt:  #EEF2FC;
-  --n-line:       #D9E0F0;
-  --n-text:       #080E20;
-  --n-muted:      #5A6480;
-  --n-on-ink:     #F4F7FF;
-  --n-muted-ink:  #93A2C8;
-  --n-accent:     #4C82FF;
-  --n-accent-ink: #1B45C4;
-
-  --radius:    14px;
+  --radius:    12px;
   --radius-sm: 8px;
 
-  --shadow-md: 0 10px 40px rgba(5, 13, 34, 0.10);
-  --shadow-lg: 0 30px 80px rgba(5, 13, 34, 0.16);
-  --shadow-gold: 0 24px 70px rgba(227, 179, 65, 0.20);
-
-  /* Depth on DARK surfaces. A navy shadow on a navy band is invisible, which is
-     why the ink sections read as flat sheets. Elevation on dark has to come from
-     three things at once: a surface lighter than its ground, a lit top edge, and
-     a genuinely black shadow beneath. */
-  --rise:    inset 0 1px 0 rgba(244, 246, 251, 0.10);
-  --cast-md: 0 18px 40px -12px rgba(0, 0, 0, 0.60);
-  --cast-lg: 0 44px 90px -24px rgba(0, 0, 0, 0.75);
-  /* Gold that emits rather than prints. */
-  --emit:    0 0 22px rgba(227, 179, 65, 0.30);
+  /* Depth is gone. These are kept as no-ops so the rules that still name
+     them resolve to nothing rather than to a stale navy glow; they go when
+     the last reference does. Surfaces separate by hairline and by ground,
+     which is the whole point of a flat system. */
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-gold: none;
+  --rise: none;
+  --cast-md: none;
+  --cast-lg: none;
+  --emit: none;
 
   --ease:      cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
@@ -152,14 +147,18 @@ svg { display: block; }
 --------------------------------------------------------- */
 h1, h2, h3 {
   font-family: var(--display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  /* Weight stays at 400 everywhere. Size is the only thing that ranks one
+     heading above another, which is what keeps the page calm at these
+     sizes. The SOFT and WONK axes went with Fraunces — Inter Tight has
+     neither, and a variable-axis rule naming axes the font does not have
+     is dead weight. */
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
 }
 
 h2 {
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.5rem);
+  font-size: clamp(2.1rem, 1.1rem + 3.9vw, 4.4rem);
   color: var(--text);
 }
 
@@ -173,13 +172,13 @@ h3 {
 /* Section framing --------------------------------------- */
 .section { padding-block: clamp(4rem, 2rem + 8vw, 8rem); }
 
-.section-head { max-width: 46rem; margin-bottom: var(--s6); }
+.section-head { max-width: 52rem; margin-bottom: var(--s6); }
 
 .section-label {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: var(--s3);
+  margin-bottom: var(--s2);
   font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 500;
@@ -213,7 +212,7 @@ h3 {
   inset: 0;
   background:
     radial-gradient(120% 70% at 50% -10%, rgba(28, 53, 102, 0.42), transparent 74%),
-    radial-gradient(60% 50% at 82% 88%, rgba(227, 179, 65, 0.06), transparent 76%);
+    radial-gradient(60% 50% at 82% 88%, rgba(76, 130, 255, 0.06), transparent 76%);
   pointer-events: none;
 }
 .band-ink::after {
@@ -226,6 +225,34 @@ h3 {
   pointer-events: none;
 }
 .band-ink > * { position: relative; z-index: 1; }
+
+
+/* ---------------------------------------------------------
+   MARKER
+   One drawn stroke under one phrase per section. Emphasis, not decoration:
+   never more than a single mark in view, and never handwriting.
+
+   Drawn as a background image rather than an inline SVG so the marked
+   phrase can live inside a translation string and each language can mark
+   its own words. The stroke colour has to be baked into the data URI —
+   custom properties do not resolve inside one — which is why there are two
+   rules: bright on dark grounds, deep on light.
+--------------------------------------------------------- */
+.mark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%234C82FF' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.24em;
+  padding-bottom: 0.08em;
+  /* A marked phrase that wraps draws the stroke twice, once under each
+     fragment, which reads as two mistakes rather than one emphasis. Marked
+     phrases are kept short in every language so this cannot overflow. */
+  white-space: nowrap;
+}
+.band-paper .mark,
+.band-paper-alt .mark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%231B45C4' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+}
 
 /* ---------------------------------------------------------
    BUTTONS
@@ -245,36 +272,18 @@ h3 {
   letter-spacing: 0.005em;
   white-space: nowrap;
   overflow: hidden;
-  transition: transform 0.28s var(--spring), box-shadow 0.28s var(--ease),
-              background-color 0.24s var(--ease), color 0.24s var(--ease),
+  transition: background-color 0.24s var(--ease), color 0.24s var(--ease),
               border-color 0.24s var(--ease);
 }
 .btn-block { display: flex; width: 100%; }
 
+/* Flat. A solid signal button and a hairline one — no gradient, no glow,
+   no sheen sweep, and no lift on hover. Colour changes, nothing moves. */
 .btn-gold {
-  background: linear-gradient(180deg, var(--gold-lift), var(--gold) 55%);
+  background: var(--accent);
   color: var(--ink);
-  box-shadow: 0 8px 26px rgba(227, 179, 65, 0.34), var(--emit),
-              inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
-.btn-gold:hover {
-  background: linear-gradient(180deg, #FFF0C8, var(--gold-lift) 60%);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 44px rgba(227, 179, 65, 0.44), 0 0 34px rgba(227, 179, 65, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-.btn-gold:active { transform: translateY(-1px); }
-
-/* Sheen sweep on gold buttons */
-.btn-gold::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.55) 50%, transparent 65%);
-  transform: translateX(-120%);
-  transition: transform 0.7s var(--ease-out);
-}
-.btn-gold:hover::after { transform: translateX(120%); }
+.btn-gold:hover { background: var(--accent-lift); }
 
 .btn-line {
   border: 1px solid var(--paper-line);
@@ -282,9 +291,8 @@ h3 {
   background: transparent;
 }
 .btn-line:hover {
-  border-color: var(--gold-ink);
-  color: var(--gold-ink);
-  transform: translateY(-3px);
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
 }
 
 .band-ink .btn-line,
@@ -314,7 +322,7 @@ h3 {
   background: transparent;
   border-bottom: 1px solid transparent;
   box-shadow: inset 0 -1px 0 rgba(244, 246, 251, 0.07),
-              inset 0 -2px 0 rgba(5, 13, 34, 0.55);
+              inset 0 -2px 0 rgba(8, 14, 32, 0.55);
   transition: background-color 0.45s var(--ease), border-color 0.45s var(--ease),
               box-shadow 0.45s var(--ease), backdrop-filter 0.45s var(--ease);
 }
@@ -322,16 +330,16 @@ h3 {
 .site-header .brand-tagline,
 .nav-links a,
 .lang-current {
-  text-shadow: 0 1px 0 rgba(5, 13, 34, 0.85), 0 -1px 0 rgba(244, 246, 251, 0.07);
+  text-shadow: 0 1px 0 rgba(8, 14, 32, 0.85), 0 -1px 0 rgba(244, 246, 251, 0.07);
   transition: text-shadow 0.45s var(--ease), color 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 
 .site-header.is-scrolled {
-  background: rgba(5, 13, 34, 0.62);
+  background: rgba(8, 14, 32, 0.62);
   backdrop-filter: blur(20px) saturate(1.7);
   -webkit-backdrop-filter: blur(20px) saturate(1.7);
   border-bottom-color: rgba(244, 246, 251, 0.12);
-  box-shadow: 0 10px 40px rgba(5, 13, 34, 0.45);
+  box-shadow: 0 10px 40px rgba(8, 14, 32, 0.45);
 }
 /* Glass reads crisp — drop the engraving. */
 .site-header.is-scrolled .brand-name,
@@ -350,7 +358,7 @@ h3 {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--gold-ink), var(--gold), var(--gold-lift));
-  box-shadow: 0 0 12px rgba(227, 179, 65, 0.6);
+  box-shadow: 0 0 12px rgba(76, 130, 255, 0.6);
 }
 
 /* Three zones: brand left, links optically centred in the bar,
@@ -416,7 +424,6 @@ h3 {
   letter-spacing: -0.025em;
   line-height: 1;
   color: var(--on-ink);
-  font-variation-settings: 'opsz' 100, 'SOFT' 0, 'WONK' 1;
 }
 .brand-city {
   font-family: var(--mono);
@@ -515,7 +522,7 @@ h3 {
   min-width: 11.5rem;
   margin-top: 0.5rem;
   padding: 0.35rem;
-  background: rgba(5, 13, 34, 0.94);
+  background: rgba(8, 14, 32, 0.94);
   backdrop-filter: blur(18px) saturate(1.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   border: 1px solid var(--navy-line);
@@ -643,7 +650,7 @@ h3 {
 .hero {
   position: relative;
   overflow: hidden;
-  color: var(--n-on-ink);
+  color: var(--on-ink);
   /* The hero and the ticker together own the first screen. */
   min-height: calc(100svh - var(--ticker-h));
   padding-block: calc(var(--nav-h) + clamp(2.5rem, 1.5rem + 5vw, 5rem))
@@ -657,9 +664,9 @@ h3 {
      headline side near-solid ink, and a bottom fade handing off to the ticker.
      The scrims are re-mixed to the new ink — the old ones were built from
      #050D22 and left a visible seam against #080E20. */
-  background-color: var(--n-ink);
+  background-color: var(--ink);
   background-image:
-    linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--n-ink) 100%),
+    linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--ink) 100%),
     /* The copy sits in the middle now, so the scrim has to be strongest
        there rather than down one side. A diagonal wash would darken the
        left edge and leave the headline sitting on the lit Parliament. */
@@ -712,7 +719,7 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 54rem;
+  max-width: 60rem;
   min-width: 0;
 }
 
@@ -728,10 +735,10 @@ h3 {
   font-weight: 400;
   /* 6.5rem put four lines in the copy column at 1440 and stranded a
      one-word line. The cap is what the column can actually hold. */
-  font-size: clamp(2.3rem, 1.1rem + 3.5vw, 4.5rem);
+  font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.9rem);
   line-height: 0.98;
   letter-spacing: -0.035em;
-  color: var(--n-on-ink);
+  color: var(--on-ink);
   /* Load-bearing, not decorative: the headline crosses the lit half of the
      photograph, and the scrim alone does not hold it. */
   text-shadow: 0 2px 12px rgba(8, 14, 32, 0.85), 0 6px 44px rgba(8, 14, 32, 0.75);
@@ -786,31 +793,14 @@ h3 {
   100% { transform: scale(1.9); opacity: 0; }
 }
 
-/* Mid-rollout bridge. The ticker is still built out of the old gold tokens.
-   Rather than rewrite each rule, remap the tokens locally: custom properties
-   inherit, so every descendant picks up the new accent from one declaration.
-   Deleted when the old tokens are. */
-.ticker {
-  --gold:       var(--n-accent);
-  --gold-lift:  #6E9AFF;
-  --gold-haze:  rgba(76, 130, 255, 0.16);
-  --gold-ink:   var(--n-accent-ink);
-  --ink:        var(--n-ink);
-  --ink-raise:  var(--n-ink-soft);
-  --navy-line:  var(--n-line-dark);
-  --muted-ink:  var(--n-muted-ink);
-  --on-ink:     var(--n-on-ink);
-  --emit:       0 0 22px rgba(76, 130, 255, 0.32);
-}
-
 /* ---------------------------------------------------------
    TRUST TICKER
 --------------------------------------------------------- */
 .ticker {
   overflow: hidden;
   padding-block: 1.1rem;
-  background: var(--n-ink-soft);
-  border-block: 1px solid var(--n-line-dark);
+  background: var(--ink-raise);
+  border-block: 1px solid var(--navy-line);
 }
 .ticker-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
 .ticker:hover .ticker-track { animation-play-state: paused; }
@@ -836,7 +826,7 @@ h3 {
   font-size: 0.68rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--n-muted-ink);
+  color: var(--muted-ink);
 }
 .ticker-item b {
   font-family: var(--mono);
@@ -878,7 +868,7 @@ h3 {
 .svc[open] {
   grid-column: 1 / -1;
   transform: none;
-  border-color: rgba(227, 179, 65, 0.45);
+  border-color: rgba(76, 130, 255, 0.45);
   box-shadow: var(--shadow-md);
 }
 
@@ -922,7 +912,7 @@ h3 {
 .svc-icon svg { width: 24px; height: 24px; }
 .svc:hover .svc-icon {
   transform: translateY(-3px) rotate(-5deg);
-  background: rgba(227, 179, 65, 0.22);
+  background: rgba(76, 130, 255, 0.22);
 }
 
 .svc-head { min-width: 0; }
@@ -1058,7 +1048,7 @@ h3 {
   height: 0%;
   background: linear-gradient(180deg, var(--gold), var(--gold-lift));
   border-radius: 2px;
-  box-shadow: 0 0 14px rgba(227, 179, 65, 0.55);
+  box-shadow: 0 0 14px rgba(76, 130, 255, 0.55);
   transition: height 0.15s linear;
 }
 .process-node {
@@ -1079,7 +1069,7 @@ h3 {
 .process-node.is-on {
   background: var(--gold);
   border-color: var(--gold);
-  box-shadow: 0 0 0 5px rgba(227, 179, 65, 0.18), var(--emit);
+  box-shadow: 0 0 0 5px rgba(76, 130, 255, 0.18), var(--emit);
 }
 
 .process-list { display: grid; gap: clamp(1.5rem, 1rem + 2vw, 2.75rem); }
@@ -1139,7 +1129,7 @@ h3 {
 }
 .plan:hover {
   transform: translateY(-5px);
-  border-color: rgba(227, 179, 65, 0.45);
+  border-color: rgba(76, 130, 255, 0.45);
   box-shadow: var(--shadow-md);
 }
 
@@ -1491,175 +1481,131 @@ h3 {
 
 /* ---------------------------------------------------------
    PARTNERS
-   The one section about people rather than services, placed right
-   after the price because the price is exactly where a parent stops
-   and asks who they are actually handing their child to.
+   The one section about people rather than services, sitting right after
+   the price because the price is where a parent stops and asks who they
+   are handing their child to.
 
-   Each card is built as a credential, not a team photo: a mono role
-   label, hairline rules, and the same BUD locator the itinerary uses.
-   Depth follows the dark recipe — a surface lighter than the band, a
-   lit top edge, and a genuinely black cast. A navy shadow on this
-   band would be invisible.
+   An accordion of first-person stories against a single portrait: opening
+   a name swaps the portrait to that person. First person is doing the work
+   here — "I do not leave until the door is open" is a promise from a named
+   human, which a third-person card can never be.
 
-   The portrait is a 1:1 slot that holds a monogram until a real
-   photograph exists. It is sized by the slot, not by the image, so
-   adding a file later changes nothing about the layout.
+   Nothing about a real person renders until it is confirmed.
+   hidePartnerSlots() hides any row whose name is empty, and hides the
+   section and both nav links if none survive.
 --------------------------------------------------------- */
 .partners {
-  /* Four fixed columns rather than auto-fit: auto-fit would drop the fourth
-     card onto a row of its own at some widths, and a lone card under a row of
-     three reads as an afterthought. The count steps 4 -> 2 -> 1 instead. */
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--s4);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
 }
 
-.partner {
+.partner-rows { border-top: 1px solid var(--navy-line); }
+.partner { border-bottom: 1px solid var(--navy-line); }
+.partner[hidden] { display: none; }
+
+.partner-head {
   display: flex;
-  flex-direction: column;
-  background: var(--ink-raise);
-  border: 1px solid var(--navy-line);
-  border-radius: var(--radius);
+  align-items: baseline;
+  gap: var(--s3);
+  width: 100%;
+  padding: var(--s3) 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+.partner-num {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  flex: none;
+}
+.partner-name {
+  font-size: clamp(1.15rem, 0.9rem + 0.9vw, 1.7rem);
+  letter-spacing: -0.02em;
+  color: var(--muted-ink);
+  transition: color 0.3s var(--ease);
+}
+.partner-role {
+  margin-left: auto;
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+}
+.partner.is-open .partner-name { color: var(--on-ink); }
+.partner-head:hover .partner-name { color: var(--on-ink); }
+.partner-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Height animates from a measured pixel value set in main.js, the same way
+   the FAQ opens — auto is not animatable. */
+.partner-body {
   overflow: hidden;
-  box-shadow: var(--cast-md), var(--rise);
+  height: 0;
 }
-.js .partners > .partner {
-  /* .js .reveal sets the transition shorthand on this same element, so a
-     bare `.partner { transition }` would be discarded. Restate the reveal's
-     own properties alongside the hover ones. See the pricing slots. */
-  transition: transform 0.5s var(--ease-out),
-              box-shadow 0.5s var(--ease-out),
-              border-color 0.5s var(--ease-out),
-              opacity 0.75s var(--ease-out);
-}
-@media (hover: hover) {
-  .partner:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--cast-lg), var(--rise);
-    border-color: var(--gold);
-  }
+.js .partner-body { transition: height 0.4s var(--ease); }
+.partner-line {
+  padding: 0 0 var(--s3) calc(0.68rem + var(--s3));
+  max-width: 44ch;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--muted-ink);
 }
 
+.partner-stage {
+  position: sticky;
+  top: calc(var(--nav-h) + var(--s4));
+  /* Capped and pushed right: at full column width a 4:5 portrait stood
+     200px taller than the whole list of names beside it. */
+  /* width is not optional here: margin-left:auto cancels the grid item's
+     default stretch, and an aspect-ratio box with no intrinsic width then
+     collapses to its min-content — which is the width of the BUDAPEST
+     badge, about 80px. */
+  width: 100%;
+  max-width: 26rem;
+  margin-left: auto;
+}
 .partner-portrait {
   position: relative;
   aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(120% 100% at 50% 0%, rgba(28, 53, 102, 0.55), transparent 70%),
-    var(--navy);
-  border-bottom: 1px solid var(--navy-line);
+  background: var(--ink-raise);
+  border: 1px solid var(--navy-line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
-/* Photo and monogram share one cell, so swapping in a file needs no layout. */
 .partner-photo,
 .partner-monogram { grid-area: 1 / 1; }
-/* `hidden` alone loses to an explicit display value. */
-.partner[hidden],
 .partner-photo[hidden],
 .partner-monogram[hidden] { display: none; }
-.partner-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.partner-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
 .partner-monogram {
-  font-family: var(--display);
-  /* Sized to read as a deliberate typographic plate rather than a letter
-     adrift in an empty square. A photograph will cover it entirely. */
-  font-size: clamp(3.5rem, 2rem + 6vw, 6.5rem);
-  font-weight: 600;
+  font-size: clamp(4rem, 2rem + 8vw, 8rem);
   line-height: 1;
-  color: var(--gold);
-  text-shadow: var(--emit);
+  letter-spacing: -0.04em;
+  color: var(--accent);
 }
 .partner-loc {
   position: absolute;
   left: var(--s2);
   bottom: var(--s2);
-  padding: 0.25rem 0.55rem;
+  padding: 0.25rem 0.6rem;
   font-family: var(--mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.16em;
   color: var(--muted-ink);
-  background: rgba(5, 13, 34, 0.62);
+  background: rgba(8, 14, 32, 0.66);
   border: 1px solid var(--navy-line);
   border-radius: 999px;
 }
-
-.partner-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: var(--s3);
-}
-.partner-role {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.partner-name { font-size: 1.2rem; letter-spacing: -0.01em; }
-.partner-line {
-  margin-top: 0.35rem;
-  padding-top: var(--s2);
-  border-top: 1px solid var(--navy-line);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--muted-ink);
-}
-
-
-/* ---------------------------------------------------------
-   MARKER
-   One drawn stroke under one phrase per section. It is emphasis, not
-   decoration — never more than a single mark in view, and never
-   handwriting. Drawn as a background image rather than an inline SVG so
-   the marked phrase can live inside a translation string.
-
-   The stroke colour has to be baked into the data URI (custom properties
-   do not resolve inside one), which is why there are two rules rather
-   than one. Bright on dark grounds, deep on light.
---------------------------------------------------------- */
-.mark {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%234C82FF' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 0.28em;
-  padding-bottom: 0.1em;
-  /* A marked phrase that wraps draws the stroke twice, once under each
-     fragment, which reads as two mistakes rather than one emphasis. Keeping
-     it on one line also fixes the orphan the headline was leaving. Marked
-     phrases are kept short in every language so this can never overflow. */
-  white-space: nowrap;
-}
-.band-paper .mark, .band-paper-alt .mark {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%231B45C4' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
-}
-
-/* Hero buttons, flat. A solid signal button and a hairline one — no
-   gradient, no glow, no sheen sweep. */
-.n-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.95rem 1.6rem;
-  border-radius: 999px;
-  font-family: var(--body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: 1.2;
-  text-decoration: none;
-  border: 1px solid transparent;
-  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease),
-              color 0.25s var(--ease);
-}
-.n-btn-solid { background: var(--n-accent); color: var(--n-ink); }
-.n-btn-solid:hover { background: #6E9AFF; }
-.n-btn-ghost { border-color: var(--n-line-dark); color: var(--n-on-ink); }
-.n-btn-ghost:hover { border-color: var(--n-accent); color: var(--n-accent); }
 
 /* ---------------------------------------------------------
    FAQ
@@ -1681,7 +1627,7 @@ h3 {
   overflow: hidden;
   transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.faq[open] { border-color: rgba(227, 179, 65, 0.45); box-shadow: var(--shadow-md); }
+.faq[open] { border-color: rgba(76, 130, 255, 0.45); box-shadow: var(--shadow-md); }
 
 .faq summary {
   display: flex;
@@ -1759,9 +1705,9 @@ h3 {
 .clink:hover {
   transform: translateX(6px);
   border-color: var(--gold);
-  background: rgba(227, 179, 65, 0.09);
+  background: rgba(76, 130, 255, 0.09);
 }
-.clink-primary { border-color: rgba(227, 179, 65, 0.55); background: rgba(227, 179, 65, 0.08); }
+.clink-primary { border-color: rgba(76, 130, 255, 0.55); background: rgba(76, 130, 255, 0.08); }
 
 .clink-icon {
   display: grid;
@@ -1894,7 +1840,6 @@ h3 {
 @media (max-width: 1080px) {
   /* Four price columns crush their labels below this. Two rows of two. */
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
-  .partners { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-head { position: static; }
   .contact-inner { grid-template-columns: 1fr; align-items: start; }
@@ -1916,23 +1861,16 @@ h3 {
 @media (max-width: 720px) {
   .container { width: calc(100% - 2.5rem); }
 
-  /* One column of full-width 1:1 portraits would be a screen tall each.
-     Turn the card on its side and let the portrait become a chip. */
+  /* The portrait goes above the names on a phone: side by side there is
+     no room for either. */
   .partners { grid-template-columns: 1fr; }
-  .partner { flex-direction: row; }
-  .partner-portrait {
-    flex: 0 0 96px;
-    aspect-ratio: auto;
-    border-bottom: 0;
-    border-right: 1px solid var(--navy-line);
-  }
-  .partner-monogram { font-size: 2rem; }
-  .partner-loc { display: none; }
-  .partner-body { flex: 1 1 auto; }
+  .partner-stage { position: static; order: -1; }
+  .partner-portrait { aspect-ratio: 3 / 2; }
+  .partner-role { display: none; }
   .hero {
     background-image:
-      linear-gradient(to bottom, rgba(5, 13, 34, 0) 84%, var(--ink) 100%),
-      linear-gradient(to bottom, rgba(5, 13, 34, 0.94) 0%, rgba(5, 13, 34, 0.88) 42%, rgba(5, 13, 34, 0.45) 74%, rgba(5, 13, 34, 0.32) 100%),
+      linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--ink) 100%),
+      linear-gradient(to bottom, rgba(8, 14, 32, 0.94) 0%, rgba(8, 14, 32, 0.88) 42%, rgba(8, 14, 32, 0.45) 74%, rgba(8, 14, 32, 0.32) 100%),
       url('hero-budapest-sm.webp');
     background-position: center, center, 34% bottom;
   }

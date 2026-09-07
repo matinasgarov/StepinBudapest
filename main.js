@@ -27,7 +27,7 @@
       trust1Label: 'Students helped',
       trust2: 'Azerbaijani-Speaking Team',
       trust3: 'WhatsApp Support', trust4: 'Verified Housing Options',
-      servicesLabel: 'Services', servicesTitle: 'What we take care of',
+      servicesLabel: 'Services', servicesTitle: 'What we <span class="mark">take care of</span>',
       servicesSub: 'From the moment your student books their flight to the first week of classes.',
       s1title: 'Airport Pickup', s1text: 'We personally meet your student at Budapest Airport and take them safely to their accommodation.',
       s2title: 'Accommodation', s2text: 'Safe, verified housing — dorm or apartment. We vet every option so you never worry about scams.',
@@ -58,7 +58,7 @@
       how1title: 'Contact Us', how1text: 'When are you arriving? What kind of support do you need? Message us and we will reply on WhatsApp quickly.',
       how2title: 'We Prepare Everything', how2text: 'Your home, your documents, and the pickup plan — everything is fully ready before your child boards the plane.',
       how3title: 'Arrive at Ease', how3text: 'We will be waiting at the airport. Do not worry — we are with them at every step. They will never be alone in Budapest.',
-      pricingLabel: 'Pricing', pricingTitle: 'Choose the right level of support',
+      pricingLabel: 'Pricing', pricingTitle: 'Choose the right <span class="mark">level of support</span>',
       pricingSub: 'All prices are per student, paid once. Government, university and rent costs are paid by you directly — never through us.',
       plan1name: 'Basic',
       plan1scope: 'From landing to their front door',
@@ -101,7 +101,7 @@
       plan3f3: 'A full year of support, not only the first week',
       plan3cta: 'Choose Premium',
       partnersLabel: 'In Budapest',
-      partnersTitle: 'The people who will be there',
+      partnersTitle: 'The people who <span class="mark">will be there</span>',
       partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest, and each one answers for their part of the move.',
       /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
          These three are invented. They are here so the section renders
@@ -128,7 +128,7 @@
       faq3q: 'How do I know my child is safe after arrival?', faq3a: 'We are reachable on WhatsApp at any time, and parents can contact us directly — you do not go through your child to reach us.',
       faq4q: 'Do you guarantee accommodation?', faq4a: 'We provide thoroughly vetted options and guide the final choice. We never recommend anything we haven\'t verified.',
       faq5q: 'Can parents contact you directly?', faq5a: 'Yes — we communicate with both students and parents throughout the entire process.',
-      contactLabel: 'Get in touch', contactTitle: 'Ready to start? Message us today.',
+      contactLabel: 'Get in touch', contactTitle: 'Ready to start? <span class="mark">Message us today.</span>',
       contactSub: 'WhatsApp is the fastest way to reach us. We typically respond within a few hours.',
       footerCopy: '© 2026 StepIn Budapest. All rights reserved.'
     },
@@ -146,7 +146,7 @@
       trust1Label: 'Tələbəyə kömək edildi',
       trust2: 'Azərbaycanca Danışan Komanda',
       trust3: 'WhatsApp Dəstəyi', trust4: 'Yoxlanılmış Yaşayış Seçimləri',
-      servicesLabel: 'Xidmətlər', servicesTitle: 'Biz nə ilə məşğul oluruq',
+      servicesLabel: 'Xidmətlər', servicesTitle: 'Bizim <span class="mark">öhdəmizdəkilər</span>',
       servicesSub: 'Tələbəniz bilet aldığı andan fəaliyyətimiz başlayır.',
       s1title: 'Hava Limanı Qarşılaması', s1text: 'Tələbənizi Budapeşt hava limanında şəxsən qarşılayır və təhlükəsiz şəkildə yaşayış yerinə aparırıq.',
       s2title: 'Yaşama', s2text: 'Təhlükəsiz, yoxlanılmış yaşayış — yataqxana və ya mənzil. Hər variantı yoxlayırıq ki, fırıldaqçılıqdan narahat olmayasınız.',
@@ -177,7 +177,7 @@
       how1title: 'Bizimlə Əlaqə', how1text: 'Nə vaxt gəlirsiniz? Necə bir dəstəyə ehtiyacınız var? Yazın, WhatsApp-da tez bir zamanda cavab verək.',
       how2title: 'Hər Şeyi Hazırlayırıq', how2text: 'Eviniz, sənədləriniz və qarşılama planı — hər şey övladınız təyyarəyə minməmişdən qabaq tam hazır olur.',
       how3title: 'Tam Arxayın olun', how3text: 'Hava limanından - universitetə, hər addımda yanınızdayıq',
-      pricingLabel: 'Qiymətlər', pricingTitle: 'Uyğun dəstək səviyyəsini seçin',
+      pricingLabel: 'Qiymətlər', pricingTitle: 'Uyğun <span class="mark">dəstək səviyyəsini</span> seçin',
       pricingSub: 'Bütün qiymətlər bir tələbə üçün və birdəfəlikdir. Dövlət, universitet və kirayə xərcləri birbaşa sizin tərəfinizdən ödənilir — heç vaxt bizim üzərimizdən.',
       plan1name: 'Basic',
       plan1scope: 'Enişdən evinin qapısına qədər',
@@ -220,7 +220,7 @@
       plan3f3: 'Yalnız ilk həftə deyil, tam bir il dəstək',
       plan3cta: 'Premium seçin',
       partnersLabel: 'Budapeştdə',
-      partnersTitle: 'Orada olacaq insanlar',
+      partnersTitle: '<span class="mark">Orada olacaq</span> insanlar',
       partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri köçün öz hissəsinə cavabdehdir.',
       /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
          These three are invented. They are here so the section renders
@@ -247,7 +247,7 @@
       faq3q: 'Gəlişdən sonra uşağımın təhlükəsiz olduğunu necə biləcəyəm?', faq3a: 'İstənilən vaxt WhatsApp-da əlçatanıq və valideynlər birbaşa bizimlə əlaqə saxlaya bilər — bizə çatmaq üçün övladınızdan keçməyə ehtiyac yoxdur.',
       faq4q: 'Yaşayışa zəmanət verirsiniz?', faq4a: 'Hərtərəfli yoxlanılmış variantlar təqdim edir və son seçimi rəhbərlik edirik. Yoxlamadığımız heç nəyi tövsiyə etmirik.',
       faq5q: 'Valideynlər birbaşa sizinlə əlaqə saxlaya bilər?', faq5a: 'Bəli — bütün proses boyu həm tələbələrlə, həm də valideynlərlə əlaqə saxlayırıq.',
-      contactLabel: 'Əlaqə', contactTitle: 'Başlamağa hazırsınız? Bu gün yazın.',
+      contactLabel: 'Əlaqə', contactTitle: 'Başlamağa hazırsınız? <span class="mark">Bu gün yazın.</span>',
       contactSub: 'WhatsApp bizimlə əlaqə saxlamağın ən sürətli yoludur. Bir neçə saat içində cavab veririk.',
       footerCopy: '© 2026 StepIn Budapest. Bütün hüquqlar qorunur.'
     },
@@ -265,7 +265,7 @@
       trust1Label: 'студентам помогли',
       trust2: 'Команда говорит по-азербайджански',
       trust3: 'Поддержка в WhatsApp', trust4: 'Проверенные варианты жилья',
-      servicesLabel: 'Услуги', servicesTitle: 'Что мы берём на себя',
+      servicesLabel: 'Услуги', servicesTitle: 'Что мы <span class="mark">берём на себя</span>',
       servicesSub: 'С момента покупки билета до первой недели занятий.',
       s1title: 'Трансфер из аэропорта', s1text: 'Мы лично встречаем вашего студента в аэропорту Будапешта и безопасно доставляем до жилья.',
       s2title: 'Жильё', s2text: 'Безопасное, проверенное жильё — общежитие или квартира. Мы проверяем каждый вариант, чтобы вы не беспокоились о мошенничестве.',
@@ -296,7 +296,7 @@
       how1title: 'Свяжитесь с нами', how1text: 'Когда вы прилетаете? Какая поддержка вам нужна? Напишите нам — мы быстро ответим в WhatsApp.',
       how2title: 'Готовим всё', how2text: 'Жильё, документы и план встречи — всё полностью готово до того, как ваш ребёнок сядет в самолёт.',
       how3title: 'Прилетайте спокойно', how3text: 'Мы будем ждать в аэропорту. Не волнуйтесь — мы рядом на каждом шаге. Он никогда не останется один в Будапеште.',
-      pricingLabel: 'Цены', pricingTitle: 'Выберите нужный уровень поддержки',
+      pricingLabel: 'Цены', pricingTitle: 'Выберите нужный <span class="mark">уровень поддержки</span>',
       pricingSub: 'Все цены указаны за одного студента и оплачиваются один раз. Государственные, университетские и арендные расходы вы оплачиваете напрямую — никогда через нас.',
       plan1name: 'Basic',
       plan1scope: 'От посадки до двери его дома',
@@ -339,7 +339,7 @@
       plan3f3: 'Поддержка целый год, а не только первую неделю',
       plan3cta: 'Выбрать Premium',
       partnersLabel: 'В Будапеште',
-      partnersTitle: 'Люди, которые будут рядом',
+      partnersTitle: 'Люди, которые <span class="mark">будут рядом</span>',
       partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште и отвечают за свою часть переезда.',
       /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
          These three are invented. They are here so the section renders
@@ -366,7 +366,7 @@
       faq3q: 'Как я узнаю, что мой ребёнок в безопасности после прибытия?', faq3a: 'Мы доступны в WhatsApp в любое время, и родители могут связаться с нами напрямую — вам не нужно узнавать всё через ребёнка.',
       faq4q: 'Вы гарантируете жильё?', faq4a: 'Мы предоставляем тщательно проверенные варианты и помогаем сделать финальный выбор. Мы никогда не рекомендуем то, чего не проверили.',
       faq5q: 'Могут ли родители напрямую с вами связаться?', faq5a: 'Да — мы общаемся как со студентами, так и с родителями на протяжении всего процесса.',
-      contactLabel: 'Связаться', contactTitle: 'Готовы начать? Напишите нам сегодня.',
+      contactLabel: 'Связаться', contactTitle: 'Готовы начать? <span class="mark">Напишите нам сегодня.</span>',
       contactSub: 'WhatsApp — самый быстрый способ связаться с нами. Обычно мы отвечаем в течение нескольких часов.',
       footerCopy: '© 2026 StepIn Budapest. Все права защищены.'
     }
@@ -375,7 +375,13 @@
   var SUPPORTED = ['en', 'az', 'ru'];
   var STORE_KEY = 'stepin-lang';
   // Keys whose value is allowed to contain markup. Keep this list minimal.
-  var RICH_KEYS = ['heroTitle'];
+  /* Applied with innerHTML rather than textContent, because the marked
+     phrase is part of the sentence and differs per language. Every value is
+     a literal written in this file — nothing here comes from a user or a
+     URL — so this list carries no injection surface. Keep it that way: if a
+     string ever starts coming from outside, it does not belong here. */
+  var RICH_KEYS = ['heroTitle', 'servicesTitle', 'pricingTitle',
+                   'partnersTitle', 'contactTitle'];
 
   /* -------------------------------------------------------
      LANGUAGE
@@ -463,40 +469,76 @@
      transliteration follows for free and there is no second key to forget.
      Once a real photograph has a src it replaces the monogram in the same
      grid cell, which is why adding one changes no layout. */
+  /* The portrait belongs to whichever row is open, so the monogram and the
+     photograph are read from that row rather than from a per-card slot.
+     Derived from the name on screen, so a Cyrillic transliteration follows
+     for free and there is no second key to keep in sync. */
+  function showPartner(card) {
+    var stagePhoto = document.querySelector('[data-partner-photo]');
+    var stageMono = document.querySelector('[data-partner-monogram]');
+    if (!card || !stageMono) return;
+
+    var holder = card.querySelector('[data-partner-name] [data-i18n]');
+    var name = holder ? holder.textContent.trim() : '';
+    var src = card.getAttribute('data-photo');
+
+    if (stagePhoto) {
+      if (src) stagePhoto.src = src;
+      stagePhoto.hidden = !src;
+      stagePhoto.alt = src ? name : '';
+    }
+    stageMono.hidden = !!src;
+    stageMono.textContent = name.charAt(0).toUpperCase();
+  }
+
+  function openPartner(card) {
+    document.querySelectorAll('[data-partner]').forEach(function (other) {
+      var body = other.querySelector('.partner-body');
+      var head = other.querySelector('[data-partner-toggle]');
+      var on = other === card;
+
+      other.classList.toggle('is-open', on);
+      if (head) head.setAttribute('aria-expanded', on ? 'true' : 'false');
+      /* Height animates from a measured value; auto is not animatable. It is
+         set to the content height rather than left on auto so a language
+         switch, which changes the text length, re-measures instead of
+         keeping a stale number. */
+      if (body) body.style.height = on ? body.scrollHeight + 'px' : '0px';
+    });
+    showPartner(card);
+  }
+
+  document.querySelectorAll('[data-partner-toggle]').forEach(function (head) {
+    head.addEventListener('click', function () {
+      var card = head.closest('[data-partner]');
+      /* Clicking the open row closes nothing: with one shared portrait, a
+         state where no row is open leaves a face belonging to no name. */
+      if (card && !card.classList.contains('is-open')) openPartner(card);
+    });
+  });
+
+  /* Nothing about a real person renders until it is confirmed. A row with no
+     name is a person we have not confirmed, so it does not render at all; if
+     none of them are filled in, the section and its nav links go too. */
   function hidePartnerSlots() {
-    var shown = 0;
+    var shown = null;
 
     document.querySelectorAll('[data-partner]').forEach(function (card) {
       var holder = card.querySelector('[data-partner-name] [data-i18n]');
       var name = holder ? holder.textContent.trim() : '';
-
       card.hidden = name === '';
-      if (!card.hidden) shown++;
-
-      var photo = card.querySelector('[data-partner-photo]');
-      var mono = card.querySelector('[data-partner-monogram]');
-      var hasPhoto = !!(photo && photo.getAttribute('src'));
-
-      if (photo) {
-        photo.hidden = !hasPhoto;
-        photo.alt = hasPhoto ? name : '';
-      }
-      if (mono) {
-        mono.hidden = hasPhoto;
-        mono.textContent = name.charAt(0).toUpperCase();
-      }
-
-      card.querySelectorAll('[data-partner-item]').forEach(function (item) {
-        var h = item.querySelector('[data-i18n]') || item;
-        item.hidden = h.textContent.trim() === '';
-      });
+      if (!card.hidden && !shown) shown = card;
     });
 
     var section = document.querySelector('[data-partners-section]');
-    if (section) section.hidden = shown === 0;
+    if (section) section.hidden = !shown;
     document.querySelectorAll('[data-partners-nav]').forEach(function (li) {
-      li.hidden = shown === 0;
+      li.hidden = !shown;
     });
+
+    /* Re-open the first surviving row. Doing this on every language switch
+       re-measures the body, whose height changes with the translation. */
+    if (shown) openPartner(shown);
   }
 
   function hideEmptySlots() {

@@ -19,13 +19,13 @@
        the noscript copy covers JavaScript being off.
        Dropped from the request: Inter Tight 300 and Fraunces italic 600, which
        nothing in styles.css asks for. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" /></noscript>
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=39" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -120,8 +120,8 @@
         <p class="hero-sub anim" data-anim="3" data-i18n="heroSub">We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.</p>
 
         <div class="hero-actions anim" data-anim="4">
-          <a class="n-btn n-btn-solid" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="ctaPrimary">Message us on WhatsApp</a>
-          <a class="n-btn n-btn-ghost" href="#services" data-i18n="ctaSecondary">What we do</a>
+          <a class="btn btn-gold" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="ctaPrimary">Message us on WhatsApp</a>
+          <a class="btn btn-line" href="#services" data-i18n="ctaSecondary">What we do</a>
         </div>
 
         <p class="hero-note anim" data-anim="5">
@@ -495,57 +495,63 @@
         </header>
 
         <div class="partners">
-          <article class="partner reveal" data-partner>
-            <div class="partner-portrait">
-              <img class="partner-photo" alt="" data-partner-photo hidden />
-              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
-              <span class="partner-loc" aria-hidden="true">BUD</span>
-            </div>
-            <div class="partner-body">
-              <p class="partner-role" data-partner-item><span data-i18n="pt1role"></span></p>
-              <h3 class="partner-name" data-partner-name><span data-i18n="pt1name"></span></h3>
-              <p class="partner-line" data-partner-item><span data-i18n="pt1line"></span></p>
+          <div class="partner-rows">
+          <article class="partner" data-partner>
+            <button class="partner-head" type="button" data-partner-toggle
+                    aria-expanded="true" aria-controls="ptBody1">
+              <span class="partner-num">01</span>
+              <span class="partner-name" data-partner-name><span data-i18n="pt1name"></span></span>
+              <span class="partner-role"><span data-i18n="pt1role"></span></span>
+            </button>
+            <div class="partner-body" id="ptBody1">
+              <p class="partner-line"><span data-i18n="pt1line"></span></p>
             </div>
           </article>
+          <article class="partner" data-partner>
+            <button class="partner-head" type="button" data-partner-toggle
+                    aria-expanded="false" aria-controls="ptBody2">
+              <span class="partner-num">02</span>
+              <span class="partner-name" data-partner-name><span data-i18n="pt2name"></span></span>
+              <span class="partner-role"><span data-i18n="pt2role"></span></span>
+            </button>
+            <div class="partner-body" id="ptBody2">
+              <p class="partner-line"><span data-i18n="pt2line"></span></p>
+            </div>
+          </article>
+          <article class="partner" data-partner>
+            <button class="partner-head" type="button" data-partner-toggle
+                    aria-expanded="false" aria-controls="ptBody3">
+              <span class="partner-num">03</span>
+              <span class="partner-name" data-partner-name><span data-i18n="pt3name"></span></span>
+              <span class="partner-role"><span data-i18n="pt3role"></span></span>
+            </button>
+            <div class="partner-body" id="ptBody3">
+              <p class="partner-line"><span data-i18n="pt3line"></span></p>
+            </div>
+          </article>
+          <article class="partner" data-partner>
+            <button class="partner-head" type="button" data-partner-toggle
+                    aria-expanded="false" aria-controls="ptBody4">
+              <span class="partner-num">04</span>
+              <span class="partner-name" data-partner-name><span data-i18n="pt4name"></span></span>
+              <span class="partner-role"><span data-i18n="pt4role"></span></span>
+            </button>
+            <div class="partner-body" id="ptBody4">
+              <p class="partner-line"><span data-i18n="pt4line"></span></p>
+            </div>
+          </article>
+          </div>
 
-          <article class="partner reveal" data-partner>
+          <!-- One portrait, showing whoever is open. The photo and the
+               monogram share a cell, so adding a real photograph changes
+               no layout. -->
+          <div class="partner-stage">
             <div class="partner-portrait">
               <img class="partner-photo" alt="" data-partner-photo hidden />
               <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
-              <span class="partner-loc" aria-hidden="true">BUD</span>
+              <span class="partner-loc" aria-hidden="true">BUDAPEST</span>
             </div>
-            <div class="partner-body">
-              <p class="partner-role" data-partner-item><span data-i18n="pt2role"></span></p>
-              <h3 class="partner-name" data-partner-name><span data-i18n="pt2name"></span></h3>
-              <p class="partner-line" data-partner-item><span data-i18n="pt2line"></span></p>
-            </div>
-          </article>
-
-          <article class="partner reveal" data-partner>
-            <div class="partner-portrait">
-              <img class="partner-photo" alt="" data-partner-photo hidden />
-              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
-              <span class="partner-loc" aria-hidden="true">BUD</span>
-            </div>
-            <div class="partner-body">
-              <p class="partner-role" data-partner-item><span data-i18n="pt3role"></span></p>
-              <h3 class="partner-name" data-partner-name><span data-i18n="pt3name"></span></h3>
-              <p class="partner-line" data-partner-item><span data-i18n="pt3line"></span></p>
-            </div>
-          </article>
-
-          <article class="partner reveal" data-partner>
-            <div class="partner-portrait">
-              <img class="partner-photo" alt="" data-partner-photo hidden />
-              <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
-              <span class="partner-loc" aria-hidden="true">BUD</span>
-            </div>
-            <div class="partner-body">
-              <p class="partner-role" data-partner-item><span data-i18n="pt4role"></span></p>
-              <h3 class="partner-name" data-partner-name><span data-i18n="pt4name"></span></h3>
-              <p class="partner-line" data-partner-item><span data-i18n="pt4line"></span></p>
-            </div>
-          </article>
+          </div>
         </div>
       </div>
     </section>
@@ -653,6 +659,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=29"></script>
+  <script src="main.js?v=31"></script>
 </body>
 </html>

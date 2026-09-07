@@ -30,63 +30,96 @@ Three files, no build:
 
 ### Design system
 
-Defined as tokens at the top of `styles.css`. Two rules matter most:
+Defined as tokens at the top of `styles.css`. The system is **Electric**: flat
+surfaces, one typeface, and a single saturated signal colour. It replaced a
+navy-and-gold system built on elevation — if you find a rule that still speaks
+of gold, gradients or shadow, it is a survivor, not a decision.
 
-- **Gold is structural, never a fill.** Use it for hairlines, active states, numerals, and single accents. `--gold` (`#E3B341`, 10.1:1 on `--ink`) is for dark backgrounds only — it fails contrast on light. On light backgrounds use `--gold-ink` (`#8A6D14`, 4.7:1 on `--paper`). The gold is deliberately matched to the lit Parliament in the hero photograph; an accent duller than the image it sits on reads as muddy.
-- **Depth on dark is not the same as depth on light.** `--shadow-md`/`--shadow-lg` are navy at low opacity and do nothing on the ink bands — a navy shadow on a navy surface is invisible, which is what made the dark half of the page read as flat. Elevation on dark needs three things together: a surface lighter than its ground, a lit top edge (`--rise`), and a genuinely black cast shadow (`--cast-md`/`--cast-lg`). Gold that should read as lit rather than printed gets `--emit`. Use the `--rise`/`--cast-*` pair on dark, the `--shadow-*` pair on light.
-- **Sections alternate dark → light → dark** via `.band-ink` / `.band-paper` / `.band-paper-alt`, so the page reads as chapters. `.section` controls vertical padding; `.band-*` controls background. Keep those responsibilities separate — don't add padding to a `.band-*` rule.
+- **The accent exists twice and the two are not interchangeable.** `--accent`
+  (`#4C82FF`, 5.8:1 on `--ink`) is for dark grounds and fails on white.
+  `--accent-ink` (`#1B45C4`, 7.8:1 on `--paper`) is for light ones. Putting the
+  bright one on paper is the single easiest way to break this palette. The old
+  `--gold*` names are kept as aliases only because some rules still say them;
+  they are not a second colour.
+- **There is no elevation.** `--shadow-*`, `--rise`, `--cast-*` and `--emit`
+  are all `none`. They remain only so rules that still name them resolve to
+  nothing rather than to a stale navy glow. Surfaces separate by ground and by
+  hairline. Do not reintroduce a shadow to solve a separation problem.
+- **Weight never ranks anything.** Every heading is 400. Size is the only
+  hierarchy, which is what keeps the page calm at these sizes.
+- **Sections alternate dark → light → dark** via `.band-ink` / `.band-paper` /
+  `.band-paper-alt`, so the page reads as chapters. `.section` controls vertical
+  padding; `.band-*` controls background. Keep those responsibilities separate.
 
-`.band-ink` carries two pseudo-element layers: `::before` is a wide, very low-contrast
-lift giving the band a light source, `::after` is fine SVG grain that kills gradient
-banding and gives the surface material. Both are `pointer-events: none` and sit under
-`.band-ink > *`, which is raised to `z-index: 1`. The hero repeats the grain via
-`.hero::after` — it is the largest dark surface on the page, and without it the
-photograph has texture while the flat navy around it does not, so the seam shows.
+**Colour written as a literal always survives a palette change.** Both times
+this page has changed colour, the real work was not the tokens — it was the
+dozen-odd `rgba(...)` values written directly into rules, which kept rendering
+the old palette after every token was correct. Before declaring a colour change
+done, grep for the old values, not just the old token names.
 
-The **itinerary** (`.itinerary` in the hero) is the signature element: a typed travel-document motif (`GYD → BUD`, mono codes, hairline rules, dashed route). Its vocabulary recurs as the `.process-spine` in the pinned Process section. Changes to one should keep the other consistent.
+### Type
 
-Type roles: `--display` (Fraunces) for headings, `--body` (Inter Tight) for prose, `--mono` (JetBrains Mono) for labels, codes, prices, and step numbers. The display stack lists Playfair Display second on purpose — Fraunces lacks Cyrillic and `ə`, so the browser falls back per glyph for Russian and Azerbaijani. **Don't remove that fallback.**
+One family: **Inter Tight**, for display and body alike, with **JetBrains Mono**
+for labels, codes, prices and step numbers. `--display` and `--body` both point
+at Inter Tight on purpose.
+
+This is also why the old per-glyph fallback is gone. Fraunces has no Cyrillic and
+no `ə`, so Russian and Azerbaijani used to fall back to Playfair Display glyph by
+glyph. Inter Tight covers both, so **all three languages now render in one face**
+and neither Fraunces nor Playfair is requested any more.
+
+### The marker
+
+One drawn stroke under one phrase per section — emphasis, never decoration, and
+never handwriting. Currently five in total: the hero and four section heads.
+
+The stroke is a **background image, not an inline SVG**, so the marked phrase can
+live inside a translation string and each language can mark its own words. Two
+consequences follow:
+
+- The colour is baked into the data URI, because a custom property cannot resolve
+  inside one. That is why `.mark` is written twice — bright, then deep under
+  `.band-paper`/`.band-paper-alt`.
+- `.mark` is `white-space: nowrap`. A marked phrase that wraps draws the stroke
+  **twice**, once under each fragment, which reads as two mistakes rather than one
+  emphasis. Keep marked phrases short in all three languages.
+
+Because those headings contain markup, their keys are in `RICH_KEYS` and are
+applied with `innerHTML`. Every value is a literal in `main.js` — nothing comes
+from a user or a URL — so the list carries no injection surface. **If a string
+ever starts coming from outside, it does not belong in that list.**
 
 ### Hero image
 
 `hero-budapest.webp` (blue-hour Danube) is a CSS **background** on `.hero`, not an
-`<img>`, layered under two scrims: a diagonal one holding the headline side near-solid
-ink, and a bottom fade handing off to the ticker. `hero-budapest-sm.webp` is a cropped,
-lighter file swapped in below 720px. Both are preloaded in `<head>` with `media`
-attributes — a CSS background is discovered late, so without the preload the art
-arrives after the headline.
+`<img>`. `hero-budapest-sm.webp` is a cropped, lighter file swapped in below 720px.
+Both are preloaded in `<head>` with `media` attributes — a CSS background is
+discovered late, so without the preload the art arrives after the headline.
 
-The delivered files are **cropped from the source**, not just scaled: trimming the lower
-water drops the lit Parliament to roughly three-quarter height, clear of the headline
-block. Compose placement by cropping the file — `background-position` percentages shift
-by the amount the image overflows the viewport, so they drift as the window widens and
-cannot hold a subject in place.
+The copy is a single centred column, and the scrim is shaped to match: a **centred
+radial**, not a diagonal wash. A diagonal darkens one edge, which was right when
+the text hugged the left and is wrong now — it would shade an empty margin while
+leaving the headline on the lit Parliament. If you ever move the copy off-centre,
+the scrim has to move with it.
 
-The subject sits low-left, under the copy, so the hero copy carries `text-shadow` and a
-left-hand scrim gradient. Those are load-bearing for legibility — if you swap the image,
-re-check `.hero-sub` and `.hero-note` against whatever is now behind them.
+`.hero-title`'s `text-shadow` is load-bearing, not decorative: the headline crosses
+the lit half of the photograph and the scrim alone does not hold it. Re-check it
+against any new image.
 
-The hero has no grid overlay; `.hero-grid-lines` remains in use by the contact section only.
+`.hero` carries `min-height: calc(100svh - var(--ticker-h))` so the hero and ticker
+together fill exactly one screen, and `align-items: center` so the copy sits in the
+middle of whatever height that is. `--ticker-h` must stay in sync with `.ticker`'s
+padding plus line box.
 
-`.hero-inner` is `align-items: start`, not `center`. The itinerary's height is set by
-its own content, but the copy column's height swings with translation length — the
-headline runs three lines in English and five in Russian. Centring made whichever
-language happened to match the card look deliberate and the other two look like they
-were floating. Anchoring both tops means every language lines up at the same y and the
-difference falls out of the bottom instead. Check a layout change here in **all three
-languages**, not just the one you are reading — this class of bug is invisible in one.
+The old two-column hero is gone, and with it a whole class of bug: the itinerary
+card's height was fixed by its own content while the copy column's swung with
+translation length, so the two columns disagreed differently in each language.
+One column cannot disagree with itself. **The three-language check still matters
+for anything with a fixed width**, but the hero no longer needs it.
 
-`.hero` also carries `min-height: calc(100svh - var(--ticker-h))` so the hero and the
-ticker together fill exactly one screen. Without it the hero's height was purely
-content-driven, so on a viewport taller than the copy the fold landed past the ticker
-and showed a bare strip of the white Services band — which reads as a gap, not as the
-next section. `--ticker-h` must stay in sync with `.ticker`'s padding plus line box.
-On viewports shorter than the content the min-height simply doesn't bind.
-
-The inline `<head>` script also sets `history.scrollRestoration = 'manual'`. Browsers
-default to restoring the last scroll position on reload, which on a one-page site means
-refreshing drops the reader into the middle of the hero instead of at the headline.
-Fragment links (`#services`) are unaffected — the browser handles those separately.
+The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
+default to restoring scroll position on reload, which on a one-page site drops the
+reader into the middle of the hero instead of at the headline.
 
 ### Pricing cards: opening sideways
 
@@ -183,39 +216,41 @@ absent from the repo.
 
 ### Partners section
 
-`#partners` is the page's only section about people rather than services, and it
-sits between Pricing and FAQ. That placement is deliberate on two counts. The price
-is where a parent stops and asks who they are actually handing their child to, so the
-faces answer that question exactly where it gets asked. It also keeps the band
-alternation intact without touching any existing section: paper -> ink -> paper-alt -> ink.
+`#partners` sits between Pricing and FAQ. The price is where a parent stops and
+asks who they are actually handing their child to, so the faces answer that
+question exactly where it gets asked. It also keeps the band alternation intact:
+paper -> ink -> paper-alt -> ink.
 
-**Nothing about a real person renders until it is confirmed.** `pt1..4name/role/line`
-ship as empty strings in all three languages, and `hidePartnerSlots()` in `main.js`
-hides any card whose **name** is empty, then hides the whole section *and both nav
-links* if no card survives. A partner card is an assertion that a named human will
-meet someone's child; an invented one would poison every other claim on the page.
-Fill the keys in and the section appears on its own.
+It is an **accordion of first-person stories against one shared portrait**.
+Opening a name swaps the portrait to that person. First person is doing the
+work: "I do not leave until the door is open" is a promise from a named human,
+which a third-person card can never be — so keep `pt*line` written in first
+person when the real people are filled in.
+
+**Clicking the open row does not close it.** With one shared portrait, a state
+where no row is open leaves a face belonging to no name.
+
+`openPartner()` sets the body's height to a **measured pixel value** — `auto` is
+not animatable — and `hidePartnerSlots()` re-opens the first surviving row on
+every language switch so the height is re-measured. Skip that and a language
+change leaves a Russian story clipped to the height of the English one.
+
+**Nothing about a real person renders until it is confirmed.** A row whose
+**name** is empty does not render; if no row survives, the section and both nav
+links go too. An invented partner card would poison every other claim on the
+page.
 
 The monogram is derived from whatever name is on screen (`name.charAt(0)`), so a
-Cyrillic transliteration follows for free and there is no second key to forget.
+Cyrillic transliteration follows for free. The portrait `<img>` and the monogram
+share one grid cell, so **adding a real photograph changes no layout** — put the
+file's path in `data-photo` on the row and `showPartner()` does the rest. Note
+that `hidden` alone loses to an explicit `display`, which is why
+`.partner[hidden]` and friends are spelled out.
 
-The portrait is a 1:1 slot. The photo `<img>` and the monogram occupy the same grid
-cell (`grid-area: 1 / 1`), so **adding a real photograph changes no layout** — set
-`src` and `hidePartnerSlots()` swaps which one is hidden. Note that `hidden` alone
-loses to an explicit `display` value, which is why `.partner[hidden]` and friends
-are spelled out.
-
-`.js .partners > .partner` carries the transition, not `.partner` — same trap as the
-pricing slots. `.js .reveal` sets the `transition` shorthand on the same element at
-equal specificity and later in the file, so a bare `.partner { transition }` is
-silently discarded. Restate `opacity` alongside the hover properties.
-
-The grid is four fixed columns, stepping to two below 1080px and one below 720px.
-Auto-fit was wrong here: at some widths it dropped the fourth card onto a row of
-its own, and a lone card under a row of three reads as an afterthought.
-
-Below 720px the card turns on its side and the portrait becomes a 96px chip — one
-column of full-width 1:1 portraits would be most of a screen each.
+`.partner-stage` needs an explicit `width: 100%` beside its `max-width`.
+`margin-left: auto` cancels the grid item's default stretch, and an
+`aspect-ratio` box with no intrinsic width then collapses to its min-content —
+which is the width of the BUDAPEST badge, about 80px.
 
 ### Internationalization
 
@@ -252,10 +287,10 @@ the critical path entirely: `domContentLoaded` went 584ms to ~120ms and `load` 9
 paints in the fallback stack and swaps when the webfonts land. **Don't turn this back
 into a plain stylesheet link.**
 
-Only request weights that `styles.css` actually uses. Inter Tight 300 and Fraunces
-italic 600 were being downloaded and never applied. Note that Fraunces' latin-ext subset
-covers `ə`, so Playfair Display is only fetched for Cyrillic — `unicode-range` means it
-costs Azerbaijani and English readers nothing.
+Only request weights that `styles.css` actually uses. The request is now two
+families — Inter Tight and JetBrains Mono — down from four. Fraunces and Playfair
+Display went with the serif, which also removed the per-glyph fallback Cyrillic
+used to need.
 
 `onScroll` runs once per animation frame via `requestAnimationFrame`, not once per scroll
 event, and it performs every read (`scrollY`, `innerHeight`, `scrollHeight`, the process
@@ -268,16 +303,25 @@ takes the rect as an argument for that reason; **don't have it measure anything 
 element 160% the size of the hero, transformed continuously for 26 seconds. Without the
 hint the blur is re-applied every frame.
 
-Still expensive and deliberately left alone, since removing them changes the design:
-`backdrop-filter` on `.itinerary` (blur 14px) and on `.site-header.is-scrolled`
-(blur 20px), and the two SVG grain layers.
+The hero's grain layer and `.hero-atmosphere` are gone with the depth system —
+the second was a 20px blur transformed every frame for 26 seconds, so its removal
+is a real saving rather than only a visual change.
+
+Still expensive and deliberately left alone, since removing them changes the
+design: `backdrop-filter` on `.site-header.is-scrolled` (blur 20px), and the grain
+layer on `.band-ink`.
 
 ## Testing changes
 
 Headless screenshots on Windows have two traps worth knowing:
 
 - Windows enforces a **minimum window width around 496px**, so `--window-size=390` still lays out at 496 and crops the image. To check a real phone width, load the page in an `<iframe width="390">` — the iframe gets its own layout viewport.
-- Screenshots capture at **first paint**; `setTimeout` callbacks have not run yet. Layout is valid, but anything driven by a timer (the itinerary illumination sequence, count-up) will not appear.
+- Screenshots capture at **first paint**; `setTimeout` callbacks have not run yet. Layout is valid, but anything driven by a timer (the ticker count-up) will not appear.
+- A section rewrite that replaces everything between two comment headers will
+  silently eat any unrelated block that happens to sit between them. That is how
+  `.mark` and the hero's buttons were deleted mid-rollout, and the page rendered
+  without either until it was measured. **Grep for the rules you did not intend
+  to touch after any range-based edit.**
 
 ## Known placeholders
 
