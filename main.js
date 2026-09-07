@@ -24,13 +24,6 @@
       heroSub: 'We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.',
       ctaPrimary: 'Message us on WhatsApp', ctaSecondary: 'What we do',
       heroNote: 'Write in Azerbaijani, Russian or English. We usually answer the same day.',
-      cardLabel: 'Your arrival plan',
-      routeFrom: 'Baku', routeTo: 'Budapest',
-      itinStamp: 'Ready before the flight',
-      step1Title: 'Arrival', step1Text: 'We meet them at the gate',
-      step2Title: 'Housing', step2Text: 'Seen in person, not online',
-      step3Title: 'Documents', step3Text: 'Residence permit and apostille',
-      step4Title: 'Settled', step4Text: 'Bank, SIM card, travel pass',
       trust1Label: 'Students helped',
       trust2: 'Azerbaijani-Speaking Team',
       trust3: 'WhatsApp Support', trust4: 'Verified Housing Options',
@@ -150,13 +143,6 @@
       heroSub: 'Övladınızı hava limanında qarşılayır, təhlükəsiz mənzilin açarlarını təhvil verir və xaricdəki yeni həyatı üçün bütün sənədləri həll edirik.',
       ctaPrimary: 'WhatsApp-da yazın', ctaSecondary: 'Nə edirik',
       heroNote: 'Azərbaycanca, rusca və ya ingiliscə yazın. Adətən elə həmin gün cavab veririk.',
-      cardLabel: 'Gəliş planınız',
-      routeFrom: 'Bakı', routeTo: 'Budapeşt',
-      itinStamp: 'Uçuşdan əvvəl hazırdır',
-      step1Title: 'Gəliş', step1Text: 'Onu çıxışda qarşılayırıq',
-      step2Title: 'Yaşama', step2Text: 'Onlayn yox, öz gözümüzlə',
-      step3Title: 'Sənədlər', step3Text: 'Oturum icazəsi və apostil',
-      step4Title: 'Yerləşmə', step4Text: 'Bank, SIM kart, nəqliyyat kartı',
       trust1Label: 'Tələbəyə kömək edildi',
       trust2: 'Azərbaycanca Danışan Komanda',
       trust3: 'WhatsApp Dəstəyi', trust4: 'Yoxlanılmış Yaşayış Seçimləri',
@@ -276,13 +262,6 @@
       heroSub: 'Встречаем вашего ребёнка в аэропорту, передаём ключи от безопасной квартиры и оформляем все документы для его новой жизни за границей.',
       ctaPrimary: 'Написать в WhatsApp', ctaSecondary: 'Что мы делаем',
       heroNote: 'Пишите по-азербайджански, по-русски или по-английски. Обычно отвечаем в тот же день.',
-      cardLabel: 'Ваш план прибытия',
-      routeFrom: 'Баку', routeTo: 'Будапешт',
-      itinStamp: 'Готово до вылета',
-      step1Title: 'Прилёт', step1Text: 'Встречаем на выходе',
-      step2Title: 'Жильё', step2Text: 'Смотрим сами, не по фото',
-      step3Title: 'Документы', step3Text: 'Вид на жительство и апостиль',
-      step4Title: 'Обустройство', step4Text: 'Банк, SIM-карта, проездной',
       trust1Label: 'студентам помогли',
       trust2: 'Команда говорит по-азербайджански',
       trust3: 'Поддержка в WhatsApp', trust4: 'Проверенные варианты жилья',
@@ -713,19 +692,6 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
     revealTargets.forEach(function (el) { revealObserver.observe(el); });
-  }
-
-  /* -------------------------------------------------------
-     ITINERARY — STEPS ILLUMINATE IN SEQUENCE
-  ------------------------------------------------------- */
-  var itinSteps = document.querySelectorAll('.itin-step');
-
-  if (reduceMotion) {
-    itinSteps.forEach(function (s) { s.classList.add('is-lit'); });
-  } else {
-    itinSteps.forEach(function (step, i) {
-      window.setTimeout(function () { step.classList.add('is-lit'); }, 900 + i * 260);
-    });
   }
 
   /* -------------------------------------------------------

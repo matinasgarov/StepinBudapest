@@ -648,6 +648,10 @@ h3 {
   min-height: calc(100svh - var(--ticker-h));
   padding-block: calc(var(--nav-h) + clamp(2.5rem, 1.5rem + 5vw, 5rem))
                  clamp(4rem, 2rem + 8vw, 8rem);
+  /* Centre the copy in whatever height the hero ends up with. Anchored to the
+     top it left a screen-deep gap above the ticker on a tall viewport. */
+  display: flex;
+  align-items: center;
 
   /* Blue-hour Danube photograph under two scrims: a diagonal one holding the
      headline side near-solid ink, and a bottom fade handing off to the ticker.
@@ -655,15 +659,18 @@ h3 {
      #050D22 and left a visible seam against #080E20. */
   background-color: var(--n-ink);
   background-image:
-    linear-gradient(to bottom, rgba(8, 14, 32, 0) 82%, var(--n-ink) 100%),
-    linear-gradient(95deg,
-      rgba(8, 14, 32, 0.95) 0%,
-      rgba(8, 14, 32, 0.86) 30%,
-      rgba(8, 14, 32, 0.42) 56%,
-      rgba(8, 14, 32, 0.00) 74%),
+    linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--n-ink) 100%),
+    /* The copy sits in the middle now, so the scrim has to be strongest
+       there rather than down one side. A diagonal wash would darken the
+       left edge and leave the headline sitting on the lit Parliament. */
+    radial-gradient(120% 78% at 50% 42%,
+      rgba(8, 14, 32, 0.92) 0%,
+      rgba(8, 14, 32, 0.80) 38%,
+      rgba(8, 14, 32, 0.42) 68%,
+      rgba(8, 14, 32, 0.12) 100%),
     url('hero-budapest.webp');
   background-size: cover;
-  background-position: center, center, 30% bottom;
+  background-position: center, center, center bottom;
   background-repeat: no-repeat;
 }
 
@@ -687,21 +694,28 @@ h3 {
 }
 
 .hero-inner {
+  /* One centred column. With the itinerary gone there is no second column to
+     balance, and the old two-column grid left the copy hugging the left edge
+     of a photograph that is composed around its middle.
+
+     This also retires the align-items: start rule that used to matter here:
+     that existed only because the card's height was fixed while the copy
+     column's swung with translation length. One column, no mismatch. */
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  /* Start, not center. The card's height is fixed by its own content while the
-     copy column's swings with translation length — Russian runs five headline
-     lines, English three. Centring made only the language that happened to
-     match the card look deliberate; anchoring both tops makes every language
-     line up and lets the difference fall out of the bottom instead. */
-  align-items: start;
-  gap: clamp(2.5rem, 1rem + 5vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-/* Grid children default to min-width:auto, which lets the itinerary's
-   intrinsic width set the column and push the page wider than the screen. */
-.hero-copy, .hero-inner > * { min-width: 0; }
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 54rem;
+  min-width: 0;
+}
+
 .hero-title, .hero-sub, .hero-note { overflow-wrap: break-word; }
 
 
@@ -718,14 +732,17 @@ h3 {
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--n-on-ink);
-  text-shadow: 0 2px 30px rgba(8, 14, 32, 0.6);
+  /* Load-bearing, not decorative: the headline crosses the lit half of the
+     photograph, and the scrim alone does not hold it. */
+  text-shadow: 0 2px 12px rgba(8, 14, 32, 0.85), 0 6px 44px rgba(8, 14, 32, 0.75);
 }
 .hero-title em { font-style: normal; font-weight: 400; }
 
 .hero-sub {
+  margin-inline: auto;
   /* Over photography, not flat ink — the shadow is what keeps this readable. */
   color: rgba(244, 247, 255, 0.9);
-  text-shadow: 0 1px 16px rgba(8, 14, 32, 0.95), 0 1px 3px rgba(8, 14, 32, 0.8);
+  text-shadow: 0 1px 4px rgba(8, 14, 32, 0.9), 0 2px 22px rgba(8, 14, 32, 0.95);
   margin-top: var(--s3);
   max-width: 34rem;
   font-size: clamp(1.03rem, 0.95rem + 0.4vw, 1.2rem);
@@ -733,6 +750,7 @@ h3 {
 
 .hero-actions {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: var(--s2);
   margin-top: var(--s4);
@@ -745,7 +763,7 @@ h3 {
   margin-top: var(--s3);
   font-size: 0.85rem;
   color: rgba(244, 247, 255, 0.84);
-  text-shadow: 0 1px 14px rgba(8, 14, 32, 0.95), 0 1px 3px rgba(8, 14, 32, 0.85);
+  text-shadow: 0 1px 4px rgba(8, 14, 32, 0.9), 0 2px 20px rgba(8, 14, 32, 0.95);
 }
 .pulse-dot {
   position: relative;
@@ -768,16 +786,11 @@ h3 {
   100% { transform: scale(1.9); opacity: 0; }
 }
 
-/* ---------------------------------------------------------
-   SIGNATURE: THE ITINERARY
---------------------------------------------------------- */
-
-/* Mid-rollout bridge. The itinerary and the ticker are built out of the old
-   gold tokens across dozens of rules. Rather than rewrite each one now,
-   remap the tokens locally: custom properties inherit, so every descendant
-   picks up the new accent from a single declaration. This block is deleted
-   when the old tokens are. */
-.itinerary, .ticker {
+/* Mid-rollout bridge. The ticker is still built out of the old gold tokens.
+   Rather than rewrite each rule, remap the tokens locally: custom properties
+   inherit, so every descendant picks up the new accent from one declaration.
+   Deleted when the old tokens are. */
+.ticker {
   --gold:       var(--n-accent);
   --gold-lift:  #6E9AFF;
   --gold-haze:  rgba(76, 130, 255, 0.16);
@@ -788,161 +801,6 @@ h3 {
   --muted-ink:  var(--n-muted-ink);
   --on-ink:     var(--n-on-ink);
   --emit:       0 0 22px rgba(76, 130, 255, 0.32);
-}
-
-.itinerary {
-  /* Flat: a solid surface a step lighter than the band, a hairline, and
-     nothing else. The backdrop-filter blur, the gradient and the lit top edge
-     all belonged to the depth system. */
-  position: relative;
-  padding: clamp(1.5rem, 1rem + 1.4vw, 2rem);
-  background: var(--n-ink-soft);
-  border: 1px solid var(--n-line-dark);
-  border-radius: var(--radius-sm);
-}
-
-.itin-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s2);
-  padding-bottom: var(--s2);
-  border-bottom: 1px solid var(--navy-line);
-}
-.itin-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.itin-ref {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  color: var(--muted-ink);
-}
-.itin-ref-num { color: var(--on-ink); }
-
-/* Route line */
-.itin-route {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--s2);
-  padding-block: var(--s3);
-}
-.itin-port { display: flex; flex-direction: column; gap: 2px; }
-.itin-port:last-child { text-align: right; }
-.itin-code {
-  font-family: var(--mono);
-  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--on-ink);
-  line-height: 1;
-}
-.itin-city {
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--muted-ink);
-}
-
-.itin-path {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--gold);
-}
-.itin-dash {
-  flex: 1;
-  height: 1px;
-  background-image: linear-gradient(90deg, currentColor 60%, transparent 0);
-  background-size: 7px 1px;
-  opacity: 0.55;
-}
-.itin-plane {
-  width: 15px;
-  height: 15px;
-  flex: none;
-  transform: rotate(90deg);
-  animation: plane-hover 3.6s var(--ease) infinite;
-}
-@keyframes plane-hover {
-  0%, 100% { transform: rotate(90deg) translateY(0); }
-  50%      { transform: rotate(90deg) translateY(-3px); }
-}
-
-/* Steps — illuminate in sequence */
-.itin-steps { display: flex; flex-direction: column; }
-
-.js .itin-step {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--s2);
-  padding: 0.85rem 0;
-  border-top: 1px solid var(--navy-line);
-  opacity: 0.34;
-  transform: translateX(-6px);
-  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
-}
-.js .itin-step.is-lit { opacity: 1; transform: translateX(0); }
-
-.itin-num {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--gold);
-}
-.itin-body { display: flex; flex-direction: column; line-height: 1.35; }
-.itin-body strong {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--on-ink);
-}
-.itin-body span {
-  font-size: 0.8rem;
-  color: var(--muted-ink);
-}
-
-.itin-tick {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  flex: none;
-  border: 1px solid var(--navy-line);
-  border-radius: 50%;
-  color: transparent;
-  transition: color 0.4s var(--ease) 0.15s, border-color 0.4s var(--ease) 0.15s,
-              background-color 0.4s var(--ease) 0.15s;
-}
-.itin-tick svg { width: 11px; height: 11px; }
-.itin-step.is-lit .itin-tick {
-  color: var(--ink);
-  background: var(--gold);
-  border-color: var(--gold);
-  box-shadow: var(--emit);
-}
-
-.itin-foot {
-  margin-top: var(--s2);
-  padding-top: var(--s2);
-  border-top: 1px solid var(--navy-line);
-}
-.itin-stamp {
-  display: inline-block;
-  padding: 0.3rem 0.7rem;
-  border: 1px dashed rgba(227, 179, 65, 0.5);
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  transform: rotate(-1.5deg);
 }
 
 /* ---------------------------------------------------------
@@ -2037,7 +1895,6 @@ h3 {
   /* Four price columns crush their labels below this. Two rows of two. */
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
   .partners { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .itinerary { max-width: 30rem; }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-head { position: static; }
   .contact-inner { grid-template-columns: 1fr; align-items: start; }
@@ -2091,16 +1948,9 @@ h3 {
   .nav-right { gap: 0.6rem; }
   .brand-name { font-size: 1.05rem; }
 
-  /* Keep the itinerary inside the screen. */
-  .itinerary { max-width: 100%; }
-  .itin-route { gap: 0.6rem; }
-  .itin-code { font-size: 1.35rem; }
-  .itin-city { font-size: 0.66rem; }
-  .itin-step { gap: 0.7rem; }
 }
 
 @media (max-width: 480px) {
-  .itinerary { padding: var(--s3); }
   .footer-inner { flex-direction: column; align-items: flex-start; }
   .plan-figure { font-size: 2.5rem; }
 }
@@ -2118,8 +1968,6 @@ h3 {
   }
 
   .js .anim, .js .reveal { opacity: 1 !important; transform: none !important; }
-  .itin-step { opacity: 1; transform: none; }
-  .itin-step .itin-tick { color: var(--ink); background: var(--gold); border-color: var(--gold); }
   .process-step { opacity: 1; filter: none; transform: none; }
   .ticker-track { animation: none; }
   .wa-float-ring, .pulse-dot::after { display: none; }
