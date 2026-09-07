@@ -1262,7 +1262,7 @@ h3 {
 --------------------------------------------------------- */
 .plans {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--s3);
   align-items: stretch;
 }
@@ -1342,6 +1342,19 @@ h3 {
   color: var(--muted);
 }
 .plan-featured .plan-cur { color: var(--muted-ink); }
+
+/* The lower Standard price. It is a real alternative, not a struck-through
+   "was" figure, so it gets a mono label rather than any discount styling —
+   this page never pretends something is on sale. */
+.plan-alt-price {
+  margin-top: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  color: var(--gold-ink);
+}
+.plan-featured .plan-alt-price { color: var(--gold); }
 
 .plan-list { display: grid; gap: 0.7rem; flex: 1; }
 .plan-list li {
@@ -1439,7 +1452,10 @@ h3 {
   .plans { display: flex; }
 
   .plan-slot {
-    --pd: 18rem;            /* open panel width, padding included */
+    /* Five slots now, not four. Free space is shared five ways, so a slot given
+       basis B ends up B*4/5 wider than its resting fifth; to gain exactly one
+       panel width P, B must be P * 5/4. Change the card count and this changes. */
+    --pd: 17rem;            /* open panel width, padding included */
     --pd-pad: 1.5rem;
     flex: 1 1 0;
     /* Flex items default to min-width: auto, which floors a slot at its own
@@ -1447,7 +1463,7 @@ h3 {
        shrank its face, so the face's text reflowed as the panel appeared. An
        explicit floor below the natural one lets the three squeezed slots give
        up the width the open one needs, while still stopping them collapsing. */
-    min-width: 11rem;
+    min-width: 8rem;
   }
   /* `.js .reveal` sets `transition` on this very element — .reveal lives on the
      slot so the entrance stagger can find it — and at (0,2,0) it ties with
@@ -1464,7 +1480,7 @@ h3 {
                 transform 0.75s var(--ease-out);
   }
   .plan-slot:hover,
-  .plan-slot:focus-within { flex-basis: calc(var(--pd) * 4 / 3); }
+  .plan-slot:focus-within { flex-basis: calc(var(--pd) * 5 / 4); }
 
   .plan { flex-direction: row; }
   .plan-face { padding: clamp(1.5rem, 1rem + 1vw, 2rem); }
@@ -1475,9 +1491,18 @@ h3 {
      padding it no longer has room for. */
   .plan-face > .btn {
     white-space: normal;
-    padding-inline: 1rem;
+    /* Five cards squeeze to ~146px. The label wraps, but the padding cannot,
+       so it has to come down or the button overflows its own card. */
+    padding-inline: 0.6rem;
     line-height: 1.25;
   }
+
+  /* A squeezed card is ~146px wide, leaving ~85px of content. Two things keep
+     the price inside that: the currency drops below the figure instead of
+     sitting beside it, and the figure is a size smaller than in the roomier
+     stacked layouts. Without both, 800 AZN is clipped mid-digit. */
+  .plan-price { flex-wrap: wrap; }
+  .plan-figure { font-size: clamp(1.9rem, 1.3rem + 1.6vw, 2.75rem); }
 
   .plan-detail {
     flex: 0 0 0;
@@ -1513,7 +1538,9 @@ h3 {
   }
 }
 
-/* Two up once there is no longer room to open sideways. */
+/* Two up once there is no longer room to open sideways. Five cards cannot
+   divide evenly, so the last row holds one — and the card left alone is
+   "Build your own", which already reads as a different kind of thing. */
 @media (max-width: 1199px) {
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -1534,6 +1561,11 @@ h3 {
     order: 3;
     margin: 0 clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem)
               clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+    /* .btn-block sets width: 100%, which here means a full card width laid out
+       INSIDE the margins above — so the button hung ~27px past the card and
+       pushed the whole page into horizontal scroll on a phone. As a stretched
+       flex item it fills the space the margins leave, which is what was meant. */
+    width: auto;
   }
 }
 

@@ -103,17 +103,28 @@ the panel take a proportional share and pinned its contents with a `min-width` g
 whenever the guess exceeded the width the panel actually opened to, the text overflowed
 and was cut off mid-word.
 
-**Why `calc(var(--pd) * 4 / 3)`.** Slots are `flex: 1 1 0`, so free space is shared four
-ways. A slot given basis B ends up `B + (free - B)/4` wide — that is `B * 3/4` wider than
-its resting quarter. To gain exactly one panel width P, B must be `P * 4/3`. That keeps
+**Why `calc(var(--pd) * 5 / 4)`.** Slots are `flex: 1 1 0`, so free space is shared five
+ways. A slot given basis B ends up `B + (free - B)/5` wide — that is `B * 4/5` wider than
+its resting fifth. To gain exactly one panel width P, B must be `P * 5/4`. That keeps
 the face at precisely its resting width, so nothing inside it moves as the panel appears.
-**Change the number of cards and this fraction changes.**
+**Change the number of cards and this fraction changes** — it was `4 / 3` when there
+were four.
 
-`.plan-slot` needs an explicit `min-width` (11rem). Flex items default to
-`min-width: auto`, which floors a slot at its own min-content width — about 199px here.
-That floor starves the opening card: it cannot take the width it asked for, so its face
-shrinks and its text reflows as the panel appears. An explicit floor below the natural
-one lets the squeezed slots give up the width.
+`.plan-slot` needs an explicit `min-width` (8rem). Flex items default to
+`min-width: auto`, which floors a slot at its own min-content width. That floor starves
+the opening card: it cannot take the width it asked for, so its face shrinks and its
+text reflows as the panel appears. An explicit floor below the natural one lets the
+squeezed slots give up the width. **The fifth card made this tight.** At 1440px five
+slots rest at 214px and squeeze to 149px, so the old 11rem (176px) floor left nothing to
+give and the opening face collapsed 214 -> 106px. 8rem clears it, but only just: at
+`--pd: 18rem` the squeeze reaches 145px and the Standard face clips again. 17rem is the
+largest panel that fits. Verify with a real hover, not by reading the CSS.
+
+A squeezed 149px card has ~85px of content width, which is narrower than `800 AZN` set
+on one line. Two rules in the `min-width: 1200px` block keep it legible: `.plan-price`
+is `flex-wrap: wrap`, so the currency drops below the figure, and `.plan-figure` takes a
+smaller clamp than it does in the stacked layouts. Drop either and the price is clipped
+mid-digit in every card that is not being hovered.
 
 `.plan-face > .btn` overrides `.btn`'s `white-space: nowrap; overflow: hidden`, which
 silently truncates a long label in a squeezed card. Labels here have to wrap.
@@ -153,8 +164,22 @@ Newlines in that message are `String.fromCharCode(10)`, not `
 this file through shell heredocs has repeatedly eaten the backslash and produced a real
 line break inside a string literal, which is a syntax error. Keep it escape-free.
 
-Four price columns only fit at full width; the grid drops to 2×2 below 1080px and to one
+Five price columns only fit at full width; the grid drops to two below 1200px and to one
 column below 900px, where `.plan-featured { order: -1 }` floats Standard to the top.
+Five never divides evenly, so the two-column rows leave one card alone at the end — the
+order puts *Build your own* there, which already reads as a different kind of thing.
+
+**The row is as tall as the tallest panel even while every panel is shut.** That is what
+keeps the row from resizing on hover, and it is why a long list in one card adds dead
+space to all five. Standard at six bullets set the row to 561px; merging two of them
+brought it to 524px. If the cards ever look empty, shorten the longest panel rather than
+reaching for a height animation.
+
+**Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
+text, because a number is the same in all three languages. The Standard card carries a
+second line (`planAltPrice`) for the lower without-guardianship price; that one *is*
+translated, since it is a sentence. Internal partner-payment figures are deliberately
+absent from the repo.
 
 ### Partners section
 
