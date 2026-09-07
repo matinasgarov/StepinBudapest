@@ -25,7 +25,7 @@
   <!-- Hero art is a CSS background, so preload it or it arrives after the headline. -->
   <link rel="preload" as="image" href="hero-budapest.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="preload" as="image" href="hero-budapest-sm.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=32" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -112,8 +112,6 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-atmosphere" aria-hidden="true"></div>
-
     <div class="container hero-inner">
       <div class="hero-copy">
 
@@ -122,8 +120,8 @@
         <p class="hero-sub anim" data-anim="3" data-i18n="heroSub">We meet your child at the airport, hand over the keys to a safe flat, and sort out every piece of paperwork for their new life abroad.</p>
 
         <div class="hero-actions anim" data-anim="4">
-          <a class="btn btn-gold" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="ctaPrimary">Message us on WhatsApp</a>
-          <a class="btn btn-line" href="#services" data-i18n="ctaSecondary">What we do</a>
+          <a class="n-btn n-btn-solid" href="https://wa.me/994000000000" target="_blank" rel="noreferrer" data-i18n="ctaPrimary">Message us on WhatsApp</a>
+          <a class="n-btn n-btn-ghost" href="#services" data-i18n="ctaSecondary">What we do</a>
         </div>
 
         <p class="hero-note anim" data-anim="5">
@@ -725,6 +723,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=26"></script>
+  <script src="main.js?v=28"></script>
 </body>
 </html>

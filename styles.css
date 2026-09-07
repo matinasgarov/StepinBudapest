@@ -40,6 +40,31 @@
   --s1: 0.5rem;  --s2: 1rem;    --s3: 1.5rem;  --s4: 2rem;
   --s5: 3rem;    --s6: 4rem;    --s7: 6rem;    --s8: 8rem;
 
+
+  /* -------------------------------------------------------
+     ELECTRIC — the new system.
+     Prefixed --n- while the page converts section by section, so the
+     sections that have not moved yet keep the old tokens and nothing
+     breaks in between. The two sets collapse into one at the end.
+
+     The accent exists twice on purpose, the same rule the old gold
+     followed: --n-accent is bright enough to sit on the ink band
+     (5.8:1) and would fail on white; --n-accent-ink is the deeper
+     version for light grounds (7.8:1). Never swap them.
+  ------------------------------------------------------- */
+  --n-ink:        #080E20;
+  --n-ink-soft:   #101B38;
+  --n-line-dark:  #1E2C50;
+  --n-paper:      #FFFFFF;
+  --n-paper-alt:  #EEF2FC;
+  --n-line:       #D9E0F0;
+  --n-text:       #080E20;
+  --n-muted:      #5A6480;
+  --n-on-ink:     #F4F7FF;
+  --n-muted-ink:  #93A2C8;
+  --n-accent:     #4C82FF;
+  --n-accent-ink: #1B45C4;
+
   --radius:    14px;
   --radius-sm: 8px;
 
@@ -618,75 +643,37 @@ h3 {
 .hero {
   position: relative;
   overflow: hidden;
-  color: var(--on-ink);
-  /* The hero and the ticker together own the first screen. Without this the
-     hero's height is purely content-driven, so on a given viewport the fold
-     landed wherever the copy happened to end — often a little past the ticker,
-     showing a bare strip of the white Services band with nothing in it yet.
-     That sliver reads as a gap rather than as the next section. */
+  color: var(--n-on-ink);
+  /* The hero and the ticker together own the first screen. */
   min-height: calc(100svh - var(--ticker-h));
   padding-block: calc(var(--nav-h) + clamp(2.5rem, 1.5rem + 5vw, 5rem))
                  clamp(4rem, 2rem + 8vw, 8rem);
 
-  /* Blue-hour Danube photograph under two scrims: a diagonal one that keeps
-     the headline side near-solid ink, and a bottom fade that hands off to the
-     ticker. The photo's lit side is deliberately left readable on the right.
-     (A third, uniform vertical scrim used to sit here too — it ignored the
-     30%/bottom crop entirely and darkened the whole image at every width,
-     which is why the photo barely showed. Two scrims, not three.) */
-  background-color: var(--ink);
+  /* Blue-hour Danube photograph under two scrims: a diagonal one holding the
+     headline side near-solid ink, and a bottom fade handing off to the ticker.
+     The scrims are re-mixed to the new ink — the old ones were built from
+     #050D22 and left a visible seam against #080E20. */
+  background-color: var(--n-ink);
   background-image:
-    linear-gradient(to bottom, rgba(5, 13, 34, 0) 82%, var(--ink) 100%),
+    linear-gradient(to bottom, rgba(8, 14, 32, 0) 82%, var(--n-ink) 100%),
     linear-gradient(95deg,
-      rgba(5, 13, 34, 0.80) 0%,
-      rgba(5, 13, 34, 0.55) 26%,
-      rgba(5, 13, 34, 0.16) 50%,
-      rgba(5, 13, 34, 0.00) 66%),
+      rgba(8, 14, 32, 0.95) 0%,
+      rgba(8, 14, 32, 0.86) 30%,
+      rgba(8, 14, 32, 0.42) 56%,
+      rgba(8, 14, 32, 0.00) 74%),
     url('hero-budapest.webp');
   background-size: cover;
   background-position: center, center, 30% bottom;
   background-repeat: no-repeat;
 }
 
-/* Same grain as the ink bands. The hero is the largest dark surface on the
-   page; without it the photo has texture and the flat navy around it doesn't,
-   and the seam between them shows. */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 0;
-}
+/* The grain layer and the blurred .hero-atmosphere blob are gone with the old
+   depth system: both existed to make a gradient surface feel material, and
+   this hero has no gradient to rescue. Dropping the atmosphere also removes a
+   20px blur that was being transformed every frame for 26 seconds.
+   .hero-grid-lines stays below — the hero no longer uses it, the contact
+   section still does. */
 
-/* Ambient drifting glow */
-.hero-atmosphere {
-  position: absolute;
-  inset: -30%;
-  background:
-    radial-gradient(38% 44% at 22% 28%, rgba(28, 53, 102, 0.85), transparent 70%),
-    radial-gradient(30% 36% at 76% 62%, rgba(227, 179, 65, 0.16), transparent 72%),
-    radial-gradient(46% 50% at 58% 8%, rgba(11, 30, 69, 0.9), transparent 75%);
-  filter: blur(20px);
-  opacity: 0.5;
-  animation: drift 26s var(--ease) infinite alternate;
-  pointer-events: none;
-  /* A 20px blur over an element 160% the size of the hero, transformed every
-     frame for 26s. Without a promotion hint the browser re-applies the blur on
-     each frame; with it the layer is rasterized once and only the transform
-     runs on the compositor. */
-  will-change: transform;
-}
-@keyframes drift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(3%, -2%, 0) scale(1.07); }
-  100% { transform: translate3d(-2%, 3%, 0) scale(1.03); }
-}
-
-/* Faint grid — the "document" underlay */
 .hero-grid-lines {
   position: absolute;
   inset: 0;
@@ -718,23 +705,27 @@ h3 {
 .hero-title, .hero-sub, .hero-note { overflow-wrap: break-word; }
 
 
+/* Size carries the hierarchy, not weight. The display face is Inter Tight at
+   400 — the same family as the body copy, which is the point: one voice, and
+   no per-glyph fallback, because Inter Tight covers Cyrillic and the
+   Azerbaijani schwa that Fraunces does not. */
 .hero-title {
-  font-size: clamp(2.4rem, 1.1rem + 4.6vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: var(--on-ink);
-}
-.hero-title { text-shadow: 0 2px 30px rgba(5, 13, 34, 0.6); }
-.hero-title em {
-  font-style: italic;
+  font-family: var(--body);
   font-weight: 400;
-  color: var(--gold);
+  /* 6.5rem put four lines in the copy column at 1440 and stranded a
+     one-word line. The cap is what the column can actually hold. */
+  font-size: clamp(2.3rem, 1.1rem + 3.5vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--n-on-ink);
+  text-shadow: 0 2px 30px rgba(8, 14, 32, 0.6);
 }
+.hero-title em { font-style: normal; font-weight: 400; }
 
 .hero-sub {
   /* Over photography, not flat ink — the shadow is what keeps this readable. */
-  color: rgba(244, 246, 251, 0.88);
-  text-shadow: 0 1px 16px rgba(5, 13, 34, 0.95), 0 1px 3px rgba(5, 13, 34, 0.8);
+  color: rgba(244, 247, 255, 0.9);
+  text-shadow: 0 1px 16px rgba(8, 14, 32, 0.95), 0 1px 3px rgba(8, 14, 32, 0.8);
   margin-top: var(--s3);
   max-width: 34rem;
   font-size: clamp(1.03rem, 0.95rem + 0.4vw, 1.2rem);
@@ -753,8 +744,8 @@ h3 {
   gap: 0.6rem;
   margin-top: var(--s3);
   font-size: 0.85rem;
-  color: rgba(244, 246, 251, 0.82);
-  text-shadow: 0 1px 14px rgba(5, 13, 34, 0.95), 0 1px 3px rgba(5, 13, 34, 0.85);
+  color: rgba(244, 247, 255, 0.84);
+  text-shadow: 0 1px 14px rgba(8, 14, 32, 0.95), 0 1px 3px rgba(8, 14, 32, 0.85);
 }
 .pulse-dot {
   position: relative;
@@ -780,31 +771,34 @@ h3 {
 /* ---------------------------------------------------------
    SIGNATURE: THE ITINERARY
 --------------------------------------------------------- */
-.itinerary {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  padding: var(--s4);
-  /* A travel document is a physical thing. Lifting it off the photograph with a
-     lit top edge and a real cast shadow serves the metaphor — it reads as a card
-     lying on the scene rather than a rectangle drawn over it. */
-  background: linear-gradient(155deg, rgba(18, 40, 86, 0.86), rgba(6, 16, 40, 0.94));
-  backdrop-filter: blur(14px) saturate(1.25);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
-  border: 1px solid rgba(140, 168, 224, 0.22);
-  border-radius: var(--radius);
-  box-shadow: var(--cast-lg), var(--rise);
+
+/* Mid-rollout bridge. The itinerary and the ticker are built out of the old
+   gold tokens across dozens of rules. Rather than rewrite each one now,
+   remap the tokens locally: custom properties inherit, so every descendant
+   picks up the new accent from a single declaration. This block is deleted
+   when the old tokens are. */
+.itinerary, .ticker {
+  --gold:       var(--n-accent);
+  --gold-lift:  #6E9AFF;
+  --gold-haze:  rgba(76, 130, 255, 0.16);
+  --gold-ink:   var(--n-accent-ink);
+  --ink:        var(--n-ink);
+  --ink-raise:  var(--n-ink-soft);
+  --navy-line:  var(--n-line-dark);
+  --muted-ink:  var(--n-muted-ink);
+  --on-ink:     var(--n-on-ink);
+  --emit:       0 0 22px rgba(76, 130, 255, 0.32);
 }
-/* Perforated left edge — the document tell */
-.itinerary::before {
-  content: '';
-  position: absolute;
-  top: 1.25rem;
-  bottom: 1.25rem;
-  left: 0;
-  width: 1px;
-  background-image: linear-gradient(var(--navy-line) 55%, transparent 0);
-  background-size: 1px 9px;
+
+.itinerary {
+  /* Flat: a solid surface a step lighter than the band, a hairline, and
+     nothing else. The backdrop-filter blur, the gradient and the lit top edge
+     all belonged to the depth system. */
+  position: relative;
+  padding: clamp(1.5rem, 1rem + 1.4vw, 2rem);
+  background: var(--n-ink-soft);
+  border: 1px solid var(--n-line-dark);
+  border-radius: var(--radius-sm);
 }
 
 .itin-head {
@@ -957,8 +951,8 @@ h3 {
 .ticker {
   overflow: hidden;
   padding-block: 1.1rem;
-  background: var(--ink-raise);
-  border-block: 1px solid var(--navy-line);
+  background: var(--n-ink-soft);
+  border-block: 1px solid var(--n-line-dark);
 }
 .ticker-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
 .ticker:hover .ticker-track { animation-play-state: paused; }
@@ -978,9 +972,13 @@ h3 {
   align-items: baseline;
   gap: 0.5rem;
   white-space: nowrap;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  color: var(--muted-ink);
+  /* Mono and uppercase: the band reads as a machine-set strip of facts
+     rather than as a sentence someone wrote. */
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--n-muted-ink);
 }
 .ticker-item b {
   font-family: var(--mono);
@@ -1754,6 +1752,57 @@ h3 {
   color: var(--muted-ink);
 }
 
+
+/* ---------------------------------------------------------
+   MARKER
+   One drawn stroke under one phrase per section. It is emphasis, not
+   decoration — never more than a single mark in view, and never
+   handwriting. Drawn as a background image rather than an inline SVG so
+   the marked phrase can live inside a translation string.
+
+   The stroke colour has to be baked into the data URI (custom properties
+   do not resolve inside one), which is why there are two rules rather
+   than one. Bright on dark grounds, deep on light.
+--------------------------------------------------------- */
+.mark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%234C82FF' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.28em;
+  padding-bottom: 0.1em;
+  /* A marked phrase that wraps draws the stroke twice, once under each
+     fragment, which reads as two mistakes rather than one emphasis. Keeping
+     it on one line also fixes the orphan the headline was leaving. Marked
+     phrases are kept short in every language so this can never overflow. */
+  white-space: nowrap;
+}
+.band-paper .mark, .band-paper-alt .mark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 52 3, 104 3, 197 6' fill='none' stroke='%231B45C4' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Hero buttons, flat. A solid signal button and a hairline one — no
+   gradient, no glow, no sheen sweep. */
+.n-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  font-family: var(--body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease),
+              color 0.25s var(--ease);
+}
+.n-btn-solid { background: var(--n-accent); color: var(--n-ink); }
+.n-btn-solid:hover { background: #6E9AFF; }
+.n-btn-ghost { border-color: var(--n-line-dark); color: var(--n-on-ink); }
+.n-btn-ghost:hover { border-color: var(--n-accent); color: var(--n-accent); }
+
 /* ---------------------------------------------------------
    FAQ
 --------------------------------------------------------- */
@@ -2072,7 +2121,6 @@ h3 {
   .itin-step { opacity: 1; transform: none; }
   .itin-step .itin-tick { color: var(--ink); background: var(--gold); border-color: var(--gold); }
   .process-step { opacity: 1; filter: none; transform: none; }
-  .hero-atmosphere { animation: none; }
   .ticker-track { animation: none; }
   .wa-float-ring, .pulse-dot::after { display: none; }
 }
