@@ -49,10 +49,13 @@ of gold, gradients or shadow, it is a survivor, not a decision.
 - **Sections have no eyebrow.** The mono kicker over every heading was removed;
   the headline and the marker under it carry the section on their own, and the
   `*Label` translation keys went with the markup.
-- **There is no elevation.** `--shadow-*`, `--rise`, `--cast-*` and `--emit`
-  are all `none`. They remain only so rules that still name them resolve to
-  nothing rather than to a stale navy glow. Surfaces separate by ground and by
-  hairline. Do not reintroduce a shadow to solve a separation problem.
+- **There is no elevation, with one exception.** `--shadow-*`, `--rise`,
+  `--cast-*` and `--emit` are all `none`. They remain only so rules that still
+  name them resolve to nothing rather than to a stale navy glow. Surfaces
+  separate by ground and by hairline. Do not reintroduce a shadow to solve a
+  separation problem. The exception is the glass pane a hovered services or
+  pricing row lifts out of the list, where the shadow is what makes it a pane;
+  it is written as a literal in that one rule and is not a token.
 - **Weight never ranks anything.** Every heading is 400. Size is the only
   hierarchy, which is what keeps the page calm at these sizes.
 - **Sections alternate dark → light → dark** via `.band-ink` / `.band-paper` /
@@ -152,19 +155,33 @@ reason for any of them.
 
 **The featured row is filled, not outlined** — the only emphasis a flat page has.
 
-**Hover lays glass over the row rather than repainting it.** One rule serves both
-`.plan` and `.svc`. Because nothing inside changes colour, every contrast ratio on the
-row survives untouched — which is exactly what the blue fill it replaced could not do:
-that version needed a block of token remapping under it to keep the numeral, ticks,
-scope line and buttons legible, and any element added to a row later would have missed
-it.
+**Hovering a row lifts a pane of glass out of the list** — translucent, blurred,
+rounded, edge-lit and casting onto the rows behind it. One rule serves both `.plan` and
+`.svc`. Because nothing inside changes colour, every contrast ratio on the row survives
+untouched — which is exactly what the blue fill it replaced could not do: that version
+needed a block of token remapping under it to keep the numeral, ticks, scope line and
+buttons legible, and any element added to a row later would have missed it.
 
-The pane is **smoked on paper and lit on ink**. White glass over white paper is
-invisible and dark glass over the featured row is a smudge, so `.plan-featured:hover`
-gets `rgba(255,255,255,0.09)` where the paper rows get `rgba(13,24,48,0.065)`. The
-`backdrop-filter` is what makes it read as glass instead of as a tint, and the
-`saturate` does more of that work than the blur, since a row's ground is flat and it is
-the band's grain and the type at the pane's edge that actually shift.
+**Glass needs something behind it**, which is the part a first attempt at this got
+wrong. A frosted pane over a flat white band is a grey rectangle: the blur has nothing
+to bend and the saturate has no colour to lift. So `#services` and `#pricing` carry
+`.band-aurora` — three wide, heavily blurred colour fields behind the content, low
+enough in alpha that body text keeps its contrast (the muted grey measures ~5.2:1 over
+the strongest part of the wash) and the band still reads as paper. The rows have no
+ground of their own, so the fields show through and a hovered row has something to
+frost. Its `overflow: hidden` is load-bearing — the fields are inset past the band's
+edges so their soft ends never land inside it.
+
+The featured row is **the same material in the dark**: `rgba(8,14,32,0.86)` with its
+own blur and the same radius, so it belongs to the treatment rather than arguing with
+it, and still measures about 14:1 behind white text. Its hover lightens rather than
+darkens, since a dark pane over dark glass is a smudge.
+
+**This is the one place on the page with real elevation.** The flat system separates
+surfaces by hairline everywhere else; the shadow here is what makes the pane read as a
+pane rather than as a lighter stripe. It is not licence to reintroduce shadow elsewhere.
+Note also that a hovered row's own bottom hairline must go transparent, or a straight
+line crosses the bottom of a rounded card.
 
 The rule sits inside `@media (hover: hover)`. A touch browser fires `:hover` on tap and
 holds it until something else is tapped, so unguarded it would leave the row a parent

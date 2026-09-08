@@ -212,6 +212,33 @@ h3 {
 }
 .band-ink > * { position: relative; z-index: 1; }
 
+/* Glass needs something behind it. A frosted pane over a flat white band is
+   a grey rectangle — the blur has nothing to bend and the saturate has no
+   colour to lift, which is why the first attempt at this read as a tint
+   rather than as glass.
+
+   So the two paper bands that hold rows get a backdrop: three wide, heavily
+   blurred colour fields, low enough in alpha that body text keeps its
+   contrast against them and the band still reads as paper. The rows have no
+   ground of their own, so the fields show through the whole section and a
+   hovered row has something to frost.
+
+   overflow: hidden is load-bearing — the fields are inset past the band's
+   edges so their soft ends never land inside it. */
+.band-aurora { position: relative; overflow: hidden; }
+.band-aurora::before {
+  content: '';
+  position: absolute;
+  inset: -12% -8%;
+  background:
+    radial-gradient(38% 44% at 10% 16%, rgba(76, 130, 255, 0.26), transparent 70%),
+    radial-gradient(34% 40% at 90% 28%, rgba(27, 69, 196, 0.20), transparent 72%),
+    radial-gradient(44% 48% at 58% 92%, rgba(110, 154, 255, 0.26), transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+.band-aurora > * { position: relative; z-index: 1; }
+
 
 /* ---------------------------------------------------------
    MARKER
@@ -841,7 +868,10 @@ h3 {
 .svc {
   position: relative;
   border-bottom: 1px solid var(--paper-line);
-  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  border-radius: 0;
+  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease),
+              transform 0.45s var(--ease-out), border-radius 0.45s var(--ease),
+              border-color 0.45s var(--ease);
 }
 .svc[open] { background: var(--paper-alt); }
 
@@ -1098,41 +1128,53 @@ h3 {
 .plan {
   position: relative;
   border-bottom: 1px solid var(--paper-line);
-  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  border-radius: 0;
+  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease),
+              transform 0.45s var(--ease-out), border-radius 0.45s var(--ease),
+              border-color 0.45s var(--ease);
 }
-/* Glass, not fill. Hovering a row lays a frosted pane over it rather than
-   repainting it, so nothing inside changes colour and every contrast ratio on
-   the row survives untouched — which is the whole reason the previous blue
-   fill needed a block of token remapping underneath it.
+/* Hovering a row lifts a pane of glass out of the list: translucent, blurred,
+   rounded, edge-lit, and casting onto the rows behind it. Nothing inside
+   changes colour, so every contrast ratio on the row survives untouched —
+   which the blue fill this replaced could not manage without a block of token
+   remapping underneath it.
 
-   The pane has to be smoked on paper and lit on ink: white glass over white
-   paper is invisible, and dark glass over the featured row's ink is a smudge.
-   Hence two tints of the same treatment.
+   This is the one place on the page with real elevation, and it is deliberate:
+   the flat system separates surfaces by hairline everywhere else, and a shadow
+   here is what makes the pane read as a pane rather than as a lighter stripe.
+   Do not take it as licence to reintroduce shadow elsewhere.
 
-   backdrop-filter is what makes it read as glass rather than as a tint — the
-   saturate is doing more work than the blur, since a row's own ground is flat
-   and it is the band's grain and the type behind the pane's edge that shift.
+   The row's own hairline has to go transparent on hover, or a straight line
+   crosses the bottom of a rounded card.
 
    Guarded by (hover: hover): a touch browser fires :hover on tap and holds it
    until something else is tapped, which would leave the row a parent just
-   opened frosted with no way to clear it. */
+   opened lifted out of the list with no way to put it back. */
 @media (hover: hover) {
   .plan:hover,
   .plan:has(> .plan-summary:focus-visible),
   .svc:hover,
   .svc:has(> .svc-summary:focus-visible) {
-    background: rgba(13, 24, 48, 0.065);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75),
-                inset 0 -1px 0 rgba(13, 24, 48, 0.05);
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(26px) saturate(200%);
+    -webkit-backdrop-filter: blur(26px) saturate(200%);
+    border-radius: 22px;
+    border-bottom-color: transparent;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.62),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                0 26px 50px -26px rgba(13, 24, 48, 0.5);
+    transform: translateY(-3px);
   }
 
+  /* Lit, not smoked: the featured row is already dark glass, so a dark pane
+     over it is a smudge. */
   .plan-featured:hover,
   .plan-featured:has(> .plan-summary:focus-visible) {
-    background: rgba(255, 255, 255, 0.09);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    background: rgba(8, 14, 32, 0.72);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+                inset 0 1px 0 rgba(255, 255, 255, 0.22),
+                0 26px 50px -26px rgba(8, 14, 32, 0.75);
   }
 }
 
@@ -1140,7 +1182,17 @@ h3 {
    has. Its own hover must be excluded: .plan:hover is (0,2,0) and beats
    .plan-featured at (0,1,0), which would repaint it paper and leave white
    text on a pale ground. */
-.plan-featured { background: var(--ink); color: var(--on-ink); }
+/* The featured row is the same material in the dark: a pane rather than a
+   painted stripe, so it belongs to the hover treatment instead of arguing
+   with it. Ink at 0.86 over the backdrop is still 14:1 behind white text. */
+.plan-featured {
+  background: rgba(8, 14, 32, 0.86);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-radius: 22px;
+  border-bottom-color: transparent;
+  color: var(--on-ink);
+}
 .plan-featured .plan-name,
 .plan-featured .plan-figure { color: var(--on-ink); }
 .plan-featured .plan-scope,
