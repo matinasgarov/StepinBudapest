@@ -115,22 +115,20 @@ applied with `innerHTML`. Every value is a literal in `main.js` — nothing come
 from a user or a URL — so the list carries no injection surface. **If a string
 ever starts coming from outside, it does not belong in that list.**
 
-### Hero image
+### Hero
 
-`hero-budapest.webp` (blue-hour Danube) is a CSS **background** on `.hero`, not an
-`<img>`. `hero-budapest-sm.webp` is a cropped, lighter file swapped in below 720px.
-Both are preloaded in `<head>` with `media` attributes — a CSS background is
-discovered late, so without the preload the art arrives after the headline.
+**There is no hero photograph.** The blue-hour Danube shot was the only image on
+the page and the only thing the copy ever had to fight: the headline crossed the
+lit Parliament, which is why it carried a `text-shadow` and why the scrim had to
+be re-mixed every time the ink changed. The ground is now the same ink, the same
+blurred colour fields and the same grid overlay every other dark band uses, so
+the hero belongs to the page rather than sitting on top of a postcard. The
+`text-shadow`, the two preloads and the phone-specific crop went with it.
+`hero-budapest.webp` and `hero-budapest-sm.webp` are still in the repo and no
+longer referenced — safe to delete.
 
-The copy is a single centred column, and the scrim is shaped to match: a **centred
-radial**, not a diagonal wash. A diagonal darkens one edge, which was right when
-the text hugged the left and is wrong now — it would shade an empty margin while
-leaving the headline on the lit Parliament. If you ever move the copy off-centre,
-the scrim has to move with it.
-
-`.hero-title`'s `text-shadow` is load-bearing, not decorative: the headline crosses
-the lit half of the photograph and the scrim alone does not hold it. Re-check it
-against any new image.
+The copy is a single centred column and the fields are placed to match. The
+bottom fade stays: it hands the hero off to the ticker.
 
 `.hero` carries `min-height: calc(100svh - var(--ticker-h))` so the hero and ticker
 together fill exactly one screen, and `align-items: center` so the copy sits in the
@@ -168,7 +166,16 @@ floor, the fixed panel width, the three-part no-layout-shift contract.
 Standard ships `open`. A section where every row is shut shows five prices and no
 reason for any of them.
 
-**The featured row is filled, not outlined** — the only emphasis a flat page has.
+**The featured row is one of the rows.** It was a dark card, and as a dark card it
+stopped being a row and became a poster dropped into the middle of a list — the eye
+landed on it and then had to work out what the other four were. It is now the same
+glass pane in the same paper, tinted with the accent and edged in it: enough to be
+found first, not enough to break the sequence. It keeps that tint when it lifts
+rather than washing out to its neighbours' white.
+
+Nothing inside it is recoloured any more. Every override that painted its text for
+an ink ground is gone, which also removed the reason the cascade note below used to
+matter.
 
 **Hovering a row lifts a pane of glass out of the list** — translucent, blurred,
 rounded, edge-lit and casting onto the rows behind it. One rule serves both `.plan` and
@@ -251,9 +258,15 @@ paper -> ink -> paper-alt -> ink.
 
 It is an **accordion of first-person stories against one shared portrait**.
 Opening a name swaps the portrait to that person. First person is doing the
-work: "I do not leave until the door is open" is a promise from a named human,
-which a third-person card can never be — so keep `pt*line` written in first
-person when the real people are filled in.
+work: a promise from a named human is something a third-person card can never
+be — so `pt*line` stays in first person.
+
+**They do not have separate jobs.** Any of the three can act as legal guardian,
+meet a student at the airport and handle what follows, which is why every
+`pt*role` says the same thing. The one real distinction is that **Firuzə works
+with female students**, and it is stated twice on purpose: in her role line and
+in her paragraph. `.partner-role` is `display: none` below 720px, so anything
+that only lives in a role line does not reach a phone.
 
 **Clicking the open row does not close it.** With one shared portrait, a state
 where no row is open leaves a face belonging to no name.
@@ -266,9 +279,9 @@ change leaves a Russian story clipped to the height of the English one.
 **Nothing about a real person renders until it is confirmed.** A row whose
 **name** is empty does not render; if no row survives, the section and both nav
 links go too. An invented partner card would poison every other claim on the
-page. Two of the four slots are filled — Firuzə Osmanova (arrival and settling
-in) and İbrahim Musayev (documents and registration), both written from what
-they said about themselves. Slots 03 and 04 are blank on purpose.
+page. Three of the four slots are filled — Firuzə Osmanova, İbrahim Musayev and
+Aqşin Sakif — all written from what they said about themselves. Slot 04 is blank
+on purpose.
 
 `openPartner()` measures with **`contentHeight()`, not `scrollHeight`**.
 `scrollHeight` on an element with `overflow: hidden` returns the larger of its
@@ -368,16 +381,14 @@ Headless screenshots on Windows have two traps worth knowing:
 
 ## Known placeholders
 
-Two of the four **partner** slots are filled with real people. **Slots 03 and 04 are
-blank**, which is why only two names render. Aqşin Sakif (Hungarian University of
-Agriculture and Life Sciences) is confirmed as a third partner but has no role and no
-line yet — a name with an invented job beside it is worse than no third name, so the
-slot stays empty until both arrive. Blanking a name hides that card; blanking all four
-hides the section and its nav links.
+Three of the four **partner** slots hold real people; slot 04 is blank, which is why
+three names render. Blanking a name hides that card; blanking all four hides the
+section and its nav links.
 
-Note also that **no one on the page is named as the legal guardian** any more. The
-Standard and Premium packages still promise guardianship for students under 18, so
-whoever signs that has to appear here before launch.
+**Aqşin Sakif's hobbies are invented** — hiking, Sunday football, knowing where the
+Azerbaijani food is — added at the owner's request to fill out a paragraph that
+otherwise had only his age, his university and his PhD in it. Everything else about
+all three is theirs. Have him read his paragraph before launch.
 
 
 The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**

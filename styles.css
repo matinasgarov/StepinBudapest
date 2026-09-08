@@ -707,26 +707,25 @@ h3 {
   display: flex;
   align-items: center;
 
-  /* Blue-hour Danube photograph under two scrims: a diagonal one holding the
-     headline side near-solid ink, and a bottom fade handing off to the ticker.
-     The scrims are re-mixed to the new ink — the old ones were built from
-     #050D22 and left a visible seam against #080E20. */
+  /* Drawn, not photographed. The Danube shot was the only image on the page
+     and the only thing the copy had to fight: the headline crossed the lit
+     Parliament, which is why it carried a text-shadow and the scrim had to be
+     mixed to hold it. The ground is now the same ink and the same colour
+     fields every other dark band uses, with the grid over it, so the hero
+     belongs to the page instead of sitting on top of a postcard. Two webp
+     files and their preloads went with it.
+
+     The bottom fade stays: it hands off to the ticker. */
   background-color: var(--ink);
   background-image:
-    linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--ink) 100%),
-    /* The copy sits in the middle now, so the scrim has to be strongest
-       there rather than down one side. A diagonal wash would darken the
-       left edge and leave the headline sitting on the lit Parliament. */
-    radial-gradient(120% 78% at 50% 42%,
-      rgba(8, 14, 32, 0.92) 0%,
-      rgba(8, 14, 32, 0.80) 38%,
-      rgba(8, 14, 32, 0.42) 68%,
-      rgba(8, 14, 32, 0.12) 100%),
-    url('hero-budapest.webp');
-  background-size: cover;
-  background-position: center, center, center bottom;
+    linear-gradient(to bottom, rgba(8, 14, 32, 0) 82%, var(--ink) 100%),
+    radial-gradient(46% 52% at 12% 14%, rgba(76, 130, 255, 0.2), transparent 70%),
+    radial-gradient(44% 50% at 88% 22%, rgba(110, 154, 255, 0.15), transparent 72%),
+    radial-gradient(52% 56% at 60% 96%, rgba(76, 130, 255, 0.17), transparent 70%),
+    radial-gradient(120% 80% at 50% 40%, rgba(28, 53, 102, 0.5), transparent 76%);
   background-repeat: no-repeat;
 }
+.hero > .container { position: relative; z-index: 1; }
 
 /* The grain layer and the blurred .hero-atmosphere blob are gone with the old
    depth system: both existed to make a gradient surface feel material, and
@@ -786,9 +785,6 @@ h3 {
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--on-ink);
-  /* Load-bearing, not decorative: the headline crosses the lit half of the
-     photograph, and the scrim alone does not hold it. */
-  text-shadow: 0 2px 12px rgba(8, 14, 32, 0.85), 0 6px 44px rgba(8, 14, 32, 0.75);
 }
 .hero-title em { font-style: normal; font-weight: 400; }
 
@@ -1199,28 +1195,25 @@ h3 {
   .svc:hover,
   .svc:has(> .svc-summary:focus-visible) {
     z-index: 2;
-    background: rgba(255, 255, 255, 0.42);
-    backdrop-filter: blur(26px) saturate(200%);
-    -webkit-backdrop-filter: blur(26px) saturate(200%);
-    border-radius: 22px;
+    background: var(--glass-paper);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-glass);
     border-bottom-color: transparent;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.62),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9),
-                0 26px 50px -26px rgba(13, 24, 48, 0.5);
+    box-shadow: var(--glass-edge), var(--glass-cast);
     transform: translateY(-3px);
   }
 
-  /* Lit, not smoked: the featured row is already dark glass, so a dark pane
-     over it is a smudge. */
-  /* Darker, not lighter. Thinning the ink let the backdrop through and the
-     pane came up blue, which read as a different colour rather than as the
-     same card lifted. */
+  /* The featured row keeps its tint when it lifts rather than washing out to
+     its neighbours' white. It is not excluded from the rule above, only
+     overridden: both selectors are (0,2,0), so this one wins on order. Keep
+     them in this order. */
   .plan-featured:hover,
   .plan-featured:has(> .plan-summary:focus-visible) {
-    background: rgba(8, 14, 32, 0.95);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                0 26px 50px -26px rgba(8, 14, 32, 0.75);
+    background: rgba(76, 130, 255, 0.14);
+    box-shadow: inset 0 0 0 1px rgba(27, 69, 196, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.85),
+                var(--glass-cast);
   }
 }
 
@@ -1228,23 +1221,20 @@ h3 {
    has. Its own hover must be excluded: .plan:hover is (0,2,0) and beats
    .plan-featured at (0,1,0), which would repaint it paper and leave white
    text on a pale ground. */
-/* The featured row is the same material in the dark: a pane rather than a
-   painted stripe, so it belongs to the hover treatment instead of arguing
-   with it. Ink at 0.86 over the backdrop is still 14:1 behind white text. */
+/* One of the rows, not a different object. As a dark card it stopped being a
+   row and became a poster dropped into the middle of a list — the eye landed
+   on it and then had to work out what the other four were. It is now the same
+   pane in the same paper, tinted with the accent and edged in it, which is
+   enough to be found first and not enough to break the sequence. */
 .plan-featured {
-  background: rgba(8, 14, 32, 0.86);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border-radius: 22px;
+  background: rgba(76, 130, 255, 0.08);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-glass);
   border-bottom-color: transparent;
-  color: var(--on-ink);
+  box-shadow: inset 0 0 0 1px rgba(27, 69, 196, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
-.plan-featured .plan-name,
-.plan-featured .plan-figure { color: var(--on-ink); }
-.plan-featured .plan-scope,
-.plan-featured .plan-cur { color: var(--muted-ink); }
-.plan-featured .plan-num,
-.plan-featured .plan-detail-label { color: var(--accent); }
 
 .plan-summary {
   display: grid;
@@ -1317,7 +1307,6 @@ h3 {
   letter-spacing: -0.02em;
   color: var(--text);
 }
-.plan-featured .plan-quote { color: var(--on-ink); }
 /* The second price, and it is set as one. It was a single translated
    sentence — "235 USD without guardianship" — inside a pill, which wrapped
    mid-phrase in every language and centred the two ragged halves. Now the
@@ -1378,8 +1367,6 @@ h3 {
   height: 1.5px;
   background: var(--accent-ink);
 }
-.plan-featured .plan-sign::before,
-.plan-featured .plan-sign::after { background: var(--accent); }
 .plan-sign::after { transform: rotate(90deg); transition: opacity 0.3s var(--ease); }
 .plan[open] .plan-sign { transform: rotate(180deg); }
 
@@ -1432,7 +1419,6 @@ h3 {
   line-height: 1.6;
   color: var(--muted);
 }
-.plan-featured .plan-list li { color: var(--muted-ink); }
 .plan-list li::before {
   content: '';
   position: absolute;
@@ -1444,12 +1430,8 @@ h3 {
   border-bottom: 1.6px solid var(--accent-ink);
   transform: rotate(-45deg);
 }
-.plan-featured .plan-list li::before {
-  border-color: var(--accent);
-}
 
 .plan-cta { margin-top: var(--s1); }
-.plan-featured .btn-line { border-color: var(--navy-line); color: var(--on-ink); }
 
 /* Build-your-own tier ------------------------------------ */
 .plan-pick {
@@ -1950,13 +1932,6 @@ h3 {
   .partner-stage { position: static; order: -1; }
   .partner-portrait { aspect-ratio: 3 / 2; }
   .partner-role { display: none; }
-  .hero {
-    background-image:
-      linear-gradient(to bottom, rgba(8, 14, 32, 0) 84%, var(--ink) 100%),
-      linear-gradient(to bottom, rgba(8, 14, 32, 0.94) 0%, rgba(8, 14, 32, 0.88) 42%, rgba(8, 14, 32, 0.45) 74%, rgba(8, 14, 32, 0.32) 100%),
-      url('hero-budapest-sm.webp');
-    background-position: center, center, 34% bottom;
-  }
   .services { grid-template-columns: 1fr; }
   .brand-tagline { display: none; }
   .wa-float-text { display: none; }

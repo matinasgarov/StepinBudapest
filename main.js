@@ -101,22 +101,25 @@
       plan3f3: 'A full year of support, not only the first week',
       plan3cta: 'Choose Premium',
       partnersTitle: 'The people who <span class="mark">will be there</span>',
-      partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest, and each one answers for their part of the move.',
+      partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest. Any of them can act as legal guardian, meet a student at the airport and handle what comes after — Firuzə works with the girls.',
       /* ---- PARTNERS ----
-         01 and 02 are real people and their words are their own, rewritten
-         to one paragraph in first person. 03 and 04 are empty and therefore
-         do not render: a row with no name is hidden, and if none survive the
-         section and both nav links go with it. Aqsin Sakif is confirmed as a
-         third partner but has no role or line yet, which is why slot 03 is
-         blank rather than filled with something plausible. Tracked in
-         CLAUDE.md under Known placeholders. */
+         Three real people. They do not have separate jobs: any of them can be
+         the legal guardian, meet a student at the airport and handle what
+         comes after, which is why every role line says the same thing. The one
+         real distinction is that Firuze works with female students.
+
+         Their studies, ages and backgrounds are their own; Aqsin's hobbies are
+         invented at the owner's request and should be checked with him. Slot 04
+         is empty and therefore does not render. Tracked in CLAUDE.md. */
       pt1name: 'Firuzə Osmanova',
-      pt1role: 'Arrival & settling in',
-      pt1line: 'I read International Relations at Azerbaijan University of Languages, and I am now taking my master\'s in Tourism Management at Budapest Metropolitan University. My work has been in tourism and customer service, so the first days \u2014 the airport, the flat, learning which tram goes where \u2014 are the part I am good at. I meet your student at the gate and I stay with them until Budapest stops feeling foreign.',
+      pt1role: 'Guardian & arrivals — female students',
+      pt1line: 'I read International Relations at Azerbaijan University of Languages, and I am now taking my master\'s in Tourism Management at Budapest Metropolitan University. My work has been in tourism and customer service, so the first days — the airport, the flat, learning which tram goes where — are the part I am good at. I work with the girls: I can be their legal guardian, I meet them when they land, and I stay reachable long after.',
       pt2name: 'İbrahim Musayev',
-      pt2role: 'Documents & registration',
-      pt2line: 'I am in my second year of Business Management and Administration at Corvinus University of Budapest. My family runs a translation agency, so I grew up around paperwork \u2014 preparing it, checking it, knowing which step has to come before which. The residence permit, the address card and the university registration are mine to get right.',
-      pt3name: '', pt3role: '', pt3line: '',
+      pt2role: 'Guardian & arrivals',
+      pt2line: 'I am in my second year of Business Management and Administration at Corvinus University of Budapest. My family runs a translation agency, so I grew up around paperwork — preparing it, checking it, knowing which step has to come before which. I can act as legal guardian, I meet students at the airport, and a residence permit holds no surprises for me.',
+      pt3name: 'Aqşin Sakif',
+      pt3role: 'Guardian & arrivals',
+      pt3line: 'I am 27 and doing my PhD at the Hungarian University of Agriculture and Life Sciences, which makes me the one who has lived in Budapest longest. I can act as legal guardian, I meet students at the airport, and I am the person to call when something goes wrong at an awkward hour. Outside the university I hike, play football on Sundays, and know where to find a decent Azerbaijani meal in this city.',
       pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Questions parents ask',
       faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
@@ -216,22 +219,25 @@
       plan3f3: 'Yalnız ilk həftə deyil, tam bir il dəstək',
       plan3cta: 'Premium seçin',
       partnersTitle: '<span class="mark">Orada olacaq</span> insanlar',
-      partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri köçün öz hissəsinə cavabdehdir.',
+      partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri qanuni qəyyum ola, tələbəni hava limanında qarşılaya və sonrasını apara bilər — Firuzə qız tələbələrlə işləyir.',
       /* ---- PARTNERS ----
-         01 and 02 are real people and their words are their own, rewritten
-         to one paragraph in first person. 03 and 04 are empty and therefore
-         do not render: a row with no name is hidden, and if none survive the
-         section and both nav links go with it. Aqsin Sakif is confirmed as a
-         third partner but has no role or line yet, which is why slot 03 is
-         blank rather than filled with something plausible. Tracked in
-         CLAUDE.md under Known placeholders. */
+         Three real people. They do not have separate jobs: any of them can be
+         the legal guardian, meet a student at the airport and handle what
+         comes after, which is why every role line says the same thing. The one
+         real distinction is that Firuze works with female students.
+
+         Their studies, ages and backgrounds are their own; Aqsin's hobbies are
+         invented at the owner's request and should be checked with him. Slot 04
+         is empty and therefore does not render. Tracked in CLAUDE.md. */
       pt1name: 'Firuzə Osmanova',
-      pt1role: 'Qarşılama və yerləşmə',
-      pt1line: 'Azərbaycan Dillər Universitetində beynəlxalq münasibətlər oxumuşam, hazırda Budapeşt Metropolitan Universitetində turizm menecmenti üzrə magistr təhsili alıram. İş təcrübəm turizm və müştəri xidmətləri sahəsindədir, ona görə ilk günlər \u2014 hava limanı, ev, hansı tramvayın hara getdiyini öyrənmək \u2014 mənim güclü tərəfimdir. Tələbənizi çıxışda qarşılayır və Budapeşt ona yad görünməyi dayandırana qədər yanında oluram.',
+      pt1role: 'Qəyyum və qarşılama — qız tələbələr',
+      pt1line: 'Azərbaycan Dillər Universitetində beynəlxalq münasibətlər oxumuşam, hazırda Budapeşt Metropolitan Universitetində turizm menecmenti üzrə magistr təhsili alıram. İş təcrübəm turizm və müştəri xidmətləri sahəsindədir, ona görə ilk günlər — hava limanı, ev, hansı tramvayın hara getdiyini öyrənmək — mənim güclü tərəfimdir. Mən qız tələbələrlə işləyirəm: onların qanuni qəyyumu ola bilərəm, endikləri gün qarşılayıram və sonra da uzun müddət əlçatan qalıram.',
       pt2name: 'İbrahim Musayev',
-      pt2role: 'Sənədlər və qeydiyyat',
-      pt2line: 'Budapeşt Corvinus Universitetində Business Management and Administration ixtisası üzrə ikinci kursda oxuyuram. Ailəm tərcümə mərkəzi işlədir, ona görə sənədlərin hazırlanması və yoxlanılması ilə kiçik yaşlarımdan tanışam \u2014 hansı addımın hansindan əvvəl gəldiyini bilirəm. Yaşayış icazəsi, ünvan kartı və universitet qeydiyyatı mənim üzərimdədir.',
-      pt3name: '', pt3role: '', pt3line: '',
+      pt2role: 'Qəyyum və qarşılama',
+      pt2line: 'Budapeşt Corvinus Universitetində Business Management and Administration ixtisası üzrə ikinci kursda oxuyuram. Ailəm tərcümə mərkəzi işlədir, ona görə sənədlərin hazırlanması və yoxlanılması ilə kiçik yaşlarımdan tanışam — hansı addımın hansından əvvəl gəldiyini bilirəm. Qanuni qəyyum ola bilərəm, tələbələri hava limanında qarşılayıram və yaşayış icazəsi mənim üçün sürpriz deyil.',
+      pt3name: 'Aqşin Sakif',
+      pt3role: 'Qəyyum və qarşılama',
+      pt3line: '27 yaşım var, Hungarian University of Agriculture and Life Sciences-də doktorantura təhsili alıram — yəni Budapeştdə ən uzun yaşayan mənəm. Qanuni qəyyum ola bilərəm, tələbələri hava limanında qarşılayıram və nə vaxtsa işlər tərs gədersə, hətta gec saatda olsa belə, zəng ediləsi adamam. Universitetdən kənarda piyada gəzintiləri edirəm, bazar günləri futbol oynayıram və bu şəhərdə düzgün Azərbaycan yeməyinin harada olduğunu bilirəm.',
       pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Valideynlərin soruşduğu suallar',
       faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
@@ -331,22 +337,25 @@
       plan3f3: 'Поддержка целый год, а не только первую неделю',
       plan3cta: 'Выбрать Premium',
       partnersTitle: 'Люди, которые <span class="mark">будут рядом</span>',
-      partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште и отвечают за свою часть переезда.',
+      partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште. Каждый из них может быть законным опекуном, встретить студента в аэропорту и вести его дальше — Фируза работает с девушками.',
       /* ---- PARTNERS ----
-         01 and 02 are real people and their words are their own, rewritten
-         to one paragraph in first person. 03 and 04 are empty and therefore
-         do not render: a row with no name is hidden, and if none survive the
-         section and both nav links go with it. Aqsin Sakif is confirmed as a
-         third partner but has no role or line yet, which is why slot 03 is
-         blank rather than filled with something plausible. Tracked in
-         CLAUDE.md under Known placeholders. */
+         Three real people. They do not have separate jobs: any of them can be
+         the legal guardian, meet a student at the airport and handle what
+         comes after, which is why every role line says the same thing. The one
+         real distinction is that Firuze works with female students.
+
+         Their studies, ages and backgrounds are their own; Aqsin's hobbies are
+         invented at the owner's request and should be checked with him. Slot 04
+         is empty and therefore does not render. Tracked in CLAUDE.md. */
       pt1name: 'Фируза Османова',
-      pt1role: 'Встреча и заселение',
-      pt1line: 'Я изучала международные отношения в Бакинском университете языков, сейчас учусь в магистратуре по туристическому менеджменту в Будапештском университете Метрополитен. Мой опыт \u2014 туризм и работа с людьми, поэтому первые дни \u2014 аэропорт, квартира, какой трамвай куда идёт \u2014 это то, что я умею. Я встречаю вашего студента на выходе и остаюсь рядом, пока Будапешт не перестанет быть чужим.',
+      pt1role: 'Опекун и встреча — девушки',
+      pt1line: 'Я изучала международные отношения в Бакинском университете языков, сейчас учусь в магистратуре по туристическому менеджменту в Будапештском университете Метрополитен. Мой опыт — туризм и работа с людьми, поэтому первые дни — аэропорт, квартира, какой трамвай куда идёт — это то, что я умею. Я работаю с девушками: могу быть их законным опекуном, встречаю в день прилёта и остаюсь на связи долго после.',
       pt2name: 'Ибрагим Мусаев',
-      pt2role: 'Документы и регистрация',
-      pt2line: 'Я на втором курсе Университета Корвинуса в Будапеште, направление Business Management and Administration. Моя семья держит бюро переводов, так что с подготовкой и проверкой документов я знаком с детства \u2014 и знаю, какой шаг должен идти за каким. Вид на жительство, адресная карта и регистрация в университете \u2014 на мне.',
-      pt3name: '', pt3role: '', pt3line: '',
+      pt2role: 'Опекун и встреча',
+      pt2line: 'Я на втором курсе Университета Корвинуса в Будапеште, направление Business Management and Administration. Моя семья держит бюро переводов, так что с подготовкой и проверкой документов я знаком с детства. Могу быть законным опекуном, встречаю студентов в аэропорту, а вид на жительство не преподносит мне сюрпризов.',
+      pt3name: 'Агшин Сакиф',
+      pt3role: 'Опекун и встреча',
+      pt3line: 'Мне 27, я в докторантуре Hungarian University of Agriculture and Life Sciences — значит, в Будапеште я живу дольше всех. Могу быть законным опекуном, встречаю студентов в аэропорту и я тот, кому звонят, когда что-то пошло не так в неудобный час. Вне университета хожу в походы, по воскресеньям играю в футбол и знаю, где в этом городе нормально кормят по-азербайджански.',
       pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Вопросы родителей',
       faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',
