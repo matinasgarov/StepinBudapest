@@ -152,23 +152,31 @@ reason for any of them.
 
 **The featured row is filled, not outlined** — the only emphasis a flat page has.
 
-**Hover fills the whole row with `--accent-deep`** and recolours its contents by
-**remapping tokens rather than restating colours**: `--text`, `--muted`, `--accent` and
-`--accent-ink` are redefined on the hovered row, and because custom properties inherit,
-the numeral, the scope line, the ticks, the sign, the pill and the buttons all follow —
-including rules written long before the hover existed. Restating a dozen colours here
-would go stale the first time a new element was added to a row.
+**Hover lays glass over the row rather than repainting it.** One rule serves both
+`.plan` and `.svc`. Because nothing inside changes colour, every contrast ratio on the
+row survives untouched — which is exactly what the blue fill it replaced could not do:
+that version needed a block of token remapping under it to keep the numeral, ticks,
+scope line and buttons legible, and any element added to a row later would have missed
+it.
+
+The pane is **smoked on paper and lit on ink**. White glass over white paper is
+invisible and dark glass over the featured row is a smudge, so `.plan-featured:hover`
+gets `rgba(255,255,255,0.09)` where the paper rows get `rgba(13,24,48,0.065)`. The
+`backdrop-filter` is what makes it read as glass instead of as a tint, and the
+`saturate` does more of that work than the blur, since a row's ground is flat and it is
+the band's grain and the type at the pane's edge that actually shift.
 
 The rule sits inside `@media (hover: hover)`. A touch browser fires `:hover` on tap and
 holds it until something else is tapped, so unguarded it would leave the row a parent
-just opened filled in with no way to clear it. This is also why the featured row is no
-longer excluded: every row now hovers to the same fill, so `.plan:hover` (0,2,0) beating
-`.plan-featured` (0,1,0) is the intended result rather than the bug it used to be.
+just opened frosted with no way to clear it.
 
 **Opening a row is animated on entry only.** A `<details>` panel is `display: none`
 until it is not, so there is no state to transition *from*; `planOpen` fades and slides
-it in instead. Closing stays instant, which is what a reader expects. Opacity and
-transform only, so it costs no layout.
+it in over 0.85s instead, with the list, the checkboxes and the CTA following 0.12s
+behind their own panel. One step of delay, not a per-item stagger — five items each
+waiting on the one before takes longer than a reader will look at a half-drawn list.
+Closing stays instant, which is what a reader expects. Opacity and transform only, so it
+costs no layout.
 
 **Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
 text, because a number is the same in all three languages. Prices are quoted in **USD**
@@ -176,13 +184,14 @@ text, because a number is the same in all three languages. Prices are quoted in 
 gone from the page. Internal partner-payment figures are deliberately absent from the
 repo.
 
-The Standard row's second price (`planAltPrice`) *is* translated, since it is a
-sentence, and it is **a filled pill at reading size, not small print**. A student over
-18 needs no guardian, so for many families it is the price they will actually pay — it
-was set at 0.62rem in the muted accent, which is where a reader's eye does not go. Its
-fill follows `--accent`, so it inverts to white with dark text under the hover remap and
-stays legible on the featured row's ink. Its `max-width` is what keeps a long Russian
-line from widening the price column and squeezing the name beside it.
+The Standard row's second price is **set as a price, not as a caption**. A student
+over 18 needs no guardian, so for many families it is the one they will actually pay.
+`.plan-alt` is a filled block holding a literal figure, a currency and a note; only the
+note (`planAltPrice`) is translated, and it is now *only the qualifying words* —
+"without guardianship", "qəyyumluq olmadan". It used to be one translated sentence with
+the number inside it, which wrapped mid-phrase in all three languages and centred the
+two ragged halves inside a pill. Keep the number in the markup and the note short, and
+it holds one line everywhere.
 
 Below 720px the figure cannot share a line with the name, so `.plan-price` moves to the
 second grid column under the name and left-aligns. The sign keeps its own column.

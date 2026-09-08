@@ -841,9 +841,8 @@ h3 {
 .svc {
   position: relative;
   border-bottom: 1px solid var(--paper-line);
-  transition: background-color 0.3s var(--ease);
+  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
 }
-.svc:hover { background: var(--paper-alt); }
 .svc[open] { background: var(--paper-alt); }
 
 .svc-summary {
@@ -1099,38 +1098,41 @@ h3 {
 .plan {
   position: relative;
   border-bottom: 1px solid var(--paper-line);
-  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease);
 }
-/* Hover fills the whole row with the deep accent (white on #1B45C4 is
-   7.5:1). Rather than restate a colour for every element inside, the row
-   remaps the tokens: custom properties inherit, so one block here recolours
-   the numeral, the scope line, the ticks, the sign and the buttons at once,
-   including rules written before this one existed.
+/* Glass, not fill. Hovering a row lays a frosted pane over it rather than
+   repainting it, so nothing inside changes colour and every contrast ratio on
+   the row survives untouched — which is the whole reason the previous blue
+   fill needed a block of token remapping underneath it.
 
-   This is also why .plan-featured no longer needs excluding. It used to,
-   because a bare .plan:hover (0,2,0) beat .plan-featured (0,1,0) and left
-   white text on pale paper. Now every row hovers to the same fill, so the
-   cascade winning is the intended result rather than a bug.
+   The pane has to be smoked on paper and lit on ink: white glass over white
+   paper is invisible, and dark glass over the featured row's ink is a smudge.
+   Hence two tints of the same treatment.
+
+   backdrop-filter is what makes it read as glass rather than as a tint — the
+   saturate is doing more work than the blur, since a row's own ground is flat
+   and it is the band's grain and the type behind the pane's edge that shift.
 
    Guarded by (hover: hover): a touch browser fires :hover on tap and holds it
    until something else is tapped, which would leave the row a parent just
-   opened filled in with no way to clear it. */
+   opened frosted with no way to clear it. */
 @media (hover: hover) {
   .plan:hover,
-  .plan:has(> .plan-summary:focus-visible) {
-    /* --accent-deep, not --accent-ink: a custom property remapped inside this
-       very block is already remapped by the time the block's own declarations
-       resolve, so background: var(--accent-ink) here would paint white. */
-    background: var(--accent-deep);
-    color: var(--on-ink);
-    --text: var(--on-ink);
-    --muted: #C9D8FF;
-    --muted-ink: #C9D8FF;
-    --accent: #FFFFFF;
-    --accent-lift: #E6EDFF;
-    --accent-ink: #FFFFFF;
-    --paper-line: rgba(255, 255, 255, 0.28);
-    --navy-line: rgba(255, 255, 255, 0.28);
+  .plan:has(> .plan-summary:focus-visible),
+  .svc:hover,
+  .svc:has(> .svc-summary:focus-visible) {
+    background: rgba(13, 24, 48, 0.065);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75),
+                inset 0 -1px 0 rgba(13, 24, 48, 0.05);
+  }
+
+  .plan-featured:hover,
+  .plan-featured:has(> .plan-summary:focus-visible) {
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -1218,26 +1220,48 @@ h3 {
   color: var(--text);
 }
 .plan-featured .plan-quote { color: var(--on-ink); }
-/* Not a footnote. This is the price most families actually pay — a student
-   over 18 needs no guardian — so it is set as a filled pill at reading size
-   rather than as small print under the figure. The fill follows --accent, so
-   it inverts to white with dark text when the row is hovered and stays
-   legible on the featured row's ink. max-width keeps a long Russian line from
-   widening the price column and squeezing the name beside it. */
-.plan-alt-price {
-  display: inline-block;
-  max-width: 17rem;
-  margin-top: 0.7rem;
-  padding: 0.4rem 0.85rem;
+/* The second price, and it is set as one. It was a single translated
+   sentence — "235 USD without guardianship" — inside a pill, which wrapped
+   mid-phrase in every language and centred the two ragged halves. Now the
+   number is literal markup like every other figure on the page and the note
+   under it is only the qualifying words, so it is short enough to hold one
+   line in all three languages.
+
+   A student over 18 needs no guardian, so for many families this is the price
+   they will actually pay. It stays filled because it has to be found. */
+.plan-alt {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0 0.4rem;
+  margin-top: 0.8rem;
+  padding: 0.5rem 0.85rem 0.55rem;
   background: var(--accent);
+  border-radius: 12px;
+  text-align: right;
+}
+.plan-alt-figure {
+  font-size: 1.35rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  border-radius: 999px;
+}
+.plan-alt-cur {
   font-family: var(--mono);
-  font-size: clamp(0.78rem, 0.66rem + 0.42vw, 1.02rem);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  line-height: 1.35;
-  text-align: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: rgba(8, 14, 32, 0.72);
+}
+.plan-alt-note {
+  flex-basis: 100%;
+  margin-top: 0.18rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: rgba(8, 14, 32, 0.8);
 }
 
 .plan-sign {
@@ -1266,10 +1290,19 @@ h3 {
    costs a layout. The reduced-motion block at the foot of the file cuts the
    duration to nothing. */
 @keyframes planOpen {
-  from { opacity: 0; transform: translateY(-10px); }
+  from { opacity: 0; transform: translateY(-14px); }
   to   { opacity: 1; transform: none; }
 }
-.plan[open] .plan-detail { animation: planOpen 0.45s var(--ease-out) both; }
+.plan[open] .plan-detail,
+.svc[open] .svc-detail { animation: planOpen 0.85s var(--ease-out) both; }
+
+/* The list arrives just behind its own panel. One step of delay, not a
+   per-item stagger: five items each waiting on the one before would take
+   longer than a reader is willing to look at a half-drawn list. */
+.plan[open] .plan-list,
+.plan[open] .plan-pick,
+.plan[open] .plan-cta,
+.svc[open] .svc-block { animation: planOpen 0.85s var(--ease-out) 0.12s both; }
 .plan[open] .plan-sign::after { opacity: 0; }
 
 /* Indented past the numeral so the detail lines up with the name above it. */
@@ -1743,6 +1776,7 @@ h3 {
     text-align: left;
     margin-top: var(--s2);
   }
+  .plan-alt { justify-content: flex-start; text-align: left; }
   .plan-scope { font-size: 0.92rem; }
 
   /* The portrait goes above the names on a phone: side by side there is
