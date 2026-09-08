@@ -41,6 +41,14 @@ of gold, gradients or shadow, it is a survivor, not a decision.
   bright one on paper is the single easiest way to break this palette. The old
   `--gold*` names are kept as aliases only because some rules still say them;
   they are not a second colour.
+- `--accent-deep` holds the deep blue and `--accent-ink` points at it. The
+  indirection exists because a block that *remaps* `--accent-ink` for its
+  subtree cannot also use it: a custom property is already remapped by the time
+  the same block's own declarations resolve. Anything that both recolours a
+  subtree and paints itself must name `--accent-deep`.
+- **Sections have no eyebrow.** The mono kicker over every heading was removed;
+  the headline and the marker under it carry the section on their own, and the
+  `*Label` translation keys went with the markup.
 - **There is no elevation.** `--shadow-*`, `--rise`, `--cast-*` and `--emit`
   are all `none`. They remain only so rules that still name them resolve to
   nothing rather than to a stale navy glow. Surfaces separate by ground and by
@@ -142,17 +150,39 @@ floor, the fixed panel width, the three-part no-layout-shift contract.
 Standard ships `open`. A section where every row is shut shows five prices and no
 reason for any of them.
 
-**The featured row is filled, not outlined** — the only emphasis a flat page has. Its
-hover has to be excluded explicitly: `.plan:hover` is (0,2,0) and `.plan-featured` is
-(0,1,0), so a bare `.plan:hover { background }` wins the cascade, repaints the featured
-row paper, and leaves its white text on a pale ground with the price all but invisible.
-That is why the rule reads `.plan:not(.plan-featured):hover`.
+**The featured row is filled, not outlined** — the only emphasis a flat page has.
+
+**Hover fills the whole row with `--accent-deep`** and recolours its contents by
+**remapping tokens rather than restating colours**: `--text`, `--muted`, `--accent` and
+`--accent-ink` are redefined on the hovered row, and because custom properties inherit,
+the numeral, the scope line, the ticks, the sign, the pill and the buttons all follow —
+including rules written long before the hover existed. Restating a dozen colours here
+would go stale the first time a new element was added to a row.
+
+The rule sits inside `@media (hover: hover)`. A touch browser fires `:hover` on tap and
+holds it until something else is tapped, so unguarded it would leave the row a parent
+just opened filled in with no way to clear it. This is also why the featured row is no
+longer excluded: every row now hovers to the same fill, so `.plan:hover` (0,2,0) beating
+`.plan-featured` (0,1,0) is the intended result rather than the bug it used to be.
+
+**Opening a row is animated on entry only.** A `<details>` panel is `display: none`
+until it is not, so there is no state to transition *from*; `planOpen` fades and slides
+it in instead. Closing stays instant, which is what a reader expects. Opacity and
+transform only, so it costs no layout.
 
 **Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
-text, because a number is the same in all three languages. The Standard row carries a
-second line (`planAltPrice`) for the lower without-guardianship price; that one *is*
-translated, since it is a sentence. Internal partner-payment figures are deliberately
-absent from the repo.
+text, because a number is the same in all three languages. Prices are quoted in **USD**
+(99 / 119 / 299 / 469, with 235 without guardianship); the AZN figures they replaced are
+gone from the page. Internal partner-payment figures are deliberately absent from the
+repo.
+
+The Standard row's second price (`planAltPrice`) *is* translated, since it is a
+sentence, and it is **a filled pill at reading size, not small print**. A student over
+18 needs no guardian, so for many families it is the price they will actually pay — it
+was set at 0.62rem in the muted accent, which is where a reader's eye does not go. Its
+fill follows `--accent`, so it inverts to white with dark text under the hover remap and
+stays legible on the featured row's ink. Its `max-width` is what keeps a long Russian
+line from widening the price column and squeezing the name beside it.
 
 Below 720px the figure cannot share a line with the name, so `.plan-price` moves to the
 second grid column under the name and left-aligns. The sign keeps its own column.

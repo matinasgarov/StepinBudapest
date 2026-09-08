@@ -29,7 +29,8 @@
   /* Signal */
   --accent:      #4C82FF;
   --accent-lift: #6E9AFF;
-  --accent-ink:  #1B45C4;
+  --accent-deep: #1B45C4;
+  --accent-ink:  var(--accent-deep);
   --accent-haze: rgba(76, 130, 255, 0.14);
 
   /* The old gold names still appear in rules that have not been renamed.
@@ -173,21 +174,6 @@ h3 {
 .section { padding-block: clamp(4rem, 2rem + 8vw, 8rem); }
 
 .section-head { max-width: 52rem; margin-bottom: var(--s6); }
-
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: var(--s2);
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold-ink);
-}
-.section-label-dark { color: var(--gold); }
-
 
 .section-sub {
   margin-top: var(--s3);
@@ -1113,9 +1099,40 @@ h3 {
 .plan {
   position: relative;
   border-bottom: 1px solid var(--paper-line);
-  transition: background-color 0.3s var(--ease);
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
-.plan:not(.plan-featured):hover { background: var(--paper-alt); }
+/* Hover fills the whole row with the deep accent (white on #1B45C4 is
+   7.5:1). Rather than restate a colour for every element inside, the row
+   remaps the tokens: custom properties inherit, so one block here recolours
+   the numeral, the scope line, the ticks, the sign and the buttons at once,
+   including rules written before this one existed.
+
+   This is also why .plan-featured no longer needs excluding. It used to,
+   because a bare .plan:hover (0,2,0) beat .plan-featured (0,1,0) and left
+   white text on pale paper. Now every row hovers to the same fill, so the
+   cascade winning is the intended result rather than a bug.
+
+   Guarded by (hover: hover): a touch browser fires :hover on tap and holds it
+   until something else is tapped, which would leave the row a parent just
+   opened filled in with no way to clear it. */
+@media (hover: hover) {
+  .plan:hover,
+  .plan:has(> .plan-summary:focus-visible) {
+    /* --accent-deep, not --accent-ink: a custom property remapped inside this
+       very block is already remapped by the time the block's own declarations
+       resolve, so background: var(--accent-ink) here would paint white. */
+    background: var(--accent-deep);
+    color: var(--on-ink);
+    --text: var(--on-ink);
+    --muted: #C9D8FF;
+    --muted-ink: #C9D8FF;
+    --accent: #FFFFFF;
+    --accent-lift: #E6EDFF;
+    --accent-ink: #FFFFFF;
+    --paper-line: rgba(255, 255, 255, 0.28);
+    --navy-line: rgba(255, 255, 255, 0.28);
+  }
+}
 
 /* The featured row is filled, not outlined — the only emphasis a flat page
    has. Its own hover must be excluded: .plan:hover is (0,2,0) and beats
@@ -1127,7 +1144,6 @@ h3 {
 .plan-featured .plan-scope,
 .plan-featured .plan-cur { color: var(--muted-ink); }
 .plan-featured .plan-num,
-.plan-featured .plan-alt-price,
 .plan-featured .plan-detail-label { color: var(--accent); }
 
 .plan-summary {
@@ -1202,13 +1218,26 @@ h3 {
   color: var(--text);
 }
 .plan-featured .plan-quote { color: var(--on-ink); }
+/* Not a footnote. This is the price most families actually pay — a student
+   over 18 needs no guardian — so it is set as a filled pill at reading size
+   rather than as small print under the figure. The fill follows --accent, so
+   it inverts to white with dark text when the row is hovered and stays
+   legible on the featured row's ink. max-width keeps a long Russian line from
+   widening the price column and squeezing the name beside it. */
 .plan-alt-price {
-  margin-top: 0.4rem;
+  display: inline-block;
+  max-width: 17rem;
+  margin-top: 0.7rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--accent);
+  color: var(--ink);
+  border-radius: 999px;
   font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.05em;
-  line-height: 1.4;
-  color: var(--accent-ink);
+  font-size: clamp(0.78rem, 0.66rem + 0.42vw, 1.02rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  text-align: center;
 }
 
 .plan-sign {
@@ -1229,6 +1258,18 @@ h3 {
 .plan-featured .plan-sign::after { background: var(--accent); }
 .plan-sign::after { transform: rotate(90deg); transition: opacity 0.3s var(--ease); }
 .plan[open] .plan-sign { transform: rotate(180deg); }
+
+/* A native <details> shows its content instantly: the panel is display:none
+   until it is not, so there is no state to transition from. The panel is
+   therefore animated on entry only — closing stays instant, which is what a
+   reader expects anyway. Transform and opacity only, so nothing about this
+   costs a layout. The reduced-motion block at the foot of the file cuts the
+   duration to nothing. */
+@keyframes planOpen {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.plan[open] .plan-detail { animation: planOpen 0.45s var(--ease-out) both; }
 .plan[open] .plan-sign::after { opacity: 0; }
 
 /* Indented past the numeral so the detail lines up with the name above it. */
