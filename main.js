@@ -506,7 +506,20 @@
   }
 
   function openPartner(card) {
-    document.querySelectorAll('[data-partner]').forEach(function (other) {
+    var rows = document.querySelectorAll('[data-partner]');
+
+    /* Measure every row before writing to any of them. Interleaved, each
+       height written invalidates layout and the next getBoundingClientRect
+       forces it to be recomputed — three rows meant three synchronous
+       layouts of the section on every click, which is exactly the pause you
+       feel before the panel starts moving. */
+    var heights = [];
+    rows.forEach(function (other) {
+      var body = other.querySelector('.partner-body');
+      heights.push(body && other === card ? contentHeight(body) : 0);
+    });
+
+    rows.forEach(function (other, i) {
       var body = other.querySelector('.partner-body');
       var head = other.querySelector('[data-partner-toggle]');
       var on = other === card;
@@ -517,7 +530,7 @@
          set to the content height rather than left on auto so a language
          switch, which changes the text length, re-measures instead of
          keeping a stale number. */
-      if (body) body.style.height = on ? contentHeight(body) + 'px' : '0px';
+      if (body) body.style.height = heights[i] + 'px';
     });
     showPartner(card);
   }

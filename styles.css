@@ -1502,31 +1502,38 @@ h3 {
   margin-inline: calc(var(--pt-inset) * -1);
   border-top: 1px solid var(--navy-line);
 }
+/* Only colour transitions here. The radius and the border snap, because both
+   are clip changes: animating either one re-clips the whole row every frame,
+   and it is already animating its height at the same time. */
 .partner {
   position: relative;
   border-bottom: 1px solid var(--navy-line);
   border-radius: 0;
-  transition: background-color 0.45s var(--ease), box-shadow 0.45s var(--ease),
-              border-radius 0.45s var(--ease), border-color 0.45s var(--ease);
+  transition: background-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
 .partner[hidden] { display: none; }
 
 /* The open name is a lit pane of the same material as the portrait it is
    showing. It is the one row that stays raised, because it is the one the
-   portrait belongs to. */
+   portrait belongs to.
+
+   These rows are the one place the glass does NOT get a backdrop-filter.
+   Every other pane on the page is a fixed size; this one changes height on
+   every frame of the accordion, so the blur had to re-sample a moving box
+   sixty times a second and the open felt like it was catching. The ground
+   behind is near-flat ink, so the blur was buying almost nothing anyway —
+   the tint, the edge light and the cast are what read as glass here, and
+   they cost nothing to paint. The tints are raised a little to make up for
+   the missing saturate. */
 .partner.is-open {
-  background: var(--glass-ink);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(255, 255, 255, 0.075);
   border-radius: var(--radius-glass);
   border-bottom-color: transparent;
   box-shadow: var(--glass-edge-ink);
 }
 @media (hover: hover) {
   .partner:hover {
-    background: var(--glass-ink-lift);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-glass);
     border-bottom-color: transparent;
     box-shadow: var(--glass-edge-ink), var(--glass-cast-ink);
@@ -1582,8 +1589,11 @@ h3 {
   overflow: hidden;
   height: 0;
   padding-inline: var(--pt-inset);
+  /* Height is animated, so this box is re-laid out every frame. Containment
+     keeps that work inside the box instead of letting it walk the section. */
+  contain: layout paint;
 }
-.js .partner-body { transition: height 0.4s var(--ease); }
+.js .partner-body { transition: height 0.38s var(--ease-out); }
 .partner-line {
   padding: 0 0 var(--s3) calc(0.68rem + var(--s3));
   max-width: 44ch;

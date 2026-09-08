@@ -271,6 +271,25 @@ that only lives in a role line does not reach a phone.
 **Clicking the open row does not close it.** With one shared portrait, a state
 where no row is open leaves a face belonging to no name.
 
+**These rows are the one place the glass carries no `backdrop-filter`**, and that
+is a performance decision, not an oversight. Every other pane on the page is a
+fixed size; this one changes height on every frame of the accordion, so the blur
+had to re-sample a moving box sixty times a second and the open visibly caught.
+The ground behind is near-flat ink, so the blur was buying almost nothing — the
+tint, the edge light and the cast are what read as glass here, and they are free
+to paint. Their tints are raised slightly to cover the missing `saturate`.
+
+For the same reason the row's **radius and border snap rather than transition**:
+both are clip changes, and re-clipping a row every frame while it is also
+animating its height is the other half of that cost. `.partner-body` carries
+`contain: layout paint` so the per-frame re-layout stays inside the box.
+
+`openPartner()` **measures every row before writing to any of them**. Interleaved,
+each height written invalidates layout and the next `getBoundingClientRect()`
+forces it back — three rows meant three synchronous layouts of the section per
+click, which is the pause you feel before the panel starts moving. Keep the two
+passes separate.
+
 `openPartner()` sets the body's height to a **measured pixel value** — `auto` is
 not animatable — and `hidePartnerSlots()` re-opens the first surviving row on
 every language switch so the height is re-measured. Skip that and a language
