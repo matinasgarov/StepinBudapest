@@ -121,98 +121,54 @@ The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
 
-### Pricing cards: opening sideways
+### Pricing
 
-Each card is a `.plan-slot` holding a `.plan`, split into a `.plan-face` (name, price,
-scope line, CTA) and a `.plan-detail` (the full list). On a pointer device at 1200px and
-up the panel is folded shut; hovering widens the card and squeezes the other three, and
-the width it gains is the panel unfolding beside the face.
+Five `<details>` rows, matching the services section directly above it. Each row is a
+`.plan-summary` — numeral, name, scope line, figure, open/shut sign — over a
+`.plan-detail` holding the list and the CTA.
 
-**The panel is a fixed width (`--pd`), and the card grows by exactly that.** This is the
-part to preserve. The panel's text then has one measure open or shut, so it never
-reflows — which means the row never changes height — and it is never clipped, because
-the width it is laid out at is precisely the width it opens to. An earlier version let
-the panel take a proportional share and pinned its contents with a `min-width` guess;
-whenever the guess exceeded the width the panel actually opened to, the text overflowed
-and was cut off mid-word.
+**This replaced a hover interaction**, and the reasons are worth keeping because the
+old version looked more sophisticated and worked less well. Five columns forced every
+price into 234px; the row was as tall as its tallest panel *even while every panel was
+shut*, so one long list added roughly 300px of dead air to all five; and the detail was
+behind a hover, which does not exist on the phone most of this audience reads on.
 
-**Why `calc(var(--pd) * 5 / 4)`.** Slots are `flex: 1 1 0`, so free space is shared five
-ways. A slot given basis B ends up `B + (free - B)/5` wide — that is `B * 4/5` wider than
-its resting fifth. To gain exactly one panel width P, B must be `P * 5/4`. That keeps
-the face at precisely its resting width, so nothing inside it moves as the panel appears.
-**Change the number of cards and this fraction changes** — it was `4 / 3` when there
-were four.
+As rows, each package is only as tall as its own content, the figure gets to be the
+size it deserves (60px at 1440, 35px at 390), and open/shut is a native `<details>` —
+identical on a phone and a desktop, keyboard-operable, and working with JavaScript off.
+Everything delicate went with the columns: the flex-basis arithmetic, the `min-width`
+floor, the fixed panel width, the three-part no-layout-shift contract.
 
-`.plan-slot` needs an explicit `min-width` (8rem). Flex items default to
-`min-width: auto`, which floors a slot at its own min-content width. That floor starves
-the opening card: it cannot take the width it asked for, so its face shrinks and its
-text reflows as the panel appears. An explicit floor below the natural one lets the
-squeezed slots give up the width. **The fifth card made this tight.** At 1440px five
-slots rest at 214px and squeeze to 149px, so the old 11rem (176px) floor left nothing to
-give and the opening face collapsed 214 -> 106px. 8rem clears it, but only just: at
-`--pd: 18rem` the squeeze reaches 145px and the Standard face clips again. 17rem is the
-largest panel that fits. Verify with a real hover, not by reading the CSS.
+Standard ships `open`. A section where every row is shut shows five prices and no
+reason for any of them.
 
-A squeezed 149px card has ~85px of content width, which is narrower than `800 AZN` set
-on one line. Two rules in the `min-width: 1200px` block keep it legible: `.plan-price`
-is `flex-wrap: wrap`, so the currency drops below the figure, and `.plan-figure` takes a
-smaller clamp than it does in the stacked layouts. Drop either and the price is clipped
-mid-digit in every card that is not being hovered.
+**The featured row is filled, not outlined** — the only emphasis a flat page has. Its
+hover has to be excluded explicitly: `.plan:hover` is (0,2,0) and `.plan-featured` is
+(0,1,0), so a bare `.plan:hover { background }` wins the cascade, repaints the featured
+row paper, and leaves its white text on a pale ground with the price all but invisible.
+That is why the rule reads `.plan:not(.plan-featured):hover`.
 
-`.plan-face > .btn` overrides `.btn`'s `white-space: nowrap; overflow: hidden`, which
-silently truncates a long label in a squeezed card. Labels here have to wrap.
+**Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
+text, because a number is the same in all three languages. The Standard row carries a
+second line (`planAltPrice`) for the lower without-guardianship price; that one *is*
+translated, since it is a sentence. Internal partner-payment figures are deliberately
+absent from the repo.
 
-**After touching any of this, verify three things** at rest and with each card open:
-`.plans` height, `document.scrollHeight` and the FAQ's offset are unchanged; the face's
-width is unchanged; and each panel child's `scrollWidth` equals its `clientWidth`. Those
-three are the whole contract.
-
-Below 1200px, or with no pointer, the panel sits under the face instead. There
-`.plan-face` becomes `display: contents` so its two children become flex items of the
-card and `order` can place the detail between the price and the button — a CTA above the
-list of what you get asks for the decision before making the case. Padding moves onto
-`.plan-top` and the button when that happens.
-
-`.reveal` lives on `.plan-slot`, not on `.plan`: the stagger in `main.js` matches
-`:scope > .reveal` inside `.plans`, so it has to be the direct grid child. **That has a
-trap.** `.js .reveal` sets the `transition` shorthand on the very same element, at
-(0,2,0) and later in the file, so a plain `.plan-slot { transition: ... }` is silently
-discarded and the card snaps open with no animation at all. The slot's transition is
-therefore written as `.js .plans > .plan-slot` (0,3,0) and must restate the reveal's own
-`opacity` and `transform` transitions alongside `flex-basis`, or the entrance stagger
-breaks instead. If the open ever feels instant again, check
-`getComputedStyle(slot).transitionProperty` first — it should list `flex-basis`.
+Below 720px the figure cannot share a line with the name, so `.plan-price` moves to the
+second grid column under the name and left-aligns. The sign keeps its own column.
 
 ### Build your own package
 
-The fourth pricing card (`.plan-custom`) is a set of native checkboxes whose ticks are
+The last pricing row (`.plan-pick`) is a set of native checkboxes whose ticks are
 composed into the first WhatsApp message, so a parent never has to write one. The label
 text is read from the DOM at build time rather than from a fixed list, so the message
 comes out in whatever language is on screen. `updateCustomLink()` runs on every tick and
 at the end of `applyLanguage()` — miss the second call and switching language leaves a
 stale message behind the button.
 
-Newlines in that message are `String.fromCharCode(10)`, not `
-`, on purpose. Editing
-this file through shell heredocs has repeatedly eaten the backslash and produced a real
-line break inside a string literal, which is a syntax error. Keep it escape-free.
-
-Five price columns only fit at full width; the grid drops to two below 1200px and to one
-column below 900px, where `.plan-featured { order: -1 }` floats Standard to the top.
-Five never divides evenly, so the two-column rows leave one card alone at the end — the
-order puts *Build your own* there, which already reads as a different kind of thing.
-
-**The row is as tall as the tallest panel even while every panel is shut.** That is what
-keeps the row from resizing on hover, and it is why a long list in one card adds dead
-space to all five. Standard at six bullets set the row to 561px; merging two of them
-brought it to 524px. If the cards ever look empty, shorten the longest panel rather than
-reaching for a height animation.
-
-**Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
-text, because a number is the same in all three languages. The Standard card carries a
-second line (`planAltPrice`) for the lower without-guardianship price; that one *is*
-translated, since it is a sentence. Internal partner-payment figures are deliberately
-absent from the repo.
+Newlines in that message are `String.fromCharCode(10)`, not an escape, on purpose.
+Editing this file through shell heredocs has repeatedly eaten the backslash and produced
+a real line break inside a string literal, which is a syntax error. Keep it escape-free.
 
 ### Partners section
 
