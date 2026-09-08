@@ -102,25 +102,22 @@
       plan3cta: 'Choose Premium',
       partnersTitle: 'The people who <span class="mark">will be there</span>',
       partnersSub: 'Your child is not handed over to a company. They are met by named people who live in Budapest, and each one answers for their part of the move.',
-      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
-         These three are invented. They are here so the section renders
-         while the real partners are being confirmed. Shipping them to a
-         parent would be claiming a named human will meet their child at
-         Budapest airport and act as legal guardian to a minor. Blank the
-         name out and the card disappears on its own; blank all three and
-         so does the section. Tracked in CLAUDE.md under Known placeholders. */
-      pt1name: 'Aysel Məmmədova',
-      pt1role: 'Airport & arrivals',
-      pt1line: 'Meets every student at the gate and does not leave until they are inside their new flat.',
-      pt2name: 'Márton Kovács',
-      pt2role: 'Housing',
-      pt2line: 'Inspects every flat in person before a student is ever shown it.',
-      pt3name: 'Nigar Əliyeva',
-      pt3role: 'Legal guardian',
-      pt3line: 'The named guardian on file for students who arrive under 18.',
-      pt4name: 'Elvin Hüseynov',
-      pt4role: 'Documents & registration',
-      pt4line: 'Handles the residence permit, address card and bank paperwork end to end.',
+      /* ---- PARTNERS ----
+         01 and 02 are real people and their words are their own, rewritten
+         to one paragraph in first person. 03 and 04 are empty and therefore
+         do not render: a row with no name is hidden, and if none survive the
+         section and both nav links go with it. Aqsin Sakif is confirmed as a
+         third partner but has no role or line yet, which is why slot 03 is
+         blank rather than filled with something plausible. Tracked in
+         CLAUDE.md under Known placeholders. */
+      pt1name: 'Firuzə Osmanova',
+      pt1role: 'Arrival & settling in',
+      pt1line: 'I read International Relations at Azerbaijan University of Languages, and I am now taking my master\'s in Tourism Management at Budapest Metropolitan University. My work has been in tourism and customer service, so the first days \u2014 the airport, the flat, learning which tram goes where \u2014 are the part I am good at. I meet your student at the gate and I stay with them until Budapest stops feeling foreign.',
+      pt2name: 'İbrahim Musayev',
+      pt2role: 'Documents & registration',
+      pt2line: 'I am in my second year of Business Management and Administration at Corvinus University of Budapest. My family runs a translation agency, so I grew up around paperwork \u2014 preparing it, checking it, knowing which step has to come before which. The residence permit, the address card and the university registration are mine to get right.',
+      pt3name: '', pt3role: '', pt3line: '',
+      pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Questions parents ask',
       faq1q: 'When should I contact you?', faq1a: 'At least 2–4 weeks before your student\'s arrival date so we have time to arrange everything properly.',
       faq2q: 'Will someone be with my child when they land?', faq2a: 'Yes — we personally meet every student at Budapest Airport, no exceptions.',
@@ -220,25 +217,22 @@
       plan3cta: 'Premium seçin',
       partnersTitle: '<span class="mark">Orada olacaq</span> insanlar',
       partnersSub: 'Övladınız bir şirkətə deyil, Budapeştdə yaşayan konkret insanlara təhvil verilir. Hər biri köçün öz hissəsinə cavabdehdir.',
-      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
-         These three are invented. They are here so the section renders
-         while the real partners are being confirmed. Shipping them to a
-         parent would be claiming a named human will meet their child at
-         Budapest airport and act as legal guardian to a minor. Blank the
-         name out and the card disappears on its own; blank all three and
-         so does the section. Tracked in CLAUDE.md under Known placeholders. */
-      pt1name: 'Aysel Məmmədova',
-      pt1role: 'Hava limanı və qarşılama',
-      pt1line: 'Hər tələbəni çıxışda qarşılayır və onlar yeni evlərinə girənə qədər yanlarından ayrılmır.',
-      pt2name: 'Márton Kovács',
-      pt2role: 'Yaşayış',
-      pt2line: 'Hər mənzili tələbəyə göstərilməzdən əvvəl şəxsən yoxlayır.',
-      pt3name: 'Nigar Əliyeva',
-      pt3role: 'Qanuni qəyyum',
-      pt3line: '18 yaşdan kiçik gələn tələbələr üçün rəsmi qeydiyyatda olan qəyyum.',
-      pt4name: 'Elvin Hüseynov',
-      pt4role: 'Sənədlər və qeydiyyat',
-      pt4line: 'Yaşayış icazəsi, ünvan kartı və bank sənədlərini əvvəldən sona qədər aparır.',
+      /* ---- PARTNERS ----
+         01 and 02 are real people and their words are their own, rewritten
+         to one paragraph in first person. 03 and 04 are empty and therefore
+         do not render: a row with no name is hidden, and if none survive the
+         section and both nav links go with it. Aqsin Sakif is confirmed as a
+         third partner but has no role or line yet, which is why slot 03 is
+         blank rather than filled with something plausible. Tracked in
+         CLAUDE.md under Known placeholders. */
+      pt1name: 'Firuzə Osmanova',
+      pt1role: 'Qarşılama və yerləşmə',
+      pt1line: 'Azərbaycan Dillər Universitetində beynəlxalq münasibətlər oxumuşam, hazırda Budapeşt Metropolitan Universitetində turizm menecmenti üzrə magistr təhsili alıram. İş təcrübəm turizm və müştəri xidmətləri sahəsindədir, ona görə ilk günlər \u2014 hava limanı, ev, hansı tramvayın hara getdiyini öyrənmək \u2014 mənim güclü tərəfimdir. Tələbənizi çıxışda qarşılayır və Budapeşt ona yad görünməyi dayandırana qədər yanında oluram.',
+      pt2name: 'İbrahim Musayev',
+      pt2role: 'Sənədlər və qeydiyyat',
+      pt2line: 'Budapeşt Corvinus Universitetində Business Management and Administration ixtisası üzrə ikinci kursda oxuyuram. Ailəm tərcümə mərkəzi işlədir, ona görə sənədlərin hazırlanması və yoxlanılması ilə kiçik yaşlarımdan tanışam \u2014 hansı addımın hansindan əvvəl gəldiyini bilirəm. Yaşayış icazəsi, ünvan kartı və universitet qeydiyyatı mənim üzərimdədir.',
+      pt3name: '', pt3role: '', pt3line: '',
+      pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Valideynlərin soruşduğu suallar',
       faq1q: 'Nə vaxt sizinlə əlaqə saxlamalıyam?', faq1a: 'Tələbənizin gəliş tarixindən ən azı 2–4 həftə əvvəl ki, hər şeyi düzgün hazırlaya bilək.',
       faq2q: 'Uşağım endikdə yanında biri olacaqmı?', faq2a: 'Bəli — hər tələbəni Budapeşt hava limanında şəxsən qarşılayırıq, istisnasız.',
@@ -338,25 +332,22 @@
       plan3cta: 'Выбрать Premium',
       partnersTitle: 'Люди, которые <span class="mark">будут рядом</span>',
       partnersSub: 'Вашего ребёнка встречает не компания, а конкретные люди, которые живут в Будапеште и отвечают за свою часть переезда.',
-      /* ---- PLACEHOLDER PEOPLE -- REPLACE BEFORE LAUNCH ----
-         These three are invented. They are here so the section renders
-         while the real partners are being confirmed. Shipping them to a
-         parent would be claiming a named human will meet their child at
-         Budapest airport and act as legal guardian to a minor. Blank the
-         name out and the card disappears on its own; blank all three and
-         so does the section. Tracked in CLAUDE.md under Known placeholders. */
-      pt1name: 'Айсель Мамедова',
-      pt1role: 'Аэропорт и встреча',
-      pt1line: 'Встречает каждого студента на выходе и не уезжает, пока он не окажется в своей новой квартире.',
-      pt2name: 'Мартон Ковач',
-      pt2role: 'Жильё',
-      pt2line: 'Лично осматривает каждую квартиру, прежде чем её покажут студенту.',
-      pt3name: 'Нигяр Алиева',
-      pt3role: 'Законный опекун',
-      pt3line: 'Официально оформленный опекун для студентов, приезжающих до 18 лет.',
-      pt4name: 'Эльвин Гусейнов',
-      pt4role: 'Документы и регистрация',
-      pt4line: 'Ведёт вид на жительство, адресную карту и банковские документы от начала до конца.',
+      /* ---- PARTNERS ----
+         01 and 02 are real people and their words are their own, rewritten
+         to one paragraph in first person. 03 and 04 are empty and therefore
+         do not render: a row with no name is hidden, and if none survive the
+         section and both nav links go with it. Aqsin Sakif is confirmed as a
+         third partner but has no role or line yet, which is why slot 03 is
+         blank rather than filled with something plausible. Tracked in
+         CLAUDE.md under Known placeholders. */
+      pt1name: 'Фируза Османова',
+      pt1role: 'Встреча и заселение',
+      pt1line: 'Я изучала международные отношения в Бакинском университете языков, сейчас учусь в магистратуре по туристическому менеджменту в Будапештском университете Метрополитен. Мой опыт \u2014 туризм и работа с людьми, поэтому первые дни \u2014 аэропорт, квартира, какой трамвай куда идёт \u2014 это то, что я умею. Я встречаю вашего студента на выходе и остаюсь рядом, пока Будапешт не перестанет быть чужим.',
+      pt2name: 'Ибрагим Мусаев',
+      pt2role: 'Документы и регистрация',
+      pt2line: 'Я на втором курсе Университета Корвинуса в Будапеште, направление Business Management and Administration. Моя семья держит бюро переводов, так что с подготовкой и проверкой документов я знаком с детства \u2014 и знаю, какой шаг должен идти за каким. Вид на жительство, адресная карта и регистрация в университете \u2014 на мне.',
+      pt3name: '', pt3role: '', pt3line: '',
+      pt4name: '', pt4role: '', pt4line: '',
       faqTitle: 'Вопросы родителей',
       faq1q: 'Когда мне следует с вами связаться?', faq1a: 'Как минимум за 2–4 недели до даты прибытия, чтобы у нас было время всё правильно организовать.',
       faq2q: 'Будет ли кто-то рядом с моим ребёнком по прилёте?', faq2a: 'Да — мы лично встречаем каждого студента в аэропорту Будапешта, без исключений.',
@@ -488,6 +479,23 @@
     stageMono.textContent = name.charAt(0).toUpperCase();
   }
 
+  /* Measure the children, not the box. scrollHeight on an element with
+     overflow:hidden returns the LARGER of its content and its own height, and
+     this body is mid-transition from the previous language's height whenever
+     we re-measure — so scrollHeight hands back the old number and English
+     keeps Azerbaijani's spacing under its shorter paragraph. Adding up the
+     children answers the question actually being asked. */
+  function contentHeight(body) {
+    var total = 0;
+    Array.prototype.forEach.call(body.children, function (child) {
+      var cs = getComputedStyle(child);
+      total += child.getBoundingClientRect().height +
+               parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+    });
+    var bs = getComputedStyle(body);
+    return total + parseFloat(bs.paddingTop) + parseFloat(bs.paddingBottom);
+  }
+
   function openPartner(card) {
     document.querySelectorAll('[data-partner]').forEach(function (other) {
       var body = other.querySelector('.partner-body');
@@ -500,7 +508,7 @@
          set to the content height rather than left on auto so a language
          switch, which changes the text length, re-measures instead of
          keeping a stale number. */
-      if (body) body.style.height = on ? body.scrollHeight + 'px' : '0px';
+      if (body) body.style.height = on ? contentHeight(body) + 'px' : '0px';
     });
     showPartner(card);
   }

@@ -49,6 +49,21 @@ of gold, gradients or shadow, it is a survivor, not a decision.
 - **Sections have no eyebrow.** The mono kicker over every heading was removed;
   the headline and the marker under it carry the section on their own, and the
   `*Label` translation keys went with the markup.
+- **Every raised surface is one material.** The glass tokens
+  (`--glass-*`, `--radius-glass`) are the whole system: services and pricing
+  rows, FAQ cards, contact links, the partner portrait and the open partner
+  row, the active process step, the hero's ghost button and the scrolled
+  header. If something needs to look raised, use the tokens rather than
+  inventing a second recipe. There are **two grounds and they are not
+  interchangeable**: on paper the pane is white over a coloured backdrop, on
+  ink it is lit white at low alpha over a dark one. Paper values on an ink
+  band give a grey smear.
+- **Glass is nothing without a backdrop.** A frosted pane over a flat fill is
+  a rectangle: the blur has nothing to bend and the saturate no colour to
+  lift. `.band-aurora` puts three wide, heavily blurred colour fields behind
+  the paper bands, and `.band-ink::before` carries the same fields at the
+  alpha a dark ground can take. Adding glass to a band with neither is the
+  mistake that made the first two attempts at this look like a tint.
 - **There is no elevation, with one exception.** `--shadow-*`, `--rise`,
   `--cast-*` and `--emit` are all `none`. They remain only so rules that still
   name them resolve to nothing rather than to a stale navy glow. Surfaces
@@ -179,7 +194,8 @@ darkens, since a dark pane over dark glass is a smudge.
 
 **This is the one place on the page with real elevation.** The flat system separates
 surfaces by hairline everywhere else; the shadow here is what makes the pane read as a
-pane rather than as a lighter stripe. It is not licence to reintroduce shadow elsewhere.
+pane rather than as a lighter stripe. It is not licence to reintroduce shadow elsewhere — but it is now the same
+cast (`--glass-cast`, `--glass-cast-ink`) every other pane uses.
 Note also that a hovered row's own bottom hairline must go transparent, or a straight
 line crosses the bottom of a rounded card.
 
@@ -250,7 +266,22 @@ change leaves a Russian story clipped to the height of the English one.
 **Nothing about a real person renders until it is confirmed.** A row whose
 **name** is empty does not render; if no row survives, the section and both nav
 links go too. An invented partner card would poison every other claim on the
-page.
+page. Two of the four slots are filled — Firuzə Osmanova (arrival and settling
+in) and İbrahim Musayev (documents and registration), both written from what
+they said about themselves. Slots 03 and 04 are blank on purpose.
+
+`openPartner()` measures with **`contentHeight()`, not `scrollHeight`**.
+`scrollHeight` on an element with `overflow: hidden` returns the larger of its
+content and its own height, and this body is always mid-transition from the
+previous language's height at the moment it is re-measured — so it handed back
+the old number and English kept Azerbaijani's spacing under its shorter
+paragraph. Adding up the children answers the question actually being asked.
+
+The rows are inset by `--pt-inset` and the list pulled back out by the same
+amount, so the names still line up with the section heading while a row that
+becomes a pane has room inside its own rounded edge. That inset shrinks below
+720px: at full size the negative margin is wider than the page gutter and the
+page scrolls sideways.
 
 The monogram is derived from whatever name is on screen (`name.charAt(0)`), so a
 Cyrillic transliteration follows for free. The portrait `<img>` and the monogram
@@ -337,11 +368,16 @@ Headless screenshots on Windows have two traps worth knowing:
 
 ## Known placeholders
 
-The four **partners** (`pt1..4name/role/line` in `main.js`) are invented people,
-sitting in one flagged block per language. They claim a named human meets students at
-the airport and acts as legal guardian to minors — replace them with the real
-partners before this page is shown to a parent. Blanking a name hides that card;
-blanking all four hides the section and its nav links.
+Two of the four **partner** slots are filled with real people. **Slots 03 and 04 are
+blank**, which is why only two names render. Aqşin Sakif (Hungarian University of
+Agriculture and Life Sciences) is confirmed as a third partner but has no role and no
+line yet — a name with an invented job beside it is worse than no third name, so the
+slot stays empty until both arrive. Blanking a name hides that card; blanking all four
+hides the section and its nav links.
+
+Note also that **no one on the page is named as the legal guardian** any more. The
+Standard and Premium packages still promise guardianship for students under 18, so
+whoever signs that has to appear here before launch.
 
 
 The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**
