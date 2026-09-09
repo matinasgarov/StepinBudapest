@@ -210,28 +210,32 @@ h3 {
 /* Bands -------------------------------------------------- */
 .band-paper     { background: var(--paper); }
 .band-paper-alt { background: var(--paper-alt); }
-.band-ink       { background: var(--ink); color: var(--on-ink); position: relative; }
+/* The colour fields are painted BY the band, not by a layer inside it.
 
-/* The ink bands were a single flat fill edge to edge. A wide, very low-contrast
-   lift behind the content gives the surface a light source; the grain on top
-   kills the gradient banding and gives it material. Both sit under the content
-   and never intercept a pointer. */
-.band-ink::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
+   They used to live on a ::before with `inset: 0` — a box sized as a
+   percentage of the band — under `filter: blur(60px)` and `will-change`.
+   Every frame that an accordion inside the band grew, that box changed size,
+   so a promoted, blurred, band-sized layer was re-rasterised sixty times a
+   second. Screencasting a services row opening showed five or six dropped
+   frames per open, in stalls of 60-80ms; deleting the pseudo-element made
+   them vanish entirely, and no other suspect on the page moved the number.
+
+   As a background-image there is no extra layer to promote and nothing to
+   re-raster: the band just paints gradients, which is cheap, and the soft
+   `transparent 70%` stops were doing nearly all of the blur's work anyway. */
+.band-ink {
+  background-color: var(--ink);
+  background-image:
     radial-gradient(120% 70% at 50% -10%, rgba(28, 53, 102, 0.42), transparent 74%),
-    /* The same colour fields the paper bands carry, at the alpha a dark
-       ground can take. Without them the glass on an ink band has nothing
-       to sample and comes out as a flat lighter stripe. */
     radial-gradient(38% 44% at 8% 18%, rgba(76, 130, 255, 0.16), transparent 70%),
     radial-gradient(40% 46% at 92% 26%, rgba(110, 154, 255, 0.13), transparent 72%),
     radial-gradient(46% 50% at 62% 94%, rgba(76, 130, 255, 0.15), transparent 70%);
-  pointer-events: none;
-  /* Same reason as .band-aurora::before: drawn once, composited after. */
-  will-change: transform;
+  color: var(--on-ink);
+  position: relative;
 }
+
+/* The grain stays a layer: it is a fixed 160px tile, so growing the band
+   paints more tiles rather than re-rasterising one big one. */
 .band-ink::after {
   content: '';
   position: absolute;
@@ -248,32 +252,24 @@ h3 {
    colour to lift, which is why the first attempt at this read as a tint
    rather than as glass.
 
-   So the two paper bands that hold rows get a backdrop: three wide, heavily
-   blurred colour fields, low enough in alpha that body text keeps its
-   contrast against them and the band still reads as paper. The rows have no
-   ground of their own, so the fields show through the whole section and a
-   hovered row has something to frost.
+   So the paper bands that hold rows carry a backdrop: three wide colour
+   fields, low enough in alpha that body text keeps its contrast against them
+   and the band still reads as paper. The rows have no ground of their own,
+   so the fields show through the whole section and a hovered row has
+   something to frost.
 
-   overflow: hidden is load-bearing — the fields are inset past the band's
-   edges so their soft ends never land inside it. */
-.band-aurora { position: relative; overflow: hidden; }
-.band-aurora::before {
-  content: '';
-  position: absolute;
-  inset: -12% -8%;
-  background:
+   Painted BY the band, for the reason spelled out on .band-ink above: as an
+   inset pseudo-element under `filter: blur()` this was the single biggest
+   source of dropped frames on the page, because its box is a percentage of a
+   band whose height changes on every frame of an accordion opening.
+   `background-image`, not `background`, so each band keeps its own colour. */
+.band-aurora {
+  position: relative;
+  background-image:
     radial-gradient(38% 44% at 10% 16%, rgba(76, 130, 255, 0.26), transparent 70%),
-    radial-gradient(34% 40% at 90% 28%, rgba(27, 69, 196, 0.20), transparent 72%),
+    radial-gradient(34% 40% at 90% 28%, rgba(27, 69, 196, 0.2), transparent 72%),
     radial-gradient(44% 48% at 58% 92%, rgba(110, 154, 255, 0.26), transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-  /* Promoted on purpose. A 60px blur over a band-sized box is expensive to
-     rasterise, and unpromoted it is re-rasterised whenever anything in front
-     of it repaints — which is every frame of a row opening. On its own layer
-     it is drawn once and composited thereafter. */
-  will-change: transform;
 }
-.band-aurora > * { position: relative; z-index: 1; }
 
 
 /* ---------------------------------------------------------

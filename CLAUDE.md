@@ -60,10 +60,15 @@ of gold, gradients or shadow, it is a survivor, not a decision.
   band give a grey smear.
 - **Glass is nothing without a backdrop.** A frosted pane over a flat fill is
   a rectangle: the blur has nothing to bend and the saturate no colour to
-  lift. `.band-aurora` puts three wide, heavily blurred colour fields behind
-  the paper bands, and `.band-ink::before` carries the same fields at the
-  alpha a dark ground can take. Adding glass to a band with neither is the
-  mistake that made the first two attempts at this look like a tint.
+  lift. `.band-aurora` and `.band-ink` paint wide radial colour fields for the
+  glass to sit in front of. Adding glass to a band with neither is the mistake
+  that made the first two attempts at this look like a tint.
+- **Those fields are `background-image` on the band itself, never a layer
+  inside it.** They began as inset `::before` pseudo-elements under
+  `filter: blur(60px)` with `will-change: transform`, and that was the single
+  biggest source of dropped frames on the page — see Performance. Do not put
+  them back on a pseudo-element, and do not add `filter: blur()` to them: the
+  `transparent 70%` stops already give the falloff the blur was there for.
 - **There is no elevation, with one exception.** `--shadow-*`, `--rise`,
   `--cast-*` and `--emit` are all `none`. They remain only so rules that still
   name them resolve to nothing rather than to a stale navy glow. Surfaces
@@ -412,18 +417,32 @@ write a style, then call `getBoundingClientRect` — which forced a synchronous 
 in the middle of the handler, several times per frame while scrolling. `updateProcess`
 takes the rect as an argument for that reason; **don't have it measure anything itself.**
 
-**The blurred backdrops are promoted deliberately.** `.band-aurora::before` and
-`.band-ink::before` carry `will-change: transform`. A 60px blur over a band-sized box
-is expensive to rasterise, and unpromoted it is re-rasterised whenever anything in
-front of it repaints — which is every frame of a row opening. On its own layer it is
-drawn once and composited from then on. This is the one place on the page where
-`will-change` is warranted; do not sprinkle it.
+**The colour fields must not live on a resizing layer.** This was the page's worst
+performance bug and it took four wrong guesses to find, because every synthetic metric
+I tried — throttled frame timing, `Performance.getMetrics`, timeline totals — was too
+noisy to show it. What found it was **`Page.startScreencast`**: capture the real
+compositor frames during an interaction and read the gaps between their timestamps.
+Opening a services row produced deltas like `13 18 19 13 65 21 5 21 60 24 9 65 24 15
+13 15 64 78` — five or six stalls of 60-80ms, four dropped frames each.
 
-Measured over six open/close cycles of a services row, tracing the timeline: dropping
-the blur from open rows, containing the panel and promoting the backdrops took `Layout`
-from ~37ms to ~32ms, `UpdateLayoutTree` from ~76ms to ~56ms, `PrePaint` from ~72ms to
-~55ms. Raster is unchanged in headless, which uses software rasterisation and so does
-not model what a GPU blur actually costs on the reader's machine.
+Bisecting by disabling one suspect at a time, `.band-aurora::before` was the whole of
+it: with it hidden, zero drops and a 14ms worst frame. Nothing else moved the number —
+not the header blur, not the grain, not the row hover glass, not the FAQ or contact
+panes.
+
+The mechanism: the pseudo-element was `inset: -12% -8%`, so **its box was a percentage
+of the band**. Every frame that an accordion inside the band grew, a promoted,
+`blur(60px)`-filtered, band-sized layer had to be re-rasterised. `will-change` made it
+worse, not better — promoting a layer whose size changes every frame is the opposite of
+what promotion is for.
+
+As `background-image` on the band there is no layer to promote and nothing to
+re-raster; the band paints gradients, which is cheap. Result: **0-1 dropped frames,
+worst 25-35ms**, for both the services rows and the partner accordion, and the bands
+look the same because the soft stops were doing the blur's work already.
+
+**The lesson worth keeping: measure interaction smoothness with a screencast, not with
+counters.** Frame timestamps are the thing the reader actually perceives.
 
 Still expensive and deliberately left alone, since removing them changes the
 design: `backdrop-filter` on `.site-header.is-scrolled` (blur 20px), and the grain
