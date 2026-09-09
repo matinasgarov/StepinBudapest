@@ -220,7 +220,28 @@ still, not what is moving. The pane stays; the tint rises to cover the missing
 `.plan-detail` and `.svc-detail` carry `contain: layout paint` so the entrance
 animation's repaint stays inside the panel.
 
-**Opening a row is animated on entry only, and briefly.** A `<details>` panel is
+**Services and FAQ panels are animated by `main.js`, pricing by CSS. They are not
+the same mechanism and must not both run on one element.** The block at the foot of
+`main.js` (`.faq, .svc`) cancels the native toggle, sets `open` itself, and transitions
+the panel's `height` from 0 to a measured value over 0.34s — that is what makes those
+two feel like accordions. Pricing has no JS: a `.plan` is a plain `<details>` that snaps
+to full height, so the CSS fade is its only motion.
+
+`planOpen` therefore applies to `.plan-detail` **only**. It ran on `.svc-detail` as well
+for a while, and the result was two animations from two engines on one element: the
+content translated *down* from -7px while its box grew *down* from zero, inside
+`overflow: hidden`, over 0.3s against the height's 0.34s. The text crawled out from
+under the clip edge moving the wrong way. Sampling the open frame by frame showed it
+plainly — `anims: 2`, opacity ramping 0 → 1 and transform -7 → 0 while height went
+39 → 180. That is what "does not open smoothly" was, and no amount of frame budget
+would have fixed it. **One animation per element.**
+
+For the same reason `.svc-detail` carries no `contain`: `main.js` reads its
+`scrollHeight`, and layout containment on a box being measured is a trap. Both JS paths
+take that measurement *before* the animation frame, so the transition does not start
+with a forced synchronous layout.
+
+**Opening a pricing row is animated on entry only, and briefly.** A `<details>` panel is
 `display: none` until it is not, so there is no state to transition *from*; `planOpen`
 fades and slides it in over **0.3s**. Closing stays instant, which is what a reader
 expects. Opacity and transform only, so it costs no layout.

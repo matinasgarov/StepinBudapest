@@ -830,8 +830,12 @@
       if (item.classList.contains('is-flat')) return;
       e.preventDefault();
 
+      /* Both paths measure BEFORE the animation frame. Reading scrollHeight
+         inside the rAF forces a synchronous layout at the exact moment the
+         transition is meant to start, which costs the first frame of it. */
       if (item.open) {
-        body.style.height = body.scrollHeight + 'px';
+        var shut = body.scrollHeight;
+        body.style.height = shut + 'px';
         requestAnimationFrame(function () {
           body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
           body.style.height = '0px';
@@ -839,10 +843,11 @@
         window.setTimeout(function () { item.open = false; }, 340);
       } else {
         item.open = true;
+        var full = body.scrollHeight;
         body.style.height = '0px';
         requestAnimationFrame(function () {
           body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
-          body.style.height = body.scrollHeight + 'px';
+          body.style.height = full + 'px';
         });
         window.setTimeout(function () { body.style.height = 'auto'; }, 340);
       }

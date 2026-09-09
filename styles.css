@@ -1387,11 +1387,20 @@ h3 {
   from { opacity: 0; transform: translateY(-7px); }
   to   { opacity: 1; transform: none; }
 }
-.plan[open] .plan-detail,
-.svc[open] .svc-detail {
+/* PRICING ONLY. The services and FAQ panels are animated by main.js, which
+   transitions their height from 0 to a measured value over 0.34s. Running
+   this keyframe on those as well meant two animations from two engines on one
+   element: the content slid DOWN 7px while its box grew DOWN from zero, and
+   with overflow:hidden the text crawled out from under the clip edge moving
+   the wrong way. That is what "does not open smoothly" was. One animation per
+   element.
+
+   Pricing rows have no JS: they are native <details> that snap to full height,
+   so the fade is the only motion they get and there is nothing to fight. */
+.plan[open] .plan-detail {
   animation: planOpen 0.3s var(--ease-out) both;
-  /* The panel fades and slides for 0.85s. Containment keeps that repaint
-     inside the panel instead of letting it dirty the section around it. */
+  /* Not on .svc-detail: main.js reads its scrollHeight to size the open
+     panel, and layout containment on a box being measured is a trap. */
   contain: layout paint;
 }
 
