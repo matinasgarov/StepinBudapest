@@ -1383,21 +1383,21 @@ h3 {
   from { opacity: 0; transform: translateY(-7px); }
   to   { opacity: 1; transform: none; }
 }
-/* PRICING ONLY. The services and FAQ panels are animated by main.js, which
-   transitions their height from 0 to a measured value over 0.34s. Running
-   this keyframe on those as well meant two animations from two engines on one
-   element: the content slid DOWN 7px while its box grew DOWN from zero, and
-   with overflow:hidden the text crawled out from under the clip edge moving
-   the wrong way. That is what "does not open smoothly" was. One animation per
-   element.
+/* Every panel on the page opens this way: instantly to full height, with the
+   content fading in. Nothing animates a size.
 
-   Pricing rows have no JS: they are native <details> that snap to full height,
-   so the fade is the only motion they get and there is nothing to fight. */
-.plan[open] .plan-detail {
+   Services, FAQ and the partner rows used to animate their height from JS.
+   That cannot be made smooth on a page this size — a height in normal flow
+   re-lays out every section below it on every frame, and sampling rAF during
+   an open showed callbacks arriving 4-37ms apart with the panel lurching 39px
+   in a single step, against a metronomic 10ms for a pricing row that animates
+   no layout at all. Opacity and transform are the only things here that move,
+   and neither touches layout. */
+.plan[open] .plan-detail,
+.svc[open] .svc-detail,
+.faq[open] .faq-body,
+.partner.is-open .partner-body {
   animation: planOpen 0.3s var(--ease-out) both;
-  /* Not on .svc-detail: main.js reads its scrollHeight to size the open
-     panel, and layout containment on a box being measured is a trap. */
-  contain: layout paint;
 }
 
 .plan[open] .plan-sign::after { opacity: 0; }
@@ -1595,15 +1595,13 @@ h3 {
 
 /* Height animates from a measured pixel value set in main.js, the same way
    the FAQ opens — auto is not animatable. */
+/* Shown or not shown. No measured height, so nothing can hold a stale one
+   across a language switch, and no per-frame layout. */
 .partner-body {
-  overflow: hidden;
-  height: 0;
+  display: none;
   padding-inline: var(--pt-inset);
-  /* Height is animated, so this box is re-laid out every frame. Containment
-     keeps that work inside the box instead of letting it walk the section. */
-  contain: layout paint;
 }
-.js .partner-body { transition: height 0.38s var(--ease-out); }
+.partner.is-open .partner-body { display: block; }
 .partner-line {
   padding: 0 0 var(--s3) calc(0.68rem + var(--s3));
   max-width: 44ch;

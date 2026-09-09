@@ -485,49 +485,22 @@
     stageMono.textContent = name.charAt(0).toUpperCase();
   }
 
-  /* Measure the children, not the box. scrollHeight on an element with
-     overflow:hidden returns the LARGER of its content and its own height, and
-     this body is mid-transition from the previous language's height whenever
-     we re-measure — so scrollHeight hands back the old number and English
-     keeps Azerbaijani's spacing under its shorter paragraph. Adding up the
-     children answers the question actually being asked. */
-  function contentHeight(body) {
-    var total = 0;
-    Array.prototype.forEach.call(body.children, function (child) {
-      var cs = getComputedStyle(child);
-      total += child.getBoundingClientRect().height +
-               parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
-    });
-    var bs = getComputedStyle(body);
-    return total + parseFloat(bs.paddingTop) + parseFloat(bs.paddingBottom);
-  }
+  /* No measuring and no height animation. This used to set the body's height
+     to a measured pixel value and transition it, which meant a full document
+     layout on every frame of the open — the same reason services and FAQ gave
+     it up. The story is shown or it is not; CSS fades it in.
 
+     Everything that existed only to support the measurement went with it: the
+     children-not-scrollHeight helper, the measure-all-then-write-all pass, and
+     the stale-height bug where English kept Azerbaijani's spacing because
+     scrollHeight returns the larger of a box and its content. A panel with no
+     inline height cannot hold a stale one. */
   function openPartner(card) {
-    var rows = document.querySelectorAll('[data-partner]');
-
-    /* Measure every row before writing to any of them. Interleaved, each
-       height written invalidates layout and the next getBoundingClientRect
-       forces it to be recomputed — three rows meant three synchronous
-       layouts of the section on every click, which is exactly the pause you
-       feel before the panel starts moving. */
-    var heights = [];
-    rows.forEach(function (other) {
-      var body = other.querySelector('.partner-body');
-      heights.push(body && other === card ? contentHeight(body) : 0);
-    });
-
-    rows.forEach(function (other, i) {
-      var body = other.querySelector('.partner-body');
+    document.querySelectorAll('[data-partner]').forEach(function (other) {
       var head = other.querySelector('[data-partner-toggle]');
       var on = other === card;
-
       other.classList.toggle('is-open', on);
       if (head) head.setAttribute('aria-expanded', on ? 'true' : 'false');
-      /* Height animates from a measured value; auto is not animatable. It is
-         set to the content height rather than left on auto so a language
-         switch, which changes the text length, re-measures instead of
-         keeping a stale number. */
-      if (body) body.style.height = heights[i] + 'px';
     });
     showPartner(card);
   }
@@ -803,10 +776,24 @@
   /* -------------------------------------------------------
      FAQ — animate open/close height
   ------------------------------------------------------- */
-  document.querySelectorAll('.faq, .svc').forEach(function (item) {
-    var body = item.querySelector('.faq-body, .svc-detail');
-    if (!body) return;
+  /* Services and FAQ are native <details> and nothing here animates them.
 
+     They used to be driven from JS: cancel the native toggle, set `open`, read
+     scrollHeight, then transition the panel's height from 0 over 0.34s. It was
+     never smooth and could not be made smooth, because animating height in
+     normal flow re-lays out every section below the row on every frame.
+     Sampling rAF during an open showed the cost plainly — callbacks arriving
+     4ms to 37ms apart and the panel lurching 39px in one step — while a
+     pricing row, which has no layout animation, held a metronomic 10ms.
+
+     There was also 85-100ms of dead air before anything moved: un-hiding the
+     panel, forcing a synchronous layout to measure it, then waiting a frame
+     for rAF, then another for the transition to start. A native open pays one
+     layout and shows the panel on the next frame.
+
+     What is left is the fade, in CSS, on a panel that is already at its full
+     height. Opacity and transform only: nothing per-frame touches layout. */
+  document.querySelectorAll('.faq, .svc').forEach(function (item) {
     var summary = item.querySelector('summary');
     if (!summary) return;
 
@@ -815,42 +802,6 @@
        switch, so a card can be empty in one language and full in the next. */
     summary.addEventListener('click', function (e) {
       if (item.classList.contains('is-flat')) { e.preventDefault(); }
-    });
-
-    /* Reduced motion: hand <details> back to the browser and collapse nothing.
-       The height/overflow pair below is what drives the open/close animation —
-       setting it without the animation to undo it leaves an opened panel clipped
-       to zero height, i.e. every FAQ answer silently invisible. */
-    if (reduceMotion) return;
-
-    body.style.overflow = 'hidden';
-    if (!item.open) body.style.height = '0px';
-
-    summary.addEventListener('click', function (e) {
-      if (item.classList.contains('is-flat')) return;
-      e.preventDefault();
-
-      /* Both paths measure BEFORE the animation frame. Reading scrollHeight
-         inside the rAF forces a synchronous layout at the exact moment the
-         transition is meant to start, which costs the first frame of it. */
-      if (item.open) {
-        var shut = body.scrollHeight;
-        body.style.height = shut + 'px';
-        requestAnimationFrame(function () {
-          body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
-          body.style.height = '0px';
-        });
-        window.setTimeout(function () { item.open = false; }, 340);
-      } else {
-        item.open = true;
-        var full = body.scrollHeight;
-        body.style.height = '0px';
-        requestAnimationFrame(function () {
-          body.style.transition = 'height 0.34s cubic-bezier(0.4,0,0.2,1)';
-          body.style.height = full + 'px';
-        });
-        window.setTimeout(function () { body.style.height = 'auto'; }, 340);
-      }
     });
   });
 

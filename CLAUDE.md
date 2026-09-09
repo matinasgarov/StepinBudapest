@@ -225,40 +225,21 @@ still, not what is moving. The pane stays; the tint rises to cover the missing
 `.plan-detail` and `.svc-detail` carry `contain: layout paint` so the entrance
 animation's repaint stays inside the panel.
 
-**Services and FAQ panels are animated by `main.js`, pricing by CSS. They are not
-the same mechanism and must not both run on one element.** The block at the foot of
-`main.js` (`.faq, .svc`) cancels the native toggle, sets `open` itself, and transitions
-the panel's `height` from 0 to a measured value over 0.34s — that is what makes those
-two feel like accordions. Pricing has no JS: a `.plan` is a plain `<details>` that snaps
-to full height, so the CSS fade is its only motion.
+**Nothing on this page animates a size.** Every panel — pricing, services, FAQ and
+the partner rows — opens instantly to full height with its content fading in over 0.3s
+(`planOpen`, opacity and transform only). Services and FAQ are plain `<details>`; the
+partner rows are a `display` toggle.
 
-`planOpen` therefore applies to `.plan-detail` **only**. It ran on `.svc-detail` as well
-for a while, and the result was two animations from two engines on one element: the
-content translated *down* from -7px while its box grew *down* from zero, inside
-`overflow: hidden`, over 0.3s against the height's 0.34s. The text crawled out from
-under the clip edge moving the wrong way. Sampling the open frame by frame showed it
-plainly — `anims: 2`, opacity ramping 0 → 1 and transform -7 → 0 while height went
-39 → 180. That is what "does not open smoothly" was, and no amount of frame budget
-would have fixed it. **One animation per element.**
+Three of those four used to animate their height from JavaScript, and **it could not be
+made smooth.** A height in normal flow re-lays out every section below the row on every
+frame. Sampling `requestAnimationFrame` during an open showed callbacks arriving 4-37ms
+apart with the panel lurching 39px in a single step, against a metronomic 10ms for a
+pricing row that animates no layout at all. There was also 85-100ms of dead air before
+anything moved: un-hide the panel, force a synchronous layout to measure it, wait a
+frame for rAF, wait another for the transition to start.
 
-For the same reason `.svc-detail` carries no `contain`: `main.js` reads its
-`scrollHeight`, and layout containment on a box being measured is a trap. Both JS paths
-take that measurement *before* the animation frame, so the transition does not start
-with a forced synchronous layout.
-
-**Opening a pricing row is animated on entry only, and briefly.** A `<details>` panel is
-`display: none` until it is not, so there is no state to transition *from*; `planOpen`
-fades and slides it in over **0.3s**. Closing stays instant, which is what a reader
-expects. Opacity and transform only, so it costs no layout.
-
-It ran for **0.85s**, with the list, checkboxes and CTA on a second pass 0.12s behind
-the panel — so nearly a second passed between the click and the panel being readable,
-and since the animation starts at `opacity: 0`, the click looked for a moment like it
-had done nothing. That reads as lag, not as easing, and it was reported as lag twice.
-The second pass is gone entirely and the travel is down to 7px. Measured click-to-
-readable: ~300ms to ~110ms, and the inner content no longer waits on a pass of its own.
-**If this ever feels slow again, look here first** — the frame cost of the row was never
-the problem.
+**Do not reintroduce a height, max-height or grid-row animation here.** If an accordion
+needs to feel less abrupt, lengthen the fade or add a transform — not a size.
 
 **Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
 text, because a number is the same in all three languages. Prices are quoted in **USD**
@@ -313,29 +294,19 @@ that only lives in a role line does not reach a phone.
 **Clicking the open row does not close it.** With one shared portrait, a state
 where no row is open leaves a face belonging to no name.
 
-**These rows are the one place the glass carries no `backdrop-filter`**, and that
-is a performance decision, not an oversight. Every other pane on the page is a
-fixed size; this one changes height on every frame of the accordion, so the blur
-had to re-sample a moving box sixty times a second and the open visibly caught.
-The ground behind is near-flat ink, so the blur was buying almost nothing — the
-tint, the edge light and the cast are what read as glass here, and they are free
-to paint. Their tints are raised slightly to cover the missing `saturate`.
+**These rows carry no `backdrop-filter`.** The ground behind them is near-flat
+ink, so the blur bought almost nothing — the tint, the edge light and the cast
+are what read as glass here, and they are free to paint. Their tints are raised
+slightly to cover the missing `saturate`.
 
-For the same reason the row's **radius and border snap rather than transition**:
-both are clip changes, and re-clipping a row every frame while it is also
-animating its height is the other half of that cost. `.partner-body` carries
-`contain: layout paint` so the per-frame re-layout stays inside the box.
-
-`openPartner()` **measures every row before writing to any of them**. Interleaved,
-each height written invalidates layout and the next `getBoundingClientRect()`
-forces it back — three rows meant three synchronous layouts of the section per
-click, which is the pause you feel before the panel starts moving. Keep the two
-passes separate.
-
-`openPartner()` sets the body's height to a **measured pixel value** — `auto` is
-not animatable — and `hidePartnerSlots()` re-opens the first surviving row on
-every language switch so the height is re-measured. Skip that and a language
-change leaves a Russian story clipped to the height of the English one.
+**`openPartner()` measures nothing.** It toggles `is-open` and lets CSS show the
+body. It used to set the body's height to a measured pixel value and transition
+it, which took a whole family of problems with it when it went: a
+children-not-`scrollHeight` helper (because `scrollHeight` returns the larger of
+a box and its content, so a panel mid-transition handed back the previous
+language's height), a measure-all-then-write-all pass to stop three rows forcing
+three synchronous layouts per click, and `contain: layout paint` to fence the
+per-frame reflow. A panel with no inline height cannot hold a stale one.
 
 **Nothing about a real person renders until it is confirmed.** A row whose
 **name** is empty does not render; if no row survives, the section and both nav
@@ -442,7 +413,21 @@ worst 25-35ms**, for both the services rows and the partner accordion, and the b
 look the same because the soft stops were doing the blur's work already.
 
 **The lesson worth keeping: measure interaction smoothness with a screencast, not with
-counters.** Frame timestamps are the thing the reader actually perceives.
+counters.** Frame timestamps are the thing the reader actually perceives. The same
+method then found the second cause — the JS height animations — by comparing rAF
+cadence during an open: 4-37ms and lurching for a section that animates layout,
+a metronomic 10ms for one that does not.
+
+Two things about the harness, both of which cost real time here:
+
+- **Disable the HTTP cache** (`Network.setCacheDisabled`) before navigating. Chrome
+  will serve a cached `index.html`, which pulls the *previous* `?v=` of the CSS and JS,
+  and a measurement of code you already deleted looks exactly like a fix that did not
+  work.
+- **Establish the noise floor.** Recording frame deltas with no interaction at all gives
+  3 drops and a 43ms worst frame on this machine. Any result at or under that is not
+  evidence of anything. Both the services rows and the partner accordion now sit there;
+  before the fixes they were at 5-6 drops with 60-80ms stalls.
 
 Still expensive and deliberately left alone, since removing them changes the
 design: `backdrop-filter` on `.site-header.is-scrolled` (blur 20px), and the grain
