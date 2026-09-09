@@ -229,6 +229,8 @@ h3 {
     radial-gradient(40% 46% at 92% 26%, rgba(110, 154, 255, 0.13), transparent 72%),
     radial-gradient(46% 50% at 62% 94%, rgba(76, 130, 255, 0.15), transparent 70%);
   pointer-events: none;
+  /* Same reason as .band-aurora::before: drawn once, composited after. */
+  will-change: transform;
 }
 .band-ink::after {
   content: '';
@@ -265,6 +267,11 @@ h3 {
     radial-gradient(44% 48% at 58% 92%, rgba(110, 154, 255, 0.26), transparent 70%);
   filter: blur(60px);
   pointer-events: none;
+  /* Promoted on purpose. A 60px blur over a band-sized box is expensive to
+     rasterise, and unpromoted it is re-rasterised whenever anything in front
+     of it repaints — which is every frame of a row opening. On its own layer
+     it is drawn once and composited thereafter. */
+  will-change: transform;
 }
 .band-aurora > * { position: relative; z-index: 1; }
 
@@ -769,7 +776,7 @@ h3 {
   min-width: 0;
 }
 
-.hero-title, .hero-sub, .hero-note { overflow-wrap: break-word; }
+.hero-title, .hero-sub { overflow-wrap: break-word; }
 
 
 /* Size carries the hierarchy, not weight. The display face is Inter Tight at
@@ -806,35 +813,6 @@ h3 {
   margin-top: var(--s4);
 }
 
-.hero-note {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: var(--s3);
-  font-size: 0.85rem;
-  color: rgba(244, 247, 255, 0.84);
-  text-shadow: 0 1px 4px rgba(8, 14, 32, 0.9), 0 2px 20px rgba(8, 14, 32, 0.95);
-}
-.pulse-dot {
-  position: relative;
-  width: 7px;
-  height: 7px;
-  flex: none;
-  background: #34D399;
-  border-radius: 50%;
-}
-.pulse-dot::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border: 1px solid #34D399;
-  border-radius: 50%;
-  animation: pulse-ring 2.4s var(--ease-out) infinite;
-}
-@keyframes pulse-ring {
-  0%   { transform: scale(0.6); opacity: 0.9; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
 
 /* ---------------------------------------------------------
    TRUST TICKER
@@ -1204,10 +1182,33 @@ h3 {
     transform: translateY(-3px);
   }
 
+  /* An OPEN row drops the blur. Closed, a row is a short strip and the
+     backdrop is sampled once; open, it is a panel several hundred pixels
+     tall with a 0.85s entrance animation running inside it, and the blur has
+     to be recomputed across that whole area for every frame of it. That is
+     the catch you feel when a row opens. The pane stays: the tint goes up to
+     cover the missing saturate, and the edge and cast are unchanged.
+
+     Same call as the partner rows, for the same reason — blur what holds
+     still, not what is moving. */
+  .plan[open]:hover,
+  .plan[open]:has(> .plan-summary:focus-visible),
+  .svc[open]:hover,
+  .svc[open]:has(> .svc-summary:focus-visible) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
   /* The featured row keeps its tint when it lifts rather than washing out to
      its neighbours' white. It is not excluded from the rule above, only
      overridden: both selectors are (0,2,0), so this one wins on order. Keep
      them in this order. */
+  .plan-featured[open]:hover,
+  .plan-featured[open]:has(> .plan-summary:focus-visible) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .plan-featured:hover,
   .plan-featured:has(> .plan-summary:focus-visible) {
     background: rgba(76, 130, 255, 0.14);
@@ -1227,9 +1228,10 @@ h3 {
    pane in the same paper, tinted with the accent and edged in it, which is
    enough to be found first and not enough to break the sequence. */
 .plan-featured {
+  /* No blur: this row ships open, so it is a tall panel from the first
+     paint and would pay the cost described above on every frame of its own
+     entrance animation. */
   background: rgba(76, 130, 255, 0.08);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--radius-glass);
   border-bottom-color: transparent;
   box-shadow: inset 0 0 0 1px rgba(27, 69, 196, 0.3),
@@ -1381,7 +1383,12 @@ h3 {
   to   { opacity: 1; transform: none; }
 }
 .plan[open] .plan-detail,
-.svc[open] .svc-detail { animation: planOpen 0.85s var(--ease-out) both; }
+.svc[open] .svc-detail {
+  animation: planOpen 0.85s var(--ease-out) both;
+  /* The panel fades and slides for 0.85s. Containment keeps that repaint
+     inside the panel instead of letting it dirty the section around it. */
+  contain: layout paint;
+}
 
 /* The list arrives just behind its own panel. One step of delay, not a
    per-item stagger: five items each waiting on the one before would take
@@ -1975,5 +1982,5 @@ h3 {
   .js .anim, .js .reveal { opacity: 1 !important; transform: none !important; }
   .process-step { opacity: 1; filter: none; transform: none; }
   .ticker-track { animation: none; }
-  .wa-float-ring, .pulse-dot::after { display: none; }
+  .wa-float-ring { display: none; }
 }

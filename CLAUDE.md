@@ -210,6 +210,16 @@ The rule sits inside `@media (hover: hover)`. A touch browser fires `:hover` on 
 holds it until something else is tapped, so unguarded it would leave the row a parent
 just opened frosted with no way to clear it.
 
+**An open row drops the blur.** Closed, a row is a short strip and its backdrop is
+sampled once. Open, it is a panel several hundred pixels tall with a 0.85s entrance
+animation running inside it, so the blur has to be recomputed over that whole area for
+every frame — the same mistake the partner rows made, and the same fix: blur what holds
+still, not what is moving. The pane stays; the tint rises to cover the missing
+`saturate`. `.plan-featured` never blurs at all, because it ships `open`.
+
+`.plan-detail` and `.svc-detail` carry `contain: layout paint` so the entrance
+animation's repaint stays inside the panel.
+
 **Opening a row is animated on entry only.** A `<details>` panel is `display: none`
 until it is not, so there is no state to transition *from*; `planOpen` fades and slides
 it in over 0.85s instead, with the list, the checkboxes and the CTA following 0.12s
@@ -350,7 +360,8 @@ The Process section uses a 300vh scroll container driving a sticky stage. Below 
 
 ## Performance
 
-The page is 217KB of local files, and none of it is the bottleneck. The slowest thing on
+The page is well under 200KB of local files now that the hero photograph is gone, and
+none of it is the bottleneck. The slowest thing on
 it by an order of magnitude is the **Google Fonts stylesheet** — a 1KB file that costs
 ~420-470ms of DNS, TLS and round trip to a third-party origin. It used to be a plain
 `<link rel="stylesheet">`, so it blocked first paint for all of that.
@@ -374,13 +385,18 @@ write a style, then call `getBoundingClientRect` — which forced a synchronous 
 in the middle of the handler, several times per frame while scrolling. `updateProcess`
 takes the rect as an argument for that reason; **don't have it measure anything itself.**
 
-`.hero-atmosphere` carries `will-change: transform` because it is a 20px blur over an
-element 160% the size of the hero, transformed continuously for 26 seconds. Without the
-hint the blur is re-applied every frame.
+**The blurred backdrops are promoted deliberately.** `.band-aurora::before` and
+`.band-ink::before` carry `will-change: transform`. A 60px blur over a band-sized box
+is expensive to rasterise, and unpromoted it is re-rasterised whenever anything in
+front of it repaints — which is every frame of a row opening. On its own layer it is
+drawn once and composited from then on. This is the one place on the page where
+`will-change` is warranted; do not sprinkle it.
 
-The hero's grain layer and `.hero-atmosphere` are gone with the depth system —
-the second was a 20px blur transformed every frame for 26 seconds, so its removal
-is a real saving rather than only a visual change.
+Measured over six open/close cycles of a services row, tracing the timeline: dropping
+the blur from open rows, containing the panel and promoting the backdrops took `Layout`
+from ~37ms to ~32ms, `UpdateLayoutTree` from ~76ms to ~56ms, `PrePaint` from ~72ms to
+~55ms. Raster is unchanged in headless, which uses software rasterisation and so does
+not model what a GPU blur actually costs on the reader's machine.
 
 Still expensive and deliberately left alone, since removing them changes the
 design: `backdrop-filter` on `.site-header.is-scrolled` (blur 20px), and the grain
