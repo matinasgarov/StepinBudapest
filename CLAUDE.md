@@ -41,6 +41,13 @@ of gold, gradients or shadow, it is a survivor, not a decision.
   bright one on paper is the single easiest way to break this palette. The old
   `--gold*` names are kept as aliases only because some rules still say them;
   they are not a second colour.
+- **`--jade-ink` (`#0B6A5A`) marks; `--accent` acts.** Jade exists for exactly
+  one job: the recommended package. Electric blue could not do that job, because
+  it is already the page's action colour — a blue-tinted row beside blue buttons
+  reads as another button rather than as a recommendation. Jade is cool enough
+  to sit with the navy without arguing, and 6.5:1 on paper. Use it for the
+  Standard row's label, tint, edge and ticks; **do not** use it for a control,
+  and do not spend it on anything else.
 - `--accent-deep` holds the deep blue and `--accent-ink` points at it. The
   indirection exists because a block that *remaps* `--accent-ink` for its
   subtree cannot also use it: a custom property is already remapped by the time
@@ -174,13 +181,19 @@ reason for any of them.
 **The featured row is one of the rows.** It was a dark card, and as a dark card it
 stopped being a row and became a poster dropped into the middle of a list — the eye
 landed on it and then had to work out what the other four were. It is now the same
-glass pane in the same paper, tinted with the accent and edged in it: enough to be
-found first, not enough to break the sequence. It keeps that tint when it lifts
-rather than washing out to its neighbours' white.
+glass pane in the same paper, tinted in **jade** and edged in it: enough to be found
+first, not enough to break the sequence. It keeps that tint when it lifts rather than
+washing out to its neighbours' white.
 
-Nothing inside it is recoloured any more. Every override that painted its text for
-an ink ground is gone, which also removed the reason the cascade note below used to
-matter.
+Three things inside it follow the jade — the numeral, the "what is included" label and
+the tick marks. **The CTA does not.** A recommended package is still bought with the
+same blue button as every other one, and that split is the point: jade says *this is
+the one*, blue says *do it*.
+
+**The badge is an eyebrow, not a pill.** `.plan-tag` sits above the name as a line of
+tracked-out caps rather than beside it as a filled capsule. A capsule next to the title
+competes with the title — the eye reads a coloured object before it can read the word
+"Standard", and the row ends up looking like it has a button in it.
 
 **Hovering a row lifts a pane of glass out of the list** — translucent, blurred,
 rounded, edge-lit and casting onto the rows behind it. One rule serves both `.plan` and
@@ -247,14 +260,18 @@ text, because a number is the same in all three languages. Prices are quoted in 
 gone from the page. Internal partner-payment figures are deliberately absent from the
 repo.
 
-The Standard row's second price is **set as a price, not as a caption**. A student
-over 18 needs no guardian, so for many families it is the one they will actually pay.
-`.plan-alt` is a filled block holding a literal figure, a currency and a note; only the
-note (`planAltPrice`) is translated, and it is now *only the qualifying words* —
-"without guardianship", "qəyyumluq olmadan". It used to be one translated sentence with
-the number inside it, which wrapped mid-phrase in all three languages and centred the
-two ragged halves inside a pill. Keep the number in the markup and the note short, and
-it holds one line everywhere.
+The Standard row carries **two prices, ranked**. A student over 18 needs no guardian,
+so for many families 235 is the one they will actually pay — but 299 is the price of the
+package, and it stays the biggest figure in the row. Under it, past a hairline, 235 sits
+in jade at half the size with the qualifying words trailing in muted body text: the
+second entry in a price list, the way a phone is "$999, or $41.62/mo. for 24 months".
+
+It was a filled block, which inverted that rank — the cheaper number became the loudest
+thing in the row and the actual price looked like the footnote. Before that it was one
+translated sentence with the number inside it, which wrapped mid-phrase in all three
+languages. Keep the figure in the markup, keep `planAltPrice` down to the qualifying
+words alone, and keep the note on its own line so a long Russian phrase cannot widen the
+price column and squeeze the name beside it.
 
 Below 720px the figure cannot share a line with the name, so `.plan-price` moves to the
 second grid column under the name and left-aligns. The sign keeps its own column.

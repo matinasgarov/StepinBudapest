@@ -30,6 +30,14 @@
   --accent:      #4C82FF;
   --accent-lift: #6E9AFF;
   --accent-deep: #1B45C4;
+
+  /* A second signal, for one job only: marking the recommended package.
+     Electric blue could not do it — it is already the page's action colour,
+     so a blue-tinted row beside blue buttons reads as another button rather
+     than as a recommendation. Jade is cool enough to sit with the navy
+     without arguing, and carries "this is the one" on its own.
+     6.5:1 on paper. It marks; blue still acts. */
+  --jade-ink:  #0B6A5A;
   --accent-ink:  var(--accent-deep);
   --accent-haze: rgba(76, 130, 255, 0.14);
 
@@ -1207,8 +1215,8 @@ h3 {
   }
   .plan-featured:hover,
   .plan-featured:has(> .plan-summary:focus-visible) {
-    background: rgba(76, 130, 255, 0.14);
-    box-shadow: inset 0 0 0 1px rgba(27, 69, 196, 0.4),
+    background: rgba(11, 106, 90, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(11, 106, 90, 0.38),
                 inset 0 1px 0 rgba(255, 255, 255, 0.85),
                 var(--glass-cast);
   }
@@ -1227,12 +1235,18 @@ h3 {
   /* No blur: this row ships open, so it is a tall panel from the first
      paint and would pay the cost described above on every frame of its own
      entrance animation. */
-  background: rgba(76, 130, 255, 0.08);
+  background: rgba(11, 106, 90, 0.055);
   border-radius: var(--radius-glass);
   border-bottom-color: transparent;
-  box-shadow: inset 0 0 0 1px rgba(27, 69, 196, 0.3),
+  box-shadow: inset 0 0 0 1px rgba(11, 106, 90, 0.26),
               inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
+/* Jade marks the row; blue still acts. The tick marks and the section label
+   inside it follow the mark, the CTA does not — a recommended package is
+   still bought with the same button as every other one. */
+.plan-featured .plan-num,
+.plan-featured .plan-detail-label { color: var(--jade-ink); }
+.plan-featured .plan-list li::before { border-color: var(--jade-ink); }
 
 .plan-summary {
   display: grid;
@@ -1258,18 +1272,21 @@ h3 {
   letter-spacing: -0.03em;
   color: var(--text);
 }
+/* Above the name, not beside it, and set as type rather than as a filled
+   capsule. A pill next to the title competes with the title: the eye has to
+   read a coloured object before it can read the word "Standard", and the row
+   ends up looking like it has a button in it. As a small line of tracked-out
+   caps overhead it says the same thing while the name stays the largest
+   thing in the row. */
 .plan-tag {
-  margin-left: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  background: var(--accent);
-  color: var(--ink);
-  border-radius: 999px;
+  display: block;
+  margin-bottom: 0.45rem;
   font-family: var(--mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.14em;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  white-space: nowrap;
-  vertical-align: middle;
+  color: var(--jade-ink);
 }
 .plan-scope {
   display: block;
@@ -1314,41 +1331,50 @@ h3 {
 
    A student over 18 needs no guardian, so for many families this is the price
    they will actually pay. It stays filled because it has to be found. */
+/* A second price line under the first, the way a phone is "$999, or $41.62/mo
+   for 24 months". It was a filled block, which made the cheaper number the
+   loudest thing in the row and left the actual price looking like the
+   footnote. Rank comes from size and colour now: 299 stays the biggest
+   figure, 235 sits under it in jade at half the size, and the qualifying
+   words trail it in muted body text.
+
+   A hairline above it, so it reads as a second entry rather than as a caption
+   attached to the first. */
 .plan-alt {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: flex-end;
-  gap: 0 0.4rem;
-  margin-top: 0.8rem;
-  padding: 0.5rem 0.85rem 0.55rem;
-  background: var(--accent);
-  border-radius: 12px;
+  gap: 0 0.35rem;
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(11, 106, 90, 0.22);
   text-align: right;
 }
 .plan-alt-figure {
-  font-size: 1.35rem;
-  line-height: 1.1;
+  font-size: 1.5rem;
+  line-height: 1.05;
   letter-spacing: -0.03em;
-  color: var(--ink);
+  color: var(--jade-ink);
 }
 .plan-alt-cur {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.12em;
-  color: rgba(8, 14, 32, 0.72);
+  color: var(--jade-ink);
 }
 /* Body face, sentence case. Mono small caps is this page's label voice --
    it belongs beside a number, not on a phrase. Set that way this read as a
    system tag rather than as words a parent is meant to read. */
+/* Its own line, so a long Russian or Azerbaijani phrase never widens the
+   price column and squeezes the name beside it. */
 .plan-alt-note {
   flex-basis: 100%;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
   font-family: var(--body);
-  font-size: 0.85rem;
-  letter-spacing: 0;
+  font-size: 0.82rem;
   line-height: 1.35;
-  color: rgba(8, 14, 32, 0.82);
+  color: var(--muted);
 }
 
 .plan-sign {
