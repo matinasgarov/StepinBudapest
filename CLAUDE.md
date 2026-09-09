@@ -157,6 +157,36 @@ The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
 
+### The ticker
+
+The trust strip is one authored `.ticker-run` plus copies made in `buildTicker()`,
+translated left by **-50% of the track**. Two rules keep the loop from showing a seam
+or an end, and both are easy to break:
+
+- **The copy count must be even**, so half the track is a whole number of identical
+  runs and the animation ends on the same picture it started with.
+- **Half the track must be wider than the strip.** It was two copies shifted by -50%,
+  which only loops while one run is wider than the viewport — at 1440px a run is about
+  1150px, so the track's own right edge scrolled into view and the line ran out into
+  empty band before repeating. `buildTicker()` counts `ceil(strip / run)` runs per half.
+
+**The shift is a percentage on purpose; do not turn it into pixels.** JetBrains Mono
+has neither `ə` nor `İ`, so the Azerbaijani strip falls back per glyph — and that
+fallback lands *two frames after the text is set*. A run measures 1123.7px when it is
+built and 1133.5px once it settles, and `document.fonts.ready` has already resolved by
+then, so waiting on it catches nothing. A pixel shift measured at build time put a 10px
+jump in the line on every cycle. A percentage of the live track cannot go stale. Only
+`--ticker-dur` is computed from a measured width, where a few pixels is half a percent
+of speed rather than a visible jump.
+
+It is rebuilt on resize and at the end of `applyLanguage()`, because a run's width is
+exactly what changes in both cases — Russian runs about 14% longer than English. Copies
+are `aria-hidden` and their counters have the `count` class stripped after being set to
+the final figure, so the number is read and animated once rather than once per copy.
+
+`--ticker-shift` falls back to `0px`, so with JavaScript off the strip stands still
+instead of sliding away and leaving the band empty.
+
 ### Pricing
 
 Five `<details>` rows, matching the services section directly above it. Each row is a

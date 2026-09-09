@@ -414,6 +414,7 @@
     hideEmptySlots();
     hidePartnerSlots();
     updateCustomLink();
+    buildTicker();
 
     try { localStorage.setItem(STORE_KEY, lang); } catch (e) { /* non-fatal */ }
   }
@@ -734,13 +735,79 @@
   }
 
   /* -------------------------------------------------------
-     TICKER — duplicate the run so the marquee loops seamlessly
+     TICKER
+
+     Repeat the authored run until the track is wider than the strip plus one
+     run, then hand CSS the width of a single run to slide by. The animation
+     ends on a copy identical to the one it started on, so there is no seam
+     and no end to the line.
+
+     One clone was not enough: half a track only loops while a single run is
+     wider than the viewport, and at 1440px a run is about 1150px, so the end
+     of the track came into view and the strip emptied out before repeating.
+     An EVEN number of copies fixes that without giving up the -50%, and the
+     percentage is what keeps the loop honest -- half of the track is exactly
+     one half of the track however wide it turns out to be.
+
+     Measuring a run and shifting by that many pixels does not survive here.
+     JetBrains Mono has no "e" with an ogonek and no dotted capital I, so the
+     Azerbaijani strip falls back per glyph -- and that fallback lands two
+     frames after the text is set. A run measures 1123.7px when it is built
+     and 1133.5px once it settles, and a shift that disagrees with the drawn
+     width by ten pixels puts a visible jump in the line every cycle.
+     (document.fonts.ready has already resolved by then, so waiting on it
+     catches nothing.)
+
+     Rebuilt on resize and on every language switch, because a run's width is
+     the thing that changes in both cases -- Russian runs noticeably longer
+     than English.
   ------------------------------------------------------- */
-  var tickerTrack = document.getElementById('tickerTrack');
-  if (tickerTrack && !reduceMotion) {
-    var run = tickerTrack.querySelector('.ticker-run');
-    if (run) tickerTrack.appendChild(run.cloneNode(true));
+  var TICKER_SPEED = 34;  /* px per second; a run crossed 1440px in ~34s */
+  /* Only the duration is computed from a measured width, and a few pixels of
+     error there is half a percent of speed rather than a jump in the line. */
+
+  function buildTicker() {
+    var track = document.getElementById('tickerTrack');
+    if (!track) return;
+    var run = track.querySelector('.ticker-run');
+    if (!run) return;
+
+    while (track.children.length > 1) track.removeChild(track.lastChild);
+    if (reduceMotion) return;
+
+    var runW = run.getBoundingClientRect().width;
+    var strip = track.parentNode.getBoundingClientRect().width;
+    if (!runW) return;  /* not laid out yet - nothing to count against */
+
+    /* Half the track has to cover the strip, or its right-hand end is on
+       screen at the end of the cycle -- which is the gap this fixes. So each
+       half needs enough runs to fill the strip, and the total is twice that.
+       The width only decides the COUNT here; it is not used as a distance. */
+    var half = Math.max(1, Math.ceil(strip / runW));
+    for (var i = 0; i < half * 2 - 1; i++) {
+      var copy = run.cloneNode(true);
+      /* One reading of the facts is enough. */
+      copy.setAttribute('aria-hidden', 'true');
+      /* A copy shows the finished number and is not observed again: a count
+         animating as it scrolls past mid-strip reads as a glitch. */
+      copy.querySelectorAll('.count').forEach(function (el) {
+        el.textContent = (el.dataset.countTo || '') + (el.dataset.countSuffix || '');
+        el.classList.remove('count');
+      });
+      track.appendChild(copy);
+    }
+
+    track.style.setProperty('--ticker-shift', '50%');
+    track.style.setProperty('--ticker-dur', (half * runW / TICKER_SPEED) + 's');
   }
+
+  buildTicker();
+
+  var tickerResize;
+  window.addEventListener('resize', function () {
+    clearTimeout(tickerResize);
+    tickerResize = setTimeout(buildTicker, 200);
+  });
 
   /* -------------------------------------------------------
      COUNT UP

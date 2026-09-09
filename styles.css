@@ -827,15 +827,41 @@ h3 {
   background: var(--ink-raise);
   border-block: 1px solid var(--navy-line);
 }
-.ticker-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
+/* The track holds the authored run plus as many measured copies as it takes
+   to cover the strip more than twice over, and slides left by exactly one
+   run's width before restarting. The seam therefore always lands on an
+   identical copy: the line never breaks and never ends.
+
+   It used to be two copies, which only loops when a single run is wider than
+   the viewport. At 1440px a run measures about 1150px, so by the end of the
+   cycle the track's own right edge had scrolled into view and the strip ran
+   out into empty band. main.js counts the copies from the measured width and
+   keeps that count EVEN, so half the track is always a whole number of
+   identical runs -- nothing here assumes a width, and the shift stays a
+   percentage rather than a pixel figure on purpose (see main.js: the
+   Azerbaijani strip changes width two frames after it is built).
+
+   The shift falls back to 0, so with JavaScript off the strip stands still
+   rather than sliding away and leaving the band blank. */
+.ticker-track {
+  display: flex;
+  flex-wrap: nowrap;
+  /* max-content, so the runs sit on one line at their own width whatever the
+     viewport does. */
+  width: max-content;
+  animation: marquee var(--ticker-dur, 34s) linear infinite;
+}
 .ticker:hover .ticker-track { animation-play-state: paused; }
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(calc(-1 * var(--ticker-shift, 0px))); }
 }
 
 .ticker-run {
   display: flex;
+  /* Never shrink to fit: a run that gives up width breaks the line and puts
+     the shift measured in JS out of step with what is drawn. */
+  flex: none;
   align-items: center;
   gap: var(--s4);
   padding-right: var(--s4);
