@@ -1378,25 +1378,23 @@ h3 {
    reader expects anyway. Transform and opacity only, so nothing about this
    costs a layout. The reduced-motion block at the foot of the file cuts the
    duration to nothing. */
+/* Short and shallow on purpose. This ran for 0.85s with the list following
+   0.12s behind it, which meant a second passed between the click and the
+   panel being readable — and a panel that starts at opacity 0 is a click
+   that appears to have done nothing. It read as lag rather than as easing.
+   An entrance is worth having; a wait is not. */
 @keyframes planOpen {
-  from { opacity: 0; transform: translateY(-14px); }
+  from { opacity: 0; transform: translateY(-7px); }
   to   { opacity: 1; transform: none; }
 }
 .plan[open] .plan-detail,
 .svc[open] .svc-detail {
-  animation: planOpen 0.85s var(--ease-out) both;
+  animation: planOpen 0.3s var(--ease-out) both;
   /* The panel fades and slides for 0.85s. Containment keeps that repaint
      inside the panel instead of letting it dirty the section around it. */
   contain: layout paint;
 }
 
-/* The list arrives just behind its own panel. One step of delay, not a
-   per-item stagger: five items each waiting on the one before would take
-   longer than a reader is willing to look at a half-drawn list. */
-.plan[open] .plan-list,
-.plan[open] .plan-pick,
-.plan[open] .plan-cta,
-.svc[open] .svc-block { animation: planOpen 0.85s var(--ease-out) 0.12s both; }
 .plan[open] .plan-sign::after { opacity: 0; }
 
 /* Indented past the numeral so the detail lines up with the name above it. */

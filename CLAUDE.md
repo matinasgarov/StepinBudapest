@@ -220,13 +220,19 @@ still, not what is moving. The pane stays; the tint rises to cover the missing
 `.plan-detail` and `.svc-detail` carry `contain: layout paint` so the entrance
 animation's repaint stays inside the panel.
 
-**Opening a row is animated on entry only.** A `<details>` panel is `display: none`
-until it is not, so there is no state to transition *from*; `planOpen` fades and slides
-it in over 0.85s instead, with the list, the checkboxes and the CTA following 0.12s
-behind their own panel. One step of delay, not a per-item stagger — five items each
-waiting on the one before takes longer than a reader will look at a half-drawn list.
-Closing stays instant, which is what a reader expects. Opacity and transform only, so it
-costs no layout.
+**Opening a row is animated on entry only, and briefly.** A `<details>` panel is
+`display: none` until it is not, so there is no state to transition *from*; `planOpen`
+fades and slides it in over **0.3s**. Closing stays instant, which is what a reader
+expects. Opacity and transform only, so it costs no layout.
+
+It ran for **0.85s**, with the list, checkboxes and CTA on a second pass 0.12s behind
+the panel — so nearly a second passed between the click and the panel being readable,
+and since the animation starts at `opacity: 0`, the click looked for a moment like it
+had done nothing. That reads as lag, not as easing, and it was reported as lag twice.
+The second pass is gone entirely and the travel is down to 7px. Measured click-to-
+readable: ~300ms to ~110ms, and the inner content no longer waits on a pass of its own.
+**If this ever feels slow again, look here first** — the frame cost of the row was never
+the problem.
 
 **Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
 text, because a number is the same in all three languages. Prices are quoted in **USD**
