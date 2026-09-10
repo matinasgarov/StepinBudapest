@@ -711,29 +711,41 @@ h3 {
   color: var(--on-ink);
   /* The hero and the ticker together own the first screen. */
   min-height: calc(100svh - var(--ticker-h));
-  padding-block: calc(var(--nav-h) + clamp(2.5rem, 1.5rem + 5vw, 5rem))
-                 clamp(4rem, 2rem + 8vw, 8rem);
+  /* The floor is deep because the skyline lives down there. The hero centres
+     its content inside the padding box, so this is what lifts the copy clear
+     of the Parliament dome instead of sitting on top of it. */
+  padding-block: calc(var(--nav-h) + clamp(2rem, 1rem + 4vw, 4rem))
+                 clamp(11rem, 3rem + 22vw, 26rem);
   /* Centre the copy in whatever height the hero ends up with. Anchored to the
      top it left a screen-deep gap above the ticker on a tall viewport. */
   display: flex;
   align-items: center;
 
-  /* Drawn, not photographed. The Danube shot was the only image on the page
-     and the only thing the copy had to fight: the headline crossed the lit
-     Parliament, which is why it carried a text-shadow and the scrim had to be
-     mixed to hold it. The ground is now the same ink and the same colour
-     fields every other dark band uses, with the grid over it, so the hero
-     belongs to the page instead of sitting on top of a postcard. Two webp
-     files and their preloads went with it.
+  /* Drawn, not photographed. The Danube shot that used to be here was the one
+     thing the copy had to fight: the headline crossed the lit Parliament, which
+     is why it carried a text-shadow and why the scrim had to be re-mixed every
+     time the ink changed. This is a line drawing of the same view -- Parliament,
+     the Chain Bridge, Castle Hill, the Matthias Church spire, mirrored in the
+     water -- and it fights nothing, because its whole upper half is empty sky.
 
-     The bottom fade stays: it hands off to the ticker. */
+     That empty half is load-bearing. The copy sits in it, which is why the hero
+     has such a deep floor below: the padding is what keeps the headline off the
+     architecture rather than a z-index or a scrim.
+
+     `cover` at every width, anchored to the bottom. The illustration is 16:9 and
+     the hero is close to it on a desktop, so the crop is a few dozen pixels of
+     water. The gradient above it is the same hand-off to the ticker the hero has
+     always had; it is listed first because background layers paint front to back.
+
+     The radial colour fields that used to be here are gone -- an opaque image
+     covering the band hid every one of them, so they were bytes pretending to
+     be a design. */
   background-color: var(--ink);
   background-image:
-    linear-gradient(to bottom, rgba(8, 14, 32, 0) 82%, var(--ink) 100%),
-    radial-gradient(46% 52% at 12% 14%, rgba(76, 130, 255, 0.2), transparent 70%),
-    radial-gradient(44% 50% at 88% 22%, rgba(110, 154, 255, 0.15), transparent 72%),
-    radial-gradient(52% 56% at 60% 96%, rgba(76, 130, 255, 0.17), transparent 70%),
-    radial-gradient(120% 80% at 50% 40%, rgba(28, 53, 102, 0.5), transparent 76%);
+    linear-gradient(to bottom, rgba(8, 14, 32, 0) 86%, var(--ink) 100%),
+    url("hero.webp");
+  background-position: center bottom, center bottom;
+  background-size: auto, cover;
   background-repeat: no-repeat;
 }
 .hero > .container { position: relative; z-index: 1; }
@@ -742,8 +754,11 @@ h3 {
    depth system: both existed to make a gradient surface feel material, and
    this hero has no gradient to rescue. Dropping the atmosphere also removes a
    20px blur that was being transformed every frame for 26 seconds.
-   .hero-grid-lines stays below — the hero no longer uses it, the contact
-   section still does. */
+
+   .hero-grid-lines is genuinely not the hero's any more either: the drawing is
+   the hero's texture, and a 76px grid laid over an architectural line drawing
+   is two line systems arguing. The contact section still uses it, which is why
+   the rule stays. */
 
 .hero-grid-lines {
   position: absolute;
@@ -755,34 +770,6 @@ h3 {
   mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 78%);
   pointer-events: none;
-}
-
-/* A line-art skyline, not a photograph — the same call the hero already made
-   with the grid. Two motifs only (the Chain Bridge, the Parliament building),
-   drawn as single-weight strokes and sat low enough in the band that they
-   read as a horizon rather than as an illustration competing with the copy.
-   `preserveAspectRatio="xMidYMax slice"` keeps them anchored to that horizon
-   and centred at every width instead of stretching. */
-.hero-skyline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: clamp(80px, 15vw, 190px);
-  opacity: 0.12;
-  /* Fades at the edges rather than cutting off mid-stroke. */
-  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
-  pointer-events: none;
-}
-.hero-skyline path {
-  fill: none;
-  stroke: var(--on-ink);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
 }
 
 .hero-inner {
@@ -829,9 +816,11 @@ h3 {
 
 .hero-sub {
   margin-inline: auto;
-  /* Over photography, not flat ink — the shadow is what keeps this readable. */
+  /* No text-shadow. It was here for the photograph, where this line crossed lit
+     stonework; over the drawing's empty sky the same two shadows read as a dark
+     smudge box behind the text. The copy sits on flat sky at better than 12:1,
+     so nothing is holding it up but the colour. */
   color: rgba(244, 247, 255, 0.9);
-  text-shadow: 0 1px 4px rgba(8, 14, 32, 0.9), 0 2px 22px rgba(8, 14, 32, 0.95);
   margin-top: var(--s3);
   max-width: 34rem;
   font-size: clamp(1.03rem, 0.95rem + 0.4vw, 1.2rem);
@@ -1992,6 +1981,46 @@ h3 {
 --------------------------------------------------------- */
 @media (max-width: 1080px) {
   /* Four price columns crush their labels below this. Two rows of two. */
+  /* Below 1080px the drawing is a band, not a `cover` fill, and the reason is
+     arithmetic rather than taste.
+     Cover on a viewport narrower in aspect than the drawing scales by height, so the drawing is forced to
+     the full height of the hero -- and since the copy needs about 500 of the
+     710px available, whatever landmark lands in the middle of the crop ends up
+     behind the buttons. Measured, the clearance was -110px at 390 -- and this is
+     not only a phone problem: a 768x900 viewport is a 0.93 aspect against the
+     drawing's 1.78, so cover there shows barely half the panorama.
+
+     Sizing the drawing to a fixed share of the band instead decouples it from
+     the hero's height: it becomes a 48%-tall strip along the bottom, which
+     clears the CTA by 60px at 390 and, because the scale is no longer tied to
+     the height, shows twice as much of the panorama sideways.
+
+     The cost is that the drawing's own sky, rgb(5,21,52), now has a top edge
+     against the page's ink, rgb(8,14,32). The middle gradient hides it, and
+     where its stops go matters: the image's edge lands anywhere from 27% to 55% depending on which half of the
+     size expression wins, so the
+     fade has to still be FULLY opaque there and only start clearing below it. A
+     fade that is halfway through at the edge leaves the step visible -- above
+     the line there is no image at all, below it there is, and 65% of a 20-point
+     blue difference is enough to draw a line across the hero. Hence ink to 57%,
+     clear by 76%, which is above where the architecture starts (80%). */
+  .hero {
+    background-image:
+      linear-gradient(to bottom, rgba(8, 14, 32, 0) 86%, var(--ink) 100%),
+      linear-gradient(to bottom, var(--ink) 57%, rgba(8, 14, 32, 0) 76%),
+      url("hero.webp");
+    background-position: center bottom, center top, 34% bottom;
+    /* Whichever is bigger: the full width of the band, or a drawing sized to
+       46% of the hero's height. Sizing by height ALONE leaves empty margins
+       through the middle of this range -- at 1024x830 a 46%-tall drawing is
+       only 679px wide -- and sizing by width alone makes it 69% tall there,
+       which is fine, but on a 390px phone would shrink it to a 219px strip
+       where none of the detail survives. 0.817 is the drawing's aspect (1.78)
+       times 0.46, so the two expressions cross over exactly where the crop
+       starts being the better answer. */
+    background-size: auto, auto,
+      max(100%, calc((100svh - var(--ticker-h)) * 0.817)) auto;
+  }
   .hero-inner { grid-template-columns: 1fr; gap: var(--s5); }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-head { position: static; }

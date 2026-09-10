@@ -129,18 +129,87 @@ ever starts coming from outside, it does not belong in that list.**
 
 ### Hero
 
-**There is no hero photograph.** The blue-hour Danube shot was the only image on
-the page and the only thing the copy ever had to fight: the headline crossed the
-lit Parliament, which is why it carried a `text-shadow` and why the scrim had to
-be re-mixed every time the ink changed. The ground is now the same ink, the same
-blurred colour fields and the same grid overlay every other dark band uses, so
-the hero belongs to the page rather than sitting on top of a postcard. The
-`text-shadow`, the two preloads and the phone-specific crop went with it.
-`hero-budapest.webp` and `hero-budapest-sm.webp` are still in the repo and no
-longer referenced — safe to delete.
+**The ground is `hero.webp`, a line drawing of the Danube panorama** — Parliament,
+the Chain Bridge, Castle Hill, the Matthias Church spire, mirrored in the water.
+It replaced the blue-hour photograph, then briefly a hand-generated SVG of the same
+view, and the reason the drawing wins over both is the same reason: **its whole upper
+half is empty sky.** The photograph put the headline across the lit Parliament, which
+is why that headline carried a `text-shadow` and why the scrim had to be re-mixed
+every time the ink changed. Nothing has to be re-mixed for this one.
 
-The copy is a single centred column and the fields are placed to match. The
-bottom fade stays: it hands the hero off to the ticker.
+That empty half is load-bearing, and **the hero's deep floor is what keeps the copy in
+it** — `padding-block`'s second value, `clamp(11rem, 3rem + 22vw, 26rem)`. The hero
+centres its content in the padding box, so the floor is the only thing holding the
+headline off the architecture. There is no scrim and no z-index doing it. Shrink that
+value and the copy lands on the buildings.
+
+**Two background treatments, and the breakpoint between them is arithmetic, not taste.**
+
+- **Above 1080px: `cover`, anchored bottom.** The drawing is 16:9 and a desktop hero is
+  close to it, so the crop costs a few dozen pixels of water.
+- **At 1080px and below: a band**, bottom-anchored and biased to `34%` horizontally,
+  sized `max(100%, calc((100svh - var(--ticker-h)) * 0.817)) auto`. Cover on a viewport
+  narrower in aspect than the drawing scales by *height*, so it forces the drawing to
+  the hero's full height — and since the copy needs about 500 of the 710px available on
+  a phone, whatever landmark lands mid-crop ends up behind the buttons. Measured, that
+  was **-110px at 390**. It is not only a phone problem either: a 768×900 viewport is a
+  0.93 aspect against the drawing's 1.78, so cover there shows barely half the panorama.
+
+  **Both halves of that `max()` are load-bearing, and each one alone is a bug.** Sized
+  by height alone, the drawing comes out *narrower than the viewport* through the middle
+  of the range — at 1024×830 a 46%-tall drawing is 679px wide, leaving 345px of empty
+  ink beside it. Sized by width alone it is 69% tall at 1024, which is fine, but on a
+  390px phone it shrinks to a 219px strip where none of the detail survives. `0.817` is
+  the drawing's aspect (1.78) times 0.46, so the two expressions cross over exactly
+  where cropping becomes the better answer.
+
+**Verify that clearance by measuring, not by looking.** Three screenshots at three
+widths will happily miss it, because the tallest thing in the drawing (the Parliament
+dome, ~56% down the file) sits off to one side while the copy is centred — so whether
+they collide depends on the horizontal crop, which changes with every width.
+`scratchpad/clear2.js` is the check that answers it: it builds a per-column profile of
+the drawing's topmost ink, resolves the hero's background geometry the way the browser
+does, maps each block of copy's screen span back into image columns, and reports the
+gap. It also flags any width where the drawing ends up narrower than the viewport, which
+is how the `max()` bug above was found.
+
+It sweeps **all three languages**, and that is the point of it: Russian sets the worst
+case, not English. Current worst clearance is **+30px, at 430 Russian**; every width
+from 360 to 1920 clears with no empty margins. That 30px is thin, and it is thin on
+purpose — the alternative was a deeper floor, which would push the hero past the
+one-screen contract on a narrow phone in Russian. Changing the floor, the `0.817`, the
+band fraction, the crop bias or the type scale means re-running it.
+
+**Note the computed value cannot be parsed back out**: `background-size` keeps `max()`
+unresolved, and the comma inside it breaks a naive split on background layers. The
+harness recomputes the used width instead.
+
+The band treatment costs a seam, because the drawing's own sky (`rgb(5,21,52)`) is
+bluer than the page ink (`rgb(8,14,32)`), and a middle gradient hides it. **Where its
+stops go is the fiddly part**: the image's top edge sits at 52% (100 − 48), so the fade
+must still be *fully opaque there* and only start clearing below. A fade that is halfway
+through at the edge leaves the step visible — above the line there is no image, below it
+there is, and 65% of a 20-point blue difference draws a line across the hero. Hence ink
+to 55%, clear by 74%, which is above where the architecture starts (79%).
+
+**The radial colour fields that used to be on `.hero` are gone.** An opaque image
+covering the band hid every one of them; they were bytes pretending to be a design.
+`.hero-grid-lines` came off the hero for a related reason — a 76px grid over an
+architectural line drawing is two line systems arguing. The contact section still uses
+that class, so the rule stays.
+
+The image ships as **WebP at quality 95, 114KB**, from a 1.36MB PNG source (`hero.png`,
+kept in the repo, not referenced). Quality is high on purpose: at 84 it is 54KB, and the
+saving is real, but contrast-stretching the sky shows 8px blocking across an area that
+is one big flat gradient, where the source has fine grain. 95 matches the grain. It is
+`<link rel="preload" as="image">`ed, because discovered through the stylesheet it would
+not start downloading until the CSS had parsed, and it is the hero's ground.
+
+`hero-budapest.webp` and `hero-budapest-sm.webp` are the old photograph and are still
+unreferenced — safe to delete.
+
+The bottom fade stays: it hands the hero off to the ticker, and it is listed first in
+`background-image` because layers paint front to back.
 
 `.hero` carries `min-height: calc(100svh - var(--ticker-h))` so the hero and ticker
 together fill exactly one screen, and `align-items: center` so the copy sits in the
@@ -156,18 +225,6 @@ for anything with a fixed width**, but the hero no longer needs it.
 The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
-
-**The horizon carries two line-art motifs — the Chain Bridge and the Parliament
-building — not a photograph.** Same call the hero already made when the Danube
-shot came out: a sketch in the page's own stroke weight belongs to the design
-system, a picture sits on top of it. `.hero-skyline` is inline SVG rather than a
-background-image, because hand-written path data has no reason to survive a
-data-URI round trip. It is bottom-anchored and centred at every width
-(`preserveAspectRatio="xMidYMax slice"`), faded at both edges with a `mask-image`
-so a landmark is never cut off mid-stroke, and kept to 0.12 opacity so it reads
-as a horizon behind the copy rather than an illustration in front of it.
-`vector-effect: non-scaling-stroke` keeps the line weight constant as the SVG
-scales down to phone widths.
 
 ### The ticker
 
@@ -422,8 +479,9 @@ The Process section uses a 300vh scroll container driving a sticky stage. Below 
 
 ## Performance
 
-The page is well under 200KB of local files now that the hero photograph is gone, and
-none of it is the bottleneck. The slowest thing on
+Local files come to about 281KB, of which `hero.webp` is 114KB — the one image on the
+page, preloaded because it is the hero's ground. Nothing else here is close, and none of
+it is the bottleneck. The slowest thing on
 it by an order of magnitude is the **Google Fonts stylesheet** — a 1KB file that costs
 ~420-470ms of DNS, TLS and round trip to a third-party origin. It used to be a plain
 `<link rel="stylesheet">`, so it blocked first paint for all of that.
