@@ -157,6 +157,18 @@ The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
 
+**The horizon carries two line-art motifs — the Chain Bridge and the Parliament
+building — not a photograph.** Same call the hero already made when the Danube
+shot came out: a sketch in the page's own stroke weight belongs to the design
+system, a picture sits on top of it. `.hero-skyline` is inline SVG rather than a
+background-image, because hand-written path data has no reason to survive a
+data-URI round trip. It is bottom-anchored and centred at every width
+(`preserveAspectRatio="xMidYMax slice"`), faded at both edges with a `mask-image`
+so a landmark is never cut off mid-stroke, and kept to 0.12 opacity so it reads
+as a horizon behind the copy rather than an illustration in front of it.
+`vector-effect: non-scaling-stroke` keeps the line weight constant as the SVG
+scales down to phone widths.
+
 ### The ticker
 
 The trust strip is one authored `.ticker-run` plus copies made in `buildTicker()`,

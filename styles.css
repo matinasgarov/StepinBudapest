@@ -757,6 +757,34 @@ h3 {
   pointer-events: none;
 }
 
+/* A line-art skyline, not a photograph — the same call the hero already made
+   with the grid. Two motifs only (the Chain Bridge, the Parliament building),
+   drawn as single-weight strokes and sat low enough in the band that they
+   read as a horizon rather than as an illustration competing with the copy.
+   `preserveAspectRatio="xMidYMax slice"` keeps them anchored to that horizon
+   and centred at every width instead of stretching. */
+.hero-skyline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(80px, 15vw, 190px);
+  opacity: 0.12;
+  /* Fades at the edges rather than cutting off mid-stroke. */
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  pointer-events: none;
+}
+.hero-skyline path {
+  fill: none;
+  stroke: var(--on-ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
 .hero-inner {
   /* One centred column. With the itinerary gone there is no second column to
      balance, and the old two-column grid left the copy hugging the left edge
