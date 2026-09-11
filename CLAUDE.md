@@ -525,7 +525,18 @@ The Process section uses a 300vh scroll container driving a sticky stage. Below 
 
 ## Performance
 
-Local files come to about 281KB, of which `hero.webp` is 114KB — the one image on the
+Measured cold-cache: `domContentLoaded` 165ms, `load` 282ms, first contentful paint
+184ms. **Over the wire on a host that compresses, the page is 161.5KB**, and
+`hero.webp` is 114.5KB of that — 71%. Raw on disk it is 286KB; `styles.css` gzips 72.5
+to 20.1KB and `main.js` 59.3 to 19.0KB, so the comment density in both costs the reader
+almost nothing. Note a local `python -m http.server` does **not** gzip, so measuring
+transfer size against it overstates by ~120KB.
+
+Every requested font weight is genuinely used — checked by enumerating the faces the
+browser actually loaded after rendering all three languages: Inter Tight 400/500/600 and
+JetBrains Mono 400/500/700, six files. There is nothing to trim from the request.
+
+Local files come to about 286KB, of which `hero.webp` is 114KB — the one image on the
 page, preloaded because it is the hero's ground. Nothing else here is close, and none of
 it is the bottleneck. The slowest thing on
 it by an order of magnitude is the **Google Fonts stylesheet** — a 1KB file that costs
@@ -636,6 +647,68 @@ all three is theirs. Have him read his paragraph before launch.
 
 WhatsApp keeps first position and the `clink-primary` treatment because the page's one
 job is still to open WhatsApp. The call row is the alternative, not the equal.
+
+## Security
+
+Audited 2026-09-11. The shape of this page is what makes it safe, and the shape is
+worth preserving:
+
+- **Nothing untrusted reaches the DOM.** The page reads no query string, no hash, no
+  `document.referrer`, no `window.name` and no `postMessage`, and makes no `fetch` or
+  XHR. There is exactly one `innerHTML` (the `RICH_KEYS` path in `applyLanguage`) and
+  every value it writes is a literal in `main.js`. **That is the invariant:** the moment
+  a string starts coming from outside, it does not belong in `RICH_KEYS`, and the moment
+  the page reads a URL parameter, this whole section stops being true.
+- **One URL is constructed** — the build-your-own WhatsApp link — and it runs the message
+  through `encodeURIComponent`. Keep it that way.
+- No secrets in the working tree or in git history. No inline `eval`, `new Function`,
+  `document.write` or `insertAdjacentHTML`.
+- All six `target="_blank"` links carry `rel="noreferrer"`, which implies `noopener`.
+- Every external request is `https`: `fonts.googleapis.com`, `fonts.gstatic.com`,
+  `wa.me`, `instagram.com`. Nothing else. (`www.w3.org` in `styles.css` is an SVG
+  namespace, not a request.)
+
+**A `Content-Security-Policy` meta tag pins that down** so a future edit cannot quietly
+add a third-party script or beacon. `script-src` keeps `'unsafe-inline'` deliberately:
+the inline head script and the font link's `onload` are both first-paint machinery, and
+externalising them to earn a stricter policy would put a blocking request back on the
+critical path. With no untrusted input there is nothing for `'unsafe-inline'` to be
+exploited by — the policy's value here is origin lockdown, plus `base-uri 'none'` and
+`object-src 'none'`.
+
+Verified after adding it: no violations, no blocked requests, fonts and the hero
+background still load, the marker data-URI still draws, the ticker still builds, the
+accordions still open, and the no-JavaScript path still renders.
+
+**`frame-ancestors` is missing on purpose — it is ignored in a meta policy.** These have
+to come from response headers, which is host configuration rather than a file here:
+
+```
+Content-Security-Policy: frame-ancestors 'none'
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+```
+
+`<meta name="referrer">` already covers the referrer policy portably.
+
+### Files that are published but are not the site
+
+A static host serves everything in the repo root, so these are all fetchable:
+
+| File | Size | Why it matters |
+|---|---|---|
+| `CLAUDE.md` | 39KB | **Documents that Aqşin's hobbies are invented**, plus every internal decision |
+| `overview.md` | 5KB | Quotes **250/500/800 AZN** — pricing the page no longer uses |
+| `hero.png` | 1.36MB | Source for `hero.webp`, never referenced |
+| `hero-budapest*.webp` | 78KB | The old photograph, never referenced |
+
+None of it is a secret, but the first two are the ones to care about: a visitor who
+fetches `/CLAUDE.md` reads that part of a partner's biography is fabricated, and one who
+fetches `/overview.md` reads prices that contradict the page. Either delete them from
+the published root or publish from a subdirectory that excludes them. The three dead
+assets are 1.48MB of pure deploy weight.
 
 ## Deployment
 

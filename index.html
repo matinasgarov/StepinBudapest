@@ -8,6 +8,26 @@
   <meta name="theme-color" content="#050D22" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
+  <!-- Hardening. This page takes no input from anywhere -- no query string, no
+       hash, no postMessage, no fetch -- so its XSS surface is already nil; the
+       job of this policy is to pin down what the page may load at all, so a
+       future edit cannot quietly add a third-party script or beacon.
+
+       script-src keeps 'unsafe-inline' on purpose. Two inline bits are load
+       bearing and both are about first paint: the script below adds the .js
+       class before anything renders, and the font link's onload swaps it off
+       media="print". Externalising them to earn a stricter script-src would add
+       a blocking request to the critical path, which is the thing this page was
+       tuned to avoid -- and with no untrusted input there is nothing for
+       'unsafe-inline' to be exploited by.
+
+       img-src needs data: for the marker stroke and the grain tile, both of
+       which are data-URI background images. frame-ancestors is deliberately
+       absent: it is ignored in a meta policy, so clickjacking cover has to come
+       from a response header (see Deployment in CLAUDE.md). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- The font stylesheet is the single slowest thing on this page: a 1KB file
@@ -29,8 +49,8 @@
   <!-- The hero illustration is the one image on the page and it is above the
        fold, so it is preloaded: discovered through the stylesheet it would not
        start downloading until the CSS had parsed. -->
-  <link rel="preload" as="image" href="hero.webp" />
-  <link rel="stylesheet" href="styles.css?v=74" />
+  <link rel="preload" as="image" href="hero.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css?v=75" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -536,7 +556,7 @@
                no layout. -->
           <div class="partner-stage">
             <div class="partner-portrait">
-              <img class="partner-photo" alt="" data-partner-photo hidden />
+              <img class="partner-photo" alt="" data-partner-photo hidden loading="lazy" decoding="async" />
               <span class="partner-monogram" data-partner-monogram aria-hidden="true"></span>
               <span class="partner-loc" aria-hidden="true">BUDAPEST</span>
             </div>
@@ -603,7 +623,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
             </span>
             <span class="clink-body">
-              <span class="clink-kind" data-i18n="clinkCall">Call from Azerbaijan</span>
+              <span class="clink-kind" data-i18n="clinkCall">Call</span>
               <span class="clink-value">+994 50 441 82 41</span>
             </span>
             <span class="clink-arrow" aria-hidden="true">&#8594;</span>
@@ -657,6 +677,6 @@
     </div>
   </footer>
 
-  <script src="main.js?v=42"></script>
+  <script src="main.js?v=43"></script>
 </body>
 </html>

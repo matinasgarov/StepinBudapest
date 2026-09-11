@@ -128,7 +128,7 @@
       faq5q: 'Can parents contact you directly?', faq5a: 'Yes — we communicate with both students and parents throughout the entire process.',
       contactTitle: 'Ready to start? <span class="mark">Message us today.</span>',
       contactSub: 'WhatsApp is the fastest way to reach us. We typically respond within a few hours.',
-      clinkCall: 'Call from Azerbaijan',
+      clinkCall: 'Call',
       footerCopy: '© 2026 StepIn Budapest. All rights reserved.'
     },
     az: {
@@ -246,7 +246,7 @@
       faq5q: 'Valideynlər birbaşa sizinlə əlaqə saxlaya bilər?', faq5a: 'Bəli — bütün proses boyu həm tələbələrlə, həm də valideynlərlə əlaqə saxlayırıq.',
       contactTitle: 'Başlamağa hazırsınız? <span class="mark">Bu gün yazın.</span>',
       contactSub: 'WhatsApp bizimlə əlaqə saxlamağın ən sürətli yoludur. Bir neçə saat içində cavab veririk.',
-      clinkCall: 'Azərbaycandan zəng',
+      clinkCall: 'Zəng',
       footerCopy: '© 2026 StepIn Budapest. Bütün hüquqlar qorunur.'
     },
     ru: {
@@ -364,7 +364,7 @@
       faq5q: 'Могут ли родители напрямую с вами связаться?', faq5a: 'Да — мы общаемся как со студентами, так и с родителями на протяжении всего процесса.',
       contactTitle: 'Готовы начать? <span class="mark">Напишите нам сегодня.</span>',
       contactSub: 'WhatsApp — самый быстрый способ связаться с нами. Обычно мы отвечаем в течение нескольких часов.',
-      clinkCall: 'Звонок из Азербайджана',
+      clinkCall: 'Звонок',
       footerCopy: '© 2026 StepIn Budapest. Все права защищены.'
     }
   };
