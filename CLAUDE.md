@@ -182,6 +182,15 @@ Parliament stays to the left of a centred column and Castle Hill to the right, w
 the whole reason centring is affordable at all. Verified by eye at 1920, 1440 and 390 in
 Russian, the language that sets the worst case.
 
+**The headline is 48px on a phone, and the rhythm around it is tightened to pay for
+it.** The `clamp` floor went 2.6rem to 3rem and the sub-head down to 0.94rem, at the
+owner's request. Larger type costs height: at the desktop spacing the hero then ran 36px
+past the one-screen contract in English and 108px in Russian on a 760px-tall viewport, so
+below 560px `.hero-sub` and `.hero-actions` each lose one step of margin. What remains is
+~20px over in English and Azerbaijani, and **Russian still overruns on a short viewport**
+— its headline takes five lines at this size. That is the price of the larger type, and
+shrinking it is the only thing that buys it back.
+
 **Two background treatments, and the breakpoint between them is arithmetic, not taste.**
 
 - **Above 1080px: `cover`, anchored bottom.** The drawing is 16:9 and a desktop hero is
@@ -285,9 +294,27 @@ They are wrapped in `[data-lang-menu]`, which is why no new JavaScript was neede
 bind them: the existing handler already walks every such element, and `applyLanguage`
 already toggles `is-active` on every `.lang-opt` and rewrites every `[data-lang-code]`.
 
-**The nav is two columns below 900px**, not three. The desktop `1fr auto 1fr` let the
-brand overflow its first track and pushed the toggle about 43px short of the gutter, so
-the hamburger did not sit against the right edge.
+**Below 900px: mark left, name centred, hamburger right.** The name is centred against
+the *header*, not against the space beside the mark, so `.brand-text` is taken out of
+flow and centred with a transform — laid out in the grid it could only ever centre
+between the mark and the toggle, and those are different widths. The anchor keeps its
+box, so tapping the name still follows the link.
+
+**The nav is two columns there, and the count matters.** `.nav-links` is `display: none`
+below 900px, which takes it out of the grid entirely — so with three tracks `.nav-right`
+landed in column 2 and the empty third column's gap held the toggle 16px off the gutter.
+With two tracks it sits at 370 of 390. (The desktop `1fr auto 1fr` had a different
+version of the same fault: the brand overflowed its first track and pushed the toggle
+~43px short.)
+
+**The drawer scrolls and has a deep floor.** Six links, the language row and the button
+came to more than the visible viewport once Safari's own chrome took its share, and the
+CTA — the thing the drawer exists for — was off-screen. `max-height` is in `svh` so it
+tracks the visible viewport, `overflow-y: auto` guarantees the button is reachable even
+when it does not fit, `overscroll-behavior: contain` stops a flick at the end of the list
+from scrolling the page behind it, and the floor clears anything the host floats in the
+bottom-right corner. The link rhythm also tightened from `0.9rem` to `0.72rem`, which
+keeps tap targets above 44px while letting the whole drawer fit a 390x760 phone.
 
 **`.lang`'s `:hover` rules are behind `@media (hover: hover)`, and that is a bug fix.**
 A touch browser fires `:hover` on tap and holds it until something else is tapped, so
@@ -554,6 +581,21 @@ Entrance styles (`.anim`, `.reveal`, `.itin-step`) are scoped under `.js`, which
 
 The Process section uses a 300vh scroll container driving a sticky stage. Below 900px it degrades to a plain stacked list — the JS scroll driver bails out at that width, and
 `.process-scroll` goes `height: auto` so the collapsed section leaves no dead scroll.
+
+**The step highlight is driven by an IntersectionObserver below 900px.** `onScroll`
+hands `updateProcess` a null rect there, so the pinned driver never ran — which left
+`is-active` on the step it was authored with in the markup, and nothing ever moved: the
+section had no animation at all on a phone. The observer's `rootMargin` collapses the
+root to a thin band across the middle of the screen, so whichever step is passing the
+middle becomes active. No per-frame reads, nothing measured during scroll, and it cannot
+fight the desktop driver because both are bounded by the same 900px.
+
+There the active card **drops its `backdrop-filter` and raises the tint** — it moves with
+the scroll, and blurring a moving box every frame is the mistake the aurora layer taught.
+Inactive steps are dimmed but neither blurred nor displaced, which is what gives the
+scroll something to reveal. The dimming is scoped under `.js`, for the reason every
+entrance style is: unscoped, a JavaScript failure left all three steps at 26% and
+blurred, which is content hidden with no way back.
 
 **Below 720px the spine is hidden and the steps lose their horizontal padding.** The
 spine cost a 390px phone 92px of width — a 24px column, a 24px gap, 24px of step padding
