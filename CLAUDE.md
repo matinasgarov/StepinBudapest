@@ -620,9 +620,22 @@ otherwise had only his age, his university and his PhD in it. Everything else ab
 all three is theirs. Have him read his paragraph before launch.
 
 
-The WhatsApp number `994000000000` is a placeholder: **5 occurrences in `index.html`**
-plus `CUSTOM_WA` in `main.js` (the build-your-own card), and the displayed
-`+994 XX XXX XX XX`. Replace all seven before launch.
+**There are two numbers and they are not interchangeable.**
+
+- **WhatsApp is Hungarian: `+36 70 720 1512`.** It is the destination of all five
+  `wa.me` links in `index.html` (the float, the drawer CTA, the hero CTA, the contact
+  row) and of `CUSTOM_WA` in `main.js`, which builds the composed message for the
+  build-your-own card. `wa.me` takes digits only, so it is written `36707201512` -- no
+  `+`, no spaces. If a sixth CTA ever appears, it uses this one.
+- **Calls go to an Azerbaijani number: `+994 50 441 82 41`.** This exists so a parent
+  can dial locally instead of placing an international call to Hungary, which is the
+  whole reason to carry a second number. It is a `tel:+994504418241` link -- the `+`
+  stays and the spaces go -- in its own contact row, below WhatsApp and above Instagram.
+  `clinkKind` for it is the only contact label that needed translating (`clinkCall`);
+  WhatsApp, Instagram and Email are brand names and stay as they are.
+
+WhatsApp keeps first position and the `clink-primary` treatment because the page's one
+job is still to open WhatsApp. The call row is the alternative, not the equal.
 
 ## Deployment
 
