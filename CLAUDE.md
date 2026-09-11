@@ -272,6 +272,37 @@ The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
 
+### Header and the mobile drawer
+
+**Below 900px the language control lives in the drawer, not the header.** The header's
+`.lang` dropdown is `display: none` there and the drawer carries three flat buttons
+instead. A dropdown inside a drawer is a menu inside a menu, and it also drags a touch
+hazard along with it (below). The three buttons are 52x44 tap targets, always visible,
+and choosing one switches language *and* closes the drawer — the drawer is the whole
+menu on a phone, so a choice means the reader is done with it.
+
+They are wrapped in `[data-lang-menu]`, which is why no new JavaScript was needed to
+bind them: the existing handler already walks every such element, and `applyLanguage`
+already toggles `is-active` on every `.lang-opt` and rewrites every `[data-lang-code]`.
+
+**The nav is two columns below 900px**, not three. The desktop `1fr auto 1fr` let the
+brand overflow its first track and pushed the toggle about 43px short of the gutter, so
+the hamburger did not sit against the right edge.
+
+**`.lang`'s `:hover` rules are behind `@media (hover: hover)`, and that is a bug fix.**
+A touch browser fires `:hover` on tap and holds it until something else is tapped, so
+unguarded those rules fought the JavaScript: the first tap set `data-open` *and* stuck
+`:hover` on, then the second tap removed `data-open` while `:hover` kept the menu open.
+The result was a language menu that would not close on a phone. Keep `:focus-within` and
+`[data-open]` outside the guard — they are what make tap and keyboard work. This is the
+same hazard, and the same fix, as the pricing rows.
+
+**`.nav-toggle span` needs `grid-area: 1 / 1`.** The toggle is a grid, so without it each
+bar lands in its own implicit row about 21px apart, and the open-state rotations — a few
+pixels of `translateY` — can never bring them together: the close icon rendered as two
+separate diagonals instead of an X. Sharing one cell makes the open state two opposite
+rotations and nothing else. Measured, the bars went from 19.5px apart to 0.
+
 ### The ticker
 
 The trust strip is one authored `.ticker-run` plus copies made in `buildTicker()`,
@@ -521,7 +552,14 @@ All animation is CSS or vanilla JS and must stay inside the `prefers-reduced-mot
 
 Entrance styles (`.anim`, `.reveal`, `.itin-step`) are scoped under `.js`, which the inline `<head>` script adds. This means **content is never hidden when JavaScript fails** — preserve that scoping when adding new reveal effects.
 
-The Process section uses a 300vh scroll container driving a sticky stage. Below 900px it degrades to a plain stacked list — the JS scroll driver bails out at that width.
+The Process section uses a 300vh scroll container driving a sticky stage. Below 900px it degrades to a plain stacked list — the JS scroll driver bails out at that width, and
+`.process-scroll` goes `height: auto` so the collapsed section leaves no dead scroll.
+
+**Below 720px the spine is hidden and the steps lose their horizontal padding.** The
+spine cost a 390px phone 92px of width — a 24px column, a 24px gap, 24px of step padding
+and the 20px gutter — which left the step text at **254px against 350px everywhere else
+on the page**, reading as a narrow ribbon. The numerals already carry the sequence, so
+on a phone the text gets the full measure instead.
 
 ## Performance
 

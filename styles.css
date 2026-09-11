@@ -580,7 +580,6 @@ h3 {
   color: var(--on-ink);
   transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
 }
-.lang-current:hover,
 .lang[data-open] .lang-current { border-color: var(--gold); color: var(--gold); }
 
 .lang-chevron {
@@ -589,7 +588,6 @@ h3 {
   opacity: 0.7;
   transition: transform 0.35s var(--ease-out);
 }
-.lang:hover .lang-chevron,
 .lang:focus-within .lang-chevron,
 .lang[data-open] .lang-chevron { transform: rotate(180deg); }
 
@@ -622,13 +620,30 @@ h3 {
   top: -0.6rem;
   height: 0.6rem;
 }
-.lang:hover .lang-options,
 .lang:focus-within .lang-options,
 .lang[data-open] .lang-options {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition-delay: 0s;
+}
+
+/* Opening on hover is a pointer affordance and MUST stay behind this guard.
+   A touch browser fires :hover on tap and holds it until something else is
+   tapped, so unguarded these rules fought the JS: the first tap set
+   data-open and also stuck :hover on, and the second tap removed data-open
+   while :hover kept the menu open -- a language menu that would not close.
+   Same hazard, and the same fix, as the pricing rows. */
+@media (hover: hover) {
+  .lang:hover .lang-chevron { transform: rotate(180deg); }
+  .lang:hover .lang-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+  .lang-current:hover { border-color: var(--gold); color: var(--gold); }
+    .lang-foot:hover .lang-options { transform: translateY(0); }
 }
 
 .lang-opt {
@@ -663,7 +678,6 @@ h3 {
   transform: translateY(8px);
 }
 .lang-foot .lang-options::before { top: auto; bottom: -0.6rem; }
-.lang-foot:hover .lang-options,
 .lang-foot:focus-within .lang-options,
 .lang-foot[data-open] .lang-options { transform: translateY(0); }
 
@@ -678,6 +692,11 @@ h3 {
 }
 .nav-toggle span {
   display: block;
+  /* Both bars occupy the SAME grid cell. Without this each span landed in its
+     own implicit row, ~21px apart, and the open-state transforms (a few px)
+     could never bring them together -- the close icon rendered as two separate
+     diagonals rather than an X. */
+  grid-area: 1 / 1;
   width: 18px;
   height: 1.5px;
   background: var(--on-ink);
@@ -686,8 +705,9 @@ h3 {
 }
 .nav-toggle span:first-child { transform: translateY(-3px); }
 .nav-toggle span:last-child  { transform: translateY(3px); }
-.nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(1px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:last-child  { transform: translateY(-0.5px) rotate(-45deg); }
+/* Now that they share a cell, the X is just two opposite rotations. */
+.nav-toggle[aria-expanded="true"] span:first-child { transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:last-child  { transform: rotate(-45deg); }
 
 /* Drawer -------------------------------------------------- */
 .drawer {
@@ -703,6 +723,44 @@ h3 {
 }
 .drawer[hidden] { display: none; }
 .drawer.is-open { opacity: 1; transform: translateY(0); }
+
+/* The language control on a phone. Three targets in a row, always visible:
+   no dropdown to open, so nothing to leave stuck open, and each one is a
+   44px-tall tap target rather than a 13px chevron. */
+.drawer-lang {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  margin-bottom: var(--s4);
+  /* No border-top: .drawer-links a already carries a border-bottom, so the last
+     nav item draws this line. Adding one here rendered two hairlines with a gap
+     between them. */
+  padding-top: var(--s3);
+}
+.drawer-lang-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+}
+.drawer-lang-opts { display: flex; gap: 0.4rem; }
+.drawer-lang .lang-opt {
+  width: auto;
+  min-width: 52px;
+  min-height: 44px;
+  justify-content: center;
+  padding-inline: 0.75rem;
+  border: 1px solid rgba(244, 246, 251, 0.18);
+  border-radius: 999px;
+}
+.drawer-lang .lang-opt.is-active {
+  border-color: var(--accent);
+  background: rgba(76, 130, 255, 0.14);
+  color: var(--on-ink);
+}
+.drawer-lang .lang-opt-code { opacity: 1; }
 
 .drawer-links { margin-bottom: var(--s4); }
 .drawer-links a {
@@ -2058,6 +2116,12 @@ h3 {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-toggle { display: grid; }
+  /* The header's language dropdown is the drawer's job below this width, so
+     the nav is two columns and the toggle sits hard against the gutter. With
+     the three-column desktop grid the brand overflowed its 1fr and pushed the
+     toggle ~43px short of the right edge. */
+  .nav { grid-template-columns: 1fr auto; gap: var(--s2); }
+  .nav-right > .lang { display: none; }
   .process-scroll { height: auto; }
   .process-sticky { position: static; min-height: 0; }
   .process-counter { display: none; }
@@ -2092,7 +2156,14 @@ h3 {
   .wa-float-text { display: none; }
   .wa-float { padding: 0.9rem; min-width: 52px; justify-content: center; }
   .hero-actions .btn { flex: 1 1 100%; }
-  .process-stage { grid-template-columns: 24px minmax(0, 1fr); gap: var(--s3); }
+  /* The spine costs a phone 92px of the 390 available -- 24px column, 24px
+     gap, 24px step padding, 20px gutter -- which left the step text at 254px
+     against 350px everywhere else on the page, and it read as a narrow ribbon.
+     The numerals already carry the sequence, so the spine goes and the text
+     gets the full measure. */
+  .process-stage { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .process-spine { display: none; }
+  .process-step { padding-inline: 0; }
 
   /* Fit the nav row: tighter gaps. */
   .nav { gap: var(--s2); }

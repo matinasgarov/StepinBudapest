@@ -129,6 +129,7 @@
       contactTitle: 'Ready to start? <span class="mark">Message us today.</span>',
       contactSub: 'WhatsApp is the fastest way to reach us. We typically respond within a few hours.',
       clinkCall: 'Call',
+      langLabel: 'Language',
       footerCopy: '© 2026 StepIn Budapest. All rights reserved.'
     },
     az: {
@@ -247,6 +248,7 @@
       contactTitle: 'Başlamağa hazırsınız? <span class="mark">Bu gün yazın.</span>',
       contactSub: 'WhatsApp bizimlə əlaqə saxlamağın ən sürətli yoludur. Bir neçə saat içində cavab veririk.',
       clinkCall: 'Zəng',
+      langLabel: 'Dil',
       footerCopy: '© 2026 StepIn Budapest. Bütün hüquqlar qorunur.'
     },
     ru: {
@@ -365,6 +367,7 @@
       contactTitle: 'Готовы начать? <span class="mark">Напишите нам сегодня.</span>',
       contactSub: 'WhatsApp — самый быстрый способ связаться с нами. Обычно мы отвечаем в течение нескольких часов.',
       clinkCall: 'Звонок',
+      langLabel: 'Язык',
       footerCopy: '© 2026 StepIn Budapest. Все права защищены.'
     }
   };
@@ -587,6 +590,9 @@
         applyLanguage(opt.dataset.lang);
         close();
         if (trigger) trigger.blur();
+        // The drawer's copy of this control is the whole menu on a phone, so
+        // choosing a language there means the reader is done with the drawer.
+        if (menu.classList.contains('drawer-lang')) setDrawer(false);
       });
     });
 
