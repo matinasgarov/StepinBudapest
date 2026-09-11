@@ -251,8 +251,8 @@ is one big flat gradient, where the source has fine grain. 95 matches the grain.
 `<link rel="preload" as="image">`ed, because discovered through the stylesheet it would
 not start downloading until the CSS had parsed, and it is the hero's ground.
 
-`hero-budapest.webp` and `hero-budapest-sm.webp` are the old photograph and are still
-unreferenced — safe to delete.
+`hero-budapest.webp` and `hero-budapest-sm.webp` were the old photograph and are
+deleted; they are in git history if ever needed.
 
 The bottom fade stays: it hands the hero off to the ticker, and it is listed first in
 `background-image` because layers paint front to back.
@@ -625,10 +625,16 @@ Three of the four **partner** slots hold real people; slot 04 is blank, which is
 three names render. Blanking a name hides that card; blanking all four hides the
 section and its nav links.
 
-**Aqşin Sakif's hobbies are invented** — hiking, Sunday football, knowing where the
-Azerbaijani food is — added at the owner's request to fill out a paragraph that
-otherwise had only his age, his university and his PhD in it. Everything else about
-all three is theirs. Have him read his paragraph before launch.
+**`pt3line` is awaiting Aqşin's own review.** The interests in his paragraph were
+drafted rather than quoted, to fill out a bio that otherwise held only his age, his
+university and his PhD. Everything else about all three partners came from them
+directly. He should read and approve that paragraph, and until he does it is the one
+sentence on the page not in its subject's own words.
+
+**This repository is public** — `raw.githubusercontent.com` serves every file in it,
+including this one. Notes about named individuals belong here only in the form you would
+be content for them to read. Anything genuinely internal does not belong in the repo at
+all.
 
 
 **There are two numbers and they are not interchangeable.**
@@ -702,13 +708,14 @@ A static host serves everything in the repo root, so these are all fetchable:
 | `CLAUDE.md` | 39KB | **Documents that Aqşin's hobbies are invented**, plus every internal decision |
 | `overview.md` | 5KB | Quotes **250/500/800 AZN** — pricing the page no longer uses |
 | `hero.png` | 1.36MB | Source for `hero.webp`, never referenced |
-| `hero-budapest*.webp` | 78KB | The old photograph, never referenced |
 
-None of it is a secret, but the first two are the ones to care about: a visitor who
-fetches `/CLAUDE.md` reads that part of a partner's biography is fabricated, and one who
-fetches `/overview.md` reads prices that contradict the page. Either delete them from
-the published root or publish from a subdirectory that excludes them. The three dead
-assets are 1.48MB of pure deploy weight.
+`netlify.toml` force-redirects each of those paths to `/`, so the deployed site does not
+serve them. **That does not cover GitHub**: this repo is public, so every one of these
+files is readable at `raw.githubusercontent.com` regardless of what the host does. Which
+is why the fix for the partner note was to reword the note, not to hide the file — a
+redirect is deploy hygiene, not confidentiality. `overview.md`'s pricing and contact
+statements have been corrected to match the page; it had been quoting 250/500/800 AZN and
+calling the WhatsApp number a placeholder.
 
 ## Deployment
 

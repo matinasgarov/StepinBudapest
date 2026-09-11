@@ -1,0 +1,60 @@
+# Netlify configuration. The site is static with no build step, so this file
+# exists for two things only: response headers the page cannot set for itself,
+# and keeping non-site files out of the deploy.
+
+[build]
+  publish = "."
+  command = ""
+
+# ---------------------------------------------------------------- headers
+# index.html carries a Content-Security-Policy meta tag already. This header
+# repeats it VERBATIM and adds frame-ancestors, which is the one directive a
+# meta policy cannot express. Both policies apply and the browser enforces the
+# intersection, so they must stay identical apart from that addition -- if they
+# drift, the intersection will start blocking things the page needs.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; frame-ancestors 'none'"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # No `preload`, and no includeSubDomains until the real domain is live and
+    # every subdomain on it is known to serve HTTPS -- both are hard to undo.
+    Strict-Transport-Security = "max-age=31536000"
+
+# ---------------------------------------------------------------- not the site
+# A static host serves every file in the root. These are working files, not
+# pages: CLAUDE.md documents internal decisions, overview.md still quotes the
+# superseded AZN prices, and hero.png is the 1.4MB source for hero.webp.
+# Sending them to the homepage keeps them out of the published site.
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/overview.md"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services-content.md"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hero.png"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/LICENSE"
+  to = "/"
+  status = 301
+  force = true

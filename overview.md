@@ -30,7 +30,7 @@ The page reads as a sequence of chapters, alternating dark and light so each sec
 
 **Process** — Three stages, from first message to arrival. This section advances as you scroll, so the process visibly moves rather than sitting still. It's the one moment on the page that demonstrates rather than describes.
 
-**Pricing** — Three tiers: Basic (250 AZN), Standard (500 AZN), Premium (800 AZN), with Standard marked as most popular. Custom packages are invited.
+**Pricing** — Quoted in USD: Basic 99, Comfort 119, Standard 299 (299, or 235 without guardianship) and Premium 469, with Standard marked as most popular. A build-your-own row composes a WhatsApp message from tickboxes. The AZN figures this document used to quote are gone from the site.
 
 **FAQ** — The five questions parents actually ask, including the anxious ones: *Will someone be with my child when they land? How do I know they're safe? Can I contact you directly?*
 
@@ -58,7 +58,7 @@ The design and content are complete and working in all three languages, on deskt
 
 **Before it can go live:**
 
-1. **The WhatsApp number is a placeholder.** It currently points to a fake number and appears in four places, plus the displayed `+994 XX XXX XX XX`. Nothing else matters until this is real — every button on the page leads here.
+1. **Contact details are live.** WhatsApp goes to +36 70 720 1512 (all five links and the composed message), and a second contact row dials +994 50 441 82 41 so a parent in Azerbaijan can call locally rather than internationally.
 2. **Confirm the Instagram handle and email address** are correct and monitored.
 3. **Check the claims are true.** The page states 50+ students helped and verified housing options. These should be accurate before publishing.
 4. **Decide about testimonials.** The page currently has no customer quotes — the earlier ones were removed. Real, attributable testimonials from past families would be the single strongest addition for this audience.
