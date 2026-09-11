@@ -714,7 +714,18 @@ h3 {
   position: fixed;
   inset: var(--nav-h) 0 auto 0;
   z-index: 85;
-  padding: var(--s4) 1.5rem var(--s5);
+  /* The CTA at the bottom was off-screen on a phone: six links, the language
+     row and a button came to more than the visible viewport once Safari's own
+     chrome was taking its share. svh is the unit that accounts for that, and
+     the drawer scrolls if it still does not fit, so the button is always
+     reachable. overscroll-behavior stops a flick at the end of the list from
+     scrolling the page behind it. */
+  max-height: calc(100svh - var(--nav-h));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* The deep floor keeps the button clear of anything the host floats in the
+     bottom-right corner. */
+  padding: var(--s4) 1.5rem calc(var(--s5) + 3.5rem);
   background: var(--ink);
   border-bottom: 1px solid rgba(244, 246, 251, 0.1);
   transform: translateY(-8px);
@@ -766,8 +777,11 @@ h3 {
 .drawer-links a {
   display: flex;
   align-items: baseline;
+  /* Tightened from 0.9rem: six rows at the old rhythm plus the language row and
+     the button did not fit a 390x844 phone once the browser chrome was counted,
+     and the tap target is still 44px+. */
   gap: var(--s2);
-  padding: 0.9rem 0;
+  padding: 0.72rem 0;
   font-family: var(--display);
   font-size: 1.5rem;
   color: var(--on-ink);
@@ -893,7 +907,7 @@ h3 {
   font-weight: 400;
   /* 6.5rem put four lines in the copy column at 1440 and stranded a
      one-word line. The cap is what the column can actually hold. */
-  font-size: clamp(2.6rem, 1.2rem + 4.6vw, 5.9rem);
+  font-size: clamp(3rem, 1.2rem + 4.6vw, 5.9rem);
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--on-ink);
@@ -909,7 +923,7 @@ h3 {
   color: rgba(244, 247, 255, 0.9);
   margin-top: var(--s3);
   max-width: 34rem;
-  font-size: clamp(1.03rem, 0.95rem + 0.4vw, 1.2rem);
+  font-size: clamp(0.94rem, 0.88rem + 0.35vw, 1.15rem);
 }
 
 .hero-actions {
@@ -1221,11 +1235,16 @@ h3 {
 .process-step {
   padding: var(--s3);
   border-radius: var(--radius-glass);
+  transition: opacity 0.5s var(--ease-out), filter 0.5s var(--ease-out),
+              transform 0.5s var(--ease-out), background-color 0.4s var(--ease);
+}
+/* Scoped under .js for the reason every other entrance style is: unscoped, a
+   JavaScript failure left all three steps sitting at 26% and blurred, which is
+   content hidden with no way back. */
+.js .process-step {
   opacity: 0.26;
   filter: blur(1px);
   transform: translateY(10px);
-  transition: opacity 0.5s var(--ease-out), filter 0.5s var(--ease-out),
-              transform 0.5s var(--ease-out);
 }
 /* The step being read is the only one lifted. filter and backdrop-filter on
    one element is fine -- the backdrop is sampled before the element's own
@@ -1239,6 +1258,16 @@ h3 {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-edge-ink), var(--glass-cast-ink);
+}
+/* On a phone the active card moves with the scroll, so it drops the blur and
+   raises the tint to cover the missing saturate -- the same call the partner
+   rows make, for the same reason: blur what holds still, not what is moving. */
+@media (max-width: 900px) {
+  .process-step.is-active {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.085);
+  }
 }
 
 .process-num {
@@ -2120,12 +2149,34 @@ h3 {
      the nav is two columns and the toggle sits hard against the gutter. With
      the three-column desktop grid the brand overflowed its 1fr and pushed the
      toggle ~43px short of the right edge. */
-  .nav { grid-template-columns: 1fr auto; gap: var(--s2); }
+  /* Mark left, name centred, hamburger right. The name is centred against the
+     HEADER rather than against the space left over beside the mark, which is
+     why it is taken out of flow -- laid out in the grid it would only ever be
+     centred between the mark and the toggle, and those are different widths.
+     The anchor keeps its box, so tapping the name still follows the link. */
+  /* Two columns, not three: .nav-links is display:none here, so it leaves the
+     grid altogether and .nav-right would land in column 2 -- the empty third
+     column's gap then held the toggle 16px off the gutter. The name is out of
+     flow anyway, so two tracks is all this needs. */
+  .nav { position: relative; grid-template-columns: auto 1fr; gap: var(--s2); }
+  .brand { justify-self: start; }
+  .brand-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
   .nav-right > .lang { display: none; }
   .process-scroll { height: auto; }
   .process-sticky { position: static; min-height: 0; }
   .process-counter { display: none; }
-  .process-step { opacity: 1; filter: none; transform: none; }
+  /* Dimmed but not blurred, and not displaced. This is what gives the phone
+     something to animate: the observer moves `is-active` down the list as the
+     reader scrolls, and the step in the middle of the screen lifts out of the
+     others. Blur is deliberately absent -- it would be recomputed over a moving
+     box on every frame, which is the mistake the aurora layer taught. */
+  .js .process-step { opacity: 0.45; filter: none; transform: none; }
   .process-spine-fill { height: 100% !important; }
   .process-node { background: var(--gold); border-color: var(--gold); }
 }
@@ -2156,6 +2207,12 @@ h3 {
   .wa-float-text { display: none; }
   .wa-float { padding: 0.9rem; min-width: 52px; justify-content: center; }
   .hero-actions .btn { flex: 1 1 100%; }
+  /* The headline is deliberately large on a phone, so the rhythm around it
+     tightens to pay for it: at the desktop spacing the hero ran 36px past the
+     one-screen contract in English and 108px in Russian on a 760px-tall
+     viewport, which pushed the ticker below the fold. */
+  .hero-sub { margin-top: var(--s2); }
+  .hero-actions { margin-top: var(--s3); }
   /* The spine costs a phone 92px of the 390 available -- 24px column, 24px
      gap, 24px step padding, 20px gutter -- which left the step text at 254px
      against 350px everywhere else on the page, and it read as a narrow ribbon.

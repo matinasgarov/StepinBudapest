@@ -693,6 +693,34 @@
   var steps = Array.prototype.slice.call(document.querySelectorAll('.process-step'));
   var nodes = Array.prototype.slice.call(document.querySelectorAll('.process-node'));
 
+  /* Below 900px the pinned stage does not exist, so onScroll hands in a null
+     rect and this driver never runs. That left `is-active` sitting on the step
+     it was authored with and nothing ever moved -- the section had no animation
+     at all on a phone.
+
+     An observer drives it there instead. rootMargin collapses the root to a
+     thin band across the middle of the screen, so whichever step is passing
+     the middle is the active one. No per-frame reads, nothing measured during
+     scroll, and it cannot fight the desktop driver because each one is bounded
+     by the same width. */
+  var procQuery = window.matchMedia('(max-width: 900px)');
+
+  function setActiveStep(i) {
+    steps.forEach(function (step, n) { step.classList.toggle('is-active', n === i); });
+    nodes.forEach(function (node, n) { node.classList.toggle('is-on', n <= i); });
+  }
+
+  if (steps.length && 'IntersectionObserver' in window) {
+    var stepObserver = new IntersectionObserver(function (entries) {
+      if (!procQuery.matches) return;          // desktop: the scroll driver owns it
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        setActiveStep(steps.indexOf(entry.target));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    steps.forEach(function (step) { stepObserver.observe(step); });
+  }
+
   /* The rect and viewport height are measured once by onScroll, alongside every
      other read, and handed in — so this never triggers a second layout pass. */
   function updateProcess(rect, vh) {
@@ -706,8 +734,7 @@
 
     if (spine) spine.style.height = (progress * 100) + '%';
 
-    steps.forEach(function (step, i) { step.classList.toggle('is-active', i === index); });
-    nodes.forEach(function (node, i) { node.classList.toggle('is-on', i <= index); });
+    setActiveStep(index);
 
     if (counter) counter.textContent = '0' + (index + 1);
   }
