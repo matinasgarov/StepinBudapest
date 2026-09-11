@@ -101,6 +101,25 @@ One family: **Inter Tight**, for display and body alike, with **JetBrains Mono**
 for labels, codes, prices and step numbers. `--display` and `--body` both point
 at Inter Tight on purpose.
 
+**`'Inter Tight Fallback'` sits second in `--display` and `--body`, and it is what stops
+the hero text resizing on reload.** The font stylesheet is deliberately off the critical
+path, so the headline paints in the system fallback first and re-renders when Inter Tight
+lands. Measured, Segoe UI is **2.1% wider** than Inter Tight at the same `font-size` with
+a **266-vs-242** line box, and that is the size change you see. The fallback face wraps
+the system font (`local()`, one entry per platform, no download) and corrects it:
+`size-adjust` is the measured width ratio, and the ascent and descent are Inter Tight's
+own (0.9688 / 0.2412 em) divided by that ratio, because the overrides apply before
+`size-adjust` scales them. Residual width error drops from **+2.2/+3.9/+1.4%** to
+**+0.02/+1.7/-0.7%** across the three languages, and `.hero-copy`'s box is identical in
+both states. Re-measure with `scratchpad/ratio.js` if the display face ever changes.
+
+**Do not "fix" this with `display=optional`.** It looks like the right answer — optional
+never swaps, so nothing can shift after paint — but because this stylesheet is loaded
+late on purpose, optional always misses its block period and the page then never uses
+Inter Tight at all. Measured: the painted platform font came back as Segoe UI even on a
+warm load. `display=swap` plus the matched fallback is the combination that keeps both
+the typeface and a stable layout.
+
 This is also why the old per-glyph fallback is gone. Fraunces has no Cyrillic and
 no `ə`, so Russian and Azerbaijani used to fall back to Playfair Display glyph by
 glyph. Inter Tight covers both, so **all three languages now render in one face**
@@ -137,11 +156,31 @@ half is empty sky.** The photograph put the headline across the lit Parliament, 
 is why that headline carried a `text-shadow` and why the scrim had to be re-mixed
 every time the ink changed. Nothing has to be re-mixed for this one.
 
-That empty half is load-bearing, and **the hero's deep floor is what keeps the copy in
-it** — `padding-block`'s second value, `clamp(11rem, 3rem + 22vw, 26rem)`. The hero
-centres its content in the padding box, so the floor is the only thing holding the
-headline off the architecture. There is no scrim and no z-index doing it. Shrink that
-value and the copy lands on the buildings.
+**The floor is what positions the copy vertically**, since the hero centres its content
+in the padding box — `padding-block`'s second value, `clamp(8.75rem, 11.8rem - 3.4vw,
+11rem)`. Note the **negative** `vw`: the floor has to *shrink* as the viewport widens,
+because the constraint it answers is tightest on a phone.
+
+That clamp was solved, not guessed, and the finding worth keeping is this: **the copy's
+offset from centre depends only on the floor, not on the width.** Once the copy fills
+its content box the offset is just `(floor - padding-top) / 2`, so centring the copy
+means landing the floor on ~140px at every width. The old `clamp(11rem, 3rem + 22vw,
+26rem)` put it **138px above centre at 1920 and 112px above at 1440**, and also pushed
+the hero 176px past the one-screen contract at 1920.
+
+**Centred, off the drawing, and one screen are mutually exclusive here** — the copy is
+taller than the empty sky, so something has to give. Sampled across widths and all three
+languages (`scratchpad/floor-samples.json`, five floor values per context), keeping 25px
+of clearance everywhere needs a ~240px floor, which is 50px off centre *and* overflows
+one screen. The choice made is: **centre the copy.** Offset is now 0 at 1920 and 1440,
+and the hero is exactly `100svh - ticker` again.
+
+The price is that at 1600 and wider the CTA row sits **28-43px into the faint distant
+embankment**, and at 1440 in Russian by 2px. That is deliberate and it renders cleanly,
+because what it overlaps is low-contrast line work at the horizon, not a landmark — the
+Parliament stays to the left of a centred column and Castle Hill to the right, which is
+the whole reason centring is affordable at all. Verified by eye at 1920, 1440 and 390 in
+Russian, the language that sets the worst case.
 
 **Two background treatments, and the breakpoint between them is arithmetic, not taste.**
 
@@ -173,11 +212,18 @@ does, maps each block of copy's screen span back into image columns, and reports
 gap. It also flags any width where the drawing ends up narrower than the viewport, which
 is how the `max()` bug above was found.
 
+**It gates on `dense`, not on the first ink pixel**, and the difference matters. The
+profile carries two numbers per column: `top` is the first ink pixel at all, so a single
+water-reflection line counts; `dense` is the first ink pixel with sustained structure
+below it (6 of the next 40 rows), which skips lone lines and marks where the drawing
+becomes visually substantial. They differ by more than 20px in 202 of 418 columns — all
+of it open water. Gating on `top` fails a centred hero that renders perfectly well; both
+are printed so it stays visible how far into the faint stuff the copy sits.
+
 It sweeps **all three languages**, and that is the point of it: Russian sets the worst
-case, not English. Current worst clearance is **+30px, at 430 Russian**; every width
-from 360 to 1920 clears with no empty margins. That 30px is thin, and it is thin on
-purpose — the alternative was a deeper floor, which would push the hero past the
-one-screen contract on a narrow phone in Russian. Changing the floor, the `0.817`, the
+case, not English. In the band range (1024 and below) the worst clearance is **+28px at
+430 Russian**; above it the copy is centred and deliberately overlaps the horizon as
+described above. No width leaves an empty margin. Changing the floor, the `0.817`, the
 band fraction, the crop bias or the type scale means re-running it.
 
 **Note the computed value cannot be parsed back out**: `background-size` keeps `max()`

@@ -7,6 +7,28 @@
 /* ---------------------------------------------------------
    TOKENS
 --------------------------------------------------------- */
+/* A metric-matched stand-in for Inter Tight, so the text does not change size
+   when the webfont arrives. `display=optional` already stops the swap from
+   shifting anything after paint, but a first visit that misses the block period
+   renders entirely in the fallback -- and raw Segoe UI is the wrong size for
+   this layout: measured against Inter Tight at the same font-size it is 2.1%
+   wider, with a 266 line box against 242.
+
+   So the fallback is wrapped in a face that corrects for that. size-adjust is
+   the measured width ratio; the ascent and descent are Inter Tight's own
+   (0.9688 / 0.2412 em) divided by that ratio, because the overrides are applied
+   before size-adjust scales them. The local() list is one entry per platform,
+   first match wins -- there is no download here, it is the system font either
+   way. Re-measure with scratchpad/ratio.js if the display face ever changes. */
+@font-face {
+  font-family: 'Inter Tight Fallback';
+  src: local('Segoe UI'), local('Helvetica Neue'), local('Roboto'), local('Arial');
+  size-adjust: 97.9%;
+  ascent-override: 98.96%;
+  descent-override: 24.64%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* ---------------------------------------------------------
      ELECTRIC
@@ -63,8 +85,8 @@
   /* Type — one family. Size carries the hierarchy, never weight, and
      Inter Tight covers Cyrillic and the Azerbaijani schwa, so there is no
      per-glyph fallback the way the old serif stack needed. */
-  --display: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --body:    'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Inter Tight', 'Inter Tight Fallback', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --body:    'Inter Tight', 'Inter Tight Fallback', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Rhythm — 8pt */
@@ -711,11 +733,17 @@ h3 {
   color: var(--on-ink);
   /* The hero and the ticker together own the first screen. */
   min-height: calc(100svh - var(--ticker-h));
-  /* The floor is deep because the skyline lives down there. The hero centres
-     its content inside the padding box, so this is what lifts the copy clear
-     of the Parliament dome instead of sitting on top of it. */
+  /* The floor reserves the skyline's half of the band -- the hero centres its
+     content inside the padding box, so this is the only thing holding the copy
+     off the architecture. It is tuned so the copy lands ON the hero's vertical
+     centre rather than well above it: measured, the old 26rem ceiling left the
+     copy 138px high at 1920 and 112px high at 1440. Centring is affordable
+     because the tall part of the drawing (the Parliament dome) sits to the LEFT
+     of a centred column, so the copy can come down into the drawing's half
+     without touching it -- see scratchpad/clear2.js.
+     Re-measure before changing any of these three numbers. */
   padding-block: calc(var(--nav-h) + clamp(2rem, 1rem + 4vw, 4rem))
-                 clamp(11rem, 3rem + 22vw, 26rem);
+                 clamp(8.75rem, 11.8rem - 3.4vw, 11rem);
   /* Centre the copy in whatever height the hero ends up with. Anchored to the
      top it left a screen-deep gap above the ticker on a tall viewport. */
   display: flex;

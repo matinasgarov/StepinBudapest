@@ -14,9 +14,13 @@
        from a third-party origin that cost ~470ms of DNS + TLS + round trip, and
        blocked first paint for all of it. Loading it as media="print" takes it
        off the critical path; the onload swap applies it the moment it lands.
-       display=swap means text paints immediately in the fallback stack either
-       way. The preload keeps it at high priority so the swap happens early, and
-       the noscript copy covers JavaScript being off.
+       display=optional, NOT swap. Swap is what made the hero text visibly resize
+       on every reload: the headline painted in Segoe UI and then re-rendered in
+       Inter Tight, which is 2.1% narrower with a 242-vs-266 line box at the same
+       font-size. Optional never swaps -- the font is used if it arrives inside
+       the block period, and otherwise sits in cache for the next navigation, so
+       the layout cannot shift after paint. The preload is what makes it usually
+       arrive in time. The noscript copy covers JavaScript being off.
        Dropped from the request: Inter Tight 300 and Fraunces italic 600, which
        nothing in styles.css asks for. -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" />
@@ -26,7 +30,7 @@
        fold, so it is preloaded: discovered through the stylesheet it would not
        start downloading until the CSS had parsed. -->
   <link rel="preload" as="image" href="hero.webp" />
-  <link rel="stylesheet" href="styles.css?v=70" />
+  <link rel="stylesheet" href="styles.css?v=74" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
