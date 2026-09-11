@@ -54,6 +54,12 @@
   force = true
 
 [[redirects]]
+  from = "/logo.jfif"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/LICENSE"
   to = "/"
   status = 301

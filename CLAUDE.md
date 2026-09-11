@@ -281,6 +281,55 @@ The inline `<head>` script sets `history.scrollRestoration = 'manual'`. Browsers
 default to restoring scroll position on reload, which on a one-page site drops the
 reader into the middle of the hero instead of at the headline.
 
+### The logo
+
+**The mark in the header is `logo-mark.webp` — the Parliament dome over the Danube
+ribbon, cut out of the supplied `logo.jfif`.** It replaced three drawn arches, and what
+did *not* come across with it is the interesting part:
+
+- **The logo's navy square stayed behind.** The header is transparent until you scroll
+  and glass after, so a baked-in ground would show as a plate agreeing with neither. It
+  is visible on the phone before it is visible on a desktop, because there the header
+  sits on flat ink rather than on the hero's bluer sky.
+- **The logo's serif wordmark stayed behind too.** The header already sets the name in
+  Inter Tight right beside the mark; the logo's own version would be the same two words
+  twice, in two typefaces. The page has one family and the logo does not get an
+  exemption.
+
+**The alpha is keyed from luminance, and the black point is the part that has to be
+right.** The ink is cream and gold, the ground is flat navy, so
+`a = (L - black) / (Lref - black)` recovers every anti-aliased edge the artwork was
+drawn with. But the ground has a radial vignette: sampled at the far corners it is
+luminance ~20, while inside the mark's own crop it reaches **31.5**. Keying against the
+corner value left the whole crop at up to 5% alpha — a faint navy rectangle, and worse,
+un-compositing at `a = 0.02` divides by that alpha and turns the ground into a bright
+patch. The black point is **34**, just above the brightest ground pixel in the crop, with
+a 0.05 knee under it and the un-composite divisor floored at 0.3 so a faint edge cannot
+be amplified into a neon fringe.
+
+**Check it by compositing over `--ink` and pushing brightness 5x.** A plate is invisible
+at normal exposure on a dark header and obvious at 5x, which is the only reason the first
+attempt got as far as a screenshot.
+
+It ships at **145x120, WebP q78, 6.5KB** — about 3x the 40px the header paints, so it
+holds on a DPR-3 phone. It carries its intrinsic `width`/`height` in the markup so the
+header does not reflow when it lands, and is sized in CSS by **height with `width: auto`**
+(34px below 900px, where the centred name decides how much room is left).
+
+**The icons are the same mark, but with its ground kept**, because a favicon wants to be
+a badge: `favicon-32.png` (1KB) and `apple-touch-icon.png` (180px, 20KB, fetched only
+when someone saves the page to a home screen). The crop is the mark alone — a first pass
+ran 300px further down the file and swallowed the wordmark, which at 32px is mush. The
+drawn `favicon.svg` is gone with the arches.
+
+`logo.jfif` is the 1024x1024 source and is kept unreferenced, the same arrangement as
+`hero.png`; `netlify.toml` redirects it.
+
+**There is no `og:image` yet.** The page carries no Open Graph tags at all, which means a
+link shared in WhatsApp — the way most of this audience will receive it — renders as bare
+text. The logo is the asset for it, but `og:image` has to be an absolute URL, so it waits
+on the real domain.
+
 ### Header and the mobile drawer
 
 **Below 900px the language control lives in the drawer, not the header.** The header's
@@ -788,6 +837,7 @@ A static host serves everything in the repo root, so these are all fetchable:
 | `CLAUDE.md` | 39KB | **Documents that Aqşin's hobbies are invented**, plus every internal decision |
 | `overview.md` | 5KB | Quotes **250/500/800 AZN** — pricing the page no longer uses |
 | `hero.png` | 1.36MB | Source for `hero.webp`, never referenced |
+| `logo.jfif` | 335KB | Source for the mark and the icons, never referenced |
 
 `netlify.toml` force-redirects each of those paths to `/`, so the deployed site does not
 serve them. **That does not cover GitHub**: this repo is public, so every one of these

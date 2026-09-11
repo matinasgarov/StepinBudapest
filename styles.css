@@ -456,39 +456,41 @@ h3 {
 
 .brand { display: flex; align-items: center; gap: 0.7rem; }
 
-/* Mark: three ascending arches — Budapest's arcades read as steps, the
-   tallest in gold as the destination. No badge box; it stands on its own. */
+/* Mark: the Parliament dome over the Danube ribbon, taken from the supplied
+   logo. It replaced three drawn arches, and the interesting part is what did
+   NOT come across with it -- the logo's own navy square and its serif
+   wordmark.
+
+   The square had to go because the header is transparent until you scroll and
+   glass after, so a baked-in ground would have shown as a plate that agrees
+   with neither. The alpha is keyed from the source's luminance rather than
+   knocked out by hand: the ink is cream and gold, the ground is flat navy, so
+   every edge pixel keeps the anti-aliasing it was drawn with.
+
+   The wordmark had to go because the header already sets the name in Inter
+   Tight beside it; the logo's serif version would be the same words twice, in
+   two typefaces.
+
+   Sized by height with width:auto -- the file is 145x120 and the header wants
+   40 tall, so pinning the height is what keeps the aspect honest. It carries
+   its intrinsic width/height in the markup so nothing shifts when it lands. */
 .brand-mark {
   display: block;
-  width: 38px;
-  height: 38px;
+  width: auto;
+  height: 40px;
   flex: none;
-  color: var(--on-ink);
-}
-.brand-mark svg { width: 100%; height: 100%; overflow: visible; }
-
-.arch {
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  transition: opacity 0.4s var(--ease), transform 0.5s var(--spring);
-  transform-origin: 50% 32px;
-}
-.arch-1 { opacity: 0.38; }
-.arch-2 { opacity: 0.68; }
-.arch-3 { stroke: var(--gold); opacity: 1; }
-
-.arch-base {
-  stroke: currentColor;
-  stroke-width: 1.25;
-  stroke-linecap: round;
-  opacity: 0.28;
+  transition: transform 0.5s var(--spring), filter 0.4s var(--ease);
 }
 
-/* Hover: the arcade rises, back to front. */
-.brand:hover .arch-1 { opacity: 0.6;  transform: scaleY(1.09); }
-.brand:hover .arch-2 { opacity: 0.85; transform: scaleY(1.06); }
-.brand:hover .arch-3 { transform: scaleY(1.04); }
+/* Hover lifts it, and it stays behind the pointer guard: a touch browser holds
+   :hover after a tap, and a mark left permanently scaled up is a mark that
+   looks broken. */
+@media (hover: hover) {
+  .brand:hover .brand-mark {
+    transform: translateY(-1px) scale(1.04);
+    filter: brightness(1.08);
+  }
+}
 
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
 
@@ -2160,6 +2162,9 @@ h3 {
      flow anyway, so two tracks is all this needs. */
   .nav { position: relative; grid-template-columns: auto 1fr; gap: var(--s2); }
   .brand { justify-self: start; }
+  /* Smaller here: the name is centred over the whole header, so the mark is
+     what decides how much room is left before the two start to touch. */
+  .brand-mark { height: 34px; }
   .brand-text {
     position: absolute;
     left: 50%;

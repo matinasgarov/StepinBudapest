@@ -6,7 +6,11 @@
   <title>StepIn Budapest | Student Relocation Partner</title>
   <meta name="description" content="StepIn Budapest helps Azerbaijani students move to Budapest with airport pickup, accommodation support, documentation guidance, and settling-in services." />
   <meta name="theme-color" content="#050D22" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <!-- The icons are the real logo now, not the drawn arch glyph that
+       preceded it. Cropped to the mark alone: the wordmark under it is
+       illegible at 32px, and the building is the recognisable half. -->
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
   <!-- Hardening. This page takes no input from anywhere -- no query string, no
        hash, no postMessage, no fetch -- so its XSS surface is already nil; the
@@ -50,7 +54,7 @@
        fold, so it is preloaded: discovered through the stylesheet it would not
        start downloading until the CSS had parsed. -->
   <link rel="preload" as="image" href="hero.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=79" />
+  <link rel="stylesheet" href="styles.css?v=80" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -77,14 +81,11 @@
     <div class="scroll-rail" aria-hidden="true"><span class="scroll-rail-fill" id="scrollRail"></span></div>
     <nav class="nav container" aria-label="Primary">
       <a class="brand" href="#top">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none">
-            <path class="arch arch-1" d="M5 32v-4a4 4 0 0 1 8 0v4" />
-            <path class="arch arch-2" d="M15.5 32V19a5 5 0 0 1 10 0v13" />
-            <path class="arch arch-3" d="M28 32V12a5 5 0 0 1 10 0v20" />
-            <path class="arch-base" d="M3.5 32.5h36" />
-          </svg>
-        </span>
+        <!-- The mark from the supplied logo, keyed off its navy ground so it
+             sits on the header rather than in a square of its own. Width and
+             height are set to stop the header reflowing when it lands; alt is
+             empty because the name is right beside it in text. -->
+        <img class="brand-mark" src="logo-mark.webp" alt="" width="145" height="120" decoding="async" />
         <span class="brand-text">
           <span class="brand-name">StepIn<span class="brand-city">Budapest</span></span>
           <span class="brand-tagline">
