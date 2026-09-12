@@ -30,7 +30,7 @@ The page reads as a sequence of chapters, alternating dark and light so each sec
 
 **Process** — Three stages, from first message to arrival. This section advances as you scroll, so the process visibly moves rather than sitting still. It's the one moment on the page that demonstrates rather than describes.
 
-**Pricing** — Quoted in USD: Basic 99, Comfort 119, Standard 299 (299, or 235 without guardianship) and Premium 469, with Standard marked as most popular. A build-your-own row composes a WhatsApp message from tickboxes. The AZN figures this document used to quote are gone from the site.
+**Pricing** — Quoted in USD: Basic 93, Comfort 119, Standard 299 (299, or 235 without guardianship) and Premium 469, with Standard marked as most popular. A build-your-own row composes a WhatsApp message from tickboxes. The AZN figures this document used to quote are gone from the site.
 
 **FAQ** — The five questions parents actually ask, including the anxious ones: *Will someone be with my child when they land? How do I know they're safe? Can I contact you directly?*
 

@@ -508,7 +508,7 @@ needs to feel less abrupt, lengthen the fade or add a transform — not a size.
 
 **Prices live in `index.html`, not in the translations** — `.plan-figure` is literal
 text, because a number is the same in all three languages. Prices are quoted in **USD**
-(99 / 119 / 299 / 469, with 235 without guardianship); the AZN figures they replaced are
+(93 / 119 / 299 / 469, with 235 without guardianship); the AZN figures they replaced are
 gone from the page. Internal partner-payment figures are deliberately absent from the
 repo.
 
