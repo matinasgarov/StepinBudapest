@@ -400,16 +400,27 @@ h3 {
      groove and letterpressed type. It becomes glass once you scroll. */
   background: transparent;
   border-bottom: 1px solid transparent;
-  box-shadow: inset 0 -1px 0 rgba(244, 246, 251, 0.07),
-              inset 0 -2px 0 rgba(8, 14, 32, 0.55);
+  /* No edge of its own over the hero. The groove that used to be here --
+     a light hairline over a 2px dark one -- drew a line clean across the
+     hero at the header's floor, which is what made the nav read as a strip
+     laid on the picture rather than as part of it. The type carries the
+     whole treatment now. */
+  box-shadow: none;
   transition: background-color 0.45s var(--ease), border-color 0.45s var(--ease),
               box-shadow 0.45s var(--ease), backdrop-filter 0.45s var(--ease);
 }
+/* Cut into the hero rather than raised off it, and the order of those two
+   shadows is the whole difference. Light catches the BOTTOM of an engraved
+   glyph and its top edge sits in shadow, so the dark offset goes up (0 -1px)
+   and the highlight down (0 1px). The pair it replaced was the other way
+   round, which is the emboss recipe -- it read as type sitting on the
+   picture. Both are deepened, because there is no longer a groove under the
+   bar doing part of the work. */
 .site-header .brand-name,
 .site-header .brand-tagline,
 .nav-links a,
 .lang-current {
-  text-shadow: 0 1px 0 rgba(8, 14, 32, 0.85), 0 -1px 0 rgba(244, 246, 251, 0.07);
+  text-shadow: 0 -1px 1px rgba(4, 8, 20, 0.9), 0 1px 0 rgba(244, 246, 251, 0.14);
   transition: text-shadow 0.45s var(--ease), color 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 
@@ -791,13 +802,6 @@ h3 {
   transition: color 0.2s var(--ease), padding-left 0.3s var(--ease-out);
 }
 .drawer-links a:hover { color: var(--gold); padding-left: 0.5rem; }
-.drawer-num {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-}
-
 /* ---------------------------------------------------------
    HERO
 --------------------------------------------------------- */
@@ -1034,7 +1038,7 @@ h3 {
 
 .svc-summary {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: clamp(1rem, 0.5rem + 1.6vw, 2.5rem);
   padding: clamp(1.6rem, 1rem + 1.6vw, 2.6rem) clamp(0.75rem, 0.4rem + 1vw, 1.5rem);
@@ -1043,13 +1047,6 @@ h3 {
 }
 .svc-summary::-webkit-details-marker { display: none; }
 .svc.is-flat .svc-summary { cursor: default; }
-
-.svc-num {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  color: var(--accent-ink);
-}
 
 /* The one line of the old card treatment worth keeping: a rule that draws
    itself across the row on hover. It is the accent doing structure rather
@@ -1404,13 +1401,12 @@ h3 {
 /* Jade marks the row; blue still acts. The tick marks and the section label
    inside it follow the mark, the CTA does not — a recommended package is
    still bought with the same button as every other one. */
-.plan-featured .plan-num,
 .plan-featured .plan-detail-label { color: var(--jade-ink); }
 .plan-featured .plan-list li::before { border-color: var(--jade-ink); }
 
 .plan-summary {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   gap: clamp(1rem, 0.5rem + 1.6vw, 2.5rem);
   padding: clamp(1.5rem, 1rem + 1.4vw, 2.4rem) clamp(0.75rem, 0.4rem + 1vw, 1.5rem);
@@ -1418,13 +1414,6 @@ h3 {
   list-style: none;
 }
 .plan-summary::-webkit-details-marker { display: none; }
-
-.plan-num {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  color: var(--accent-ink);
-}
 
 .plan-head { min-width: 0; }
 .plan-name {
@@ -1752,13 +1741,6 @@ h3 {
   text-align: left;
   color: inherit;
   font: inherit;
-}
-.partner-num {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  flex: none;
 }
 .partner-name {
   font-size: clamp(1.15rem, 0.9rem + 0.9vw, 1.7rem);
@@ -2191,9 +2173,9 @@ h3 {
 
   /* Name and price cannot share a line at this width. The figure drops
      under the name and the sign keeps its own column. */
-  .plan-summary { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .plan-summary { grid-template-columns: minmax(0, 1fr) auto; }
   .plan-price {
-    grid-column: 2 / 3;
+    grid-column: 1 / 2;
     align-items: flex-start;
     text-align: left;
     margin-top: var(--s2);

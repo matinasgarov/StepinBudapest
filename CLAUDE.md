@@ -56,6 +56,16 @@ of gold, gradients or shadow, it is a survivor, not a decision.
 - **Sections have no eyebrow.** The mono kicker over every heading was removed;
   the headline and the marker under it carry the section on their own, and the
   `*Label` translation keys went with the markup.
+- **No listing is numbered.** Services, pricing, partners and the drawer nav
+  each used to open with a mono `01`/`02`. Five places counting in the same
+  voice made the numeral read as house style rather than as information, and
+  none of it was information: a reader scanning five packages does not need to
+  be told the third one is third. **The one survivor is `.process-num`**, which
+  is a stepper — there the number *is* the content, and below 720px, where the
+  spine is hidden, it is the only thing carrying the order. Note that each of
+  those numerals was a grid child in `.svc-summary` and `.plan-summary`:
+  removing one means dropping a track, or every sibling lands one column to the
+  left (the ≤720px pricing rule moves the figure to column 1 for that reason).
 - **Every raised surface is one material.** The glass tokens
   (`--glass-*`, `--radius-glass`) are the whole system: services and pricing
   rows, FAQ cards, contact links, the partner portrait and the open partner
@@ -373,6 +383,20 @@ The result was a language menu that would not close on a phone. Keep `:focus-wit
 `[data-open]` outside the guard — they are what make tap and keyboard work. This is the
 same hazard, and the same fix, as the pricing rows.
 
+**Over the hero the header has no edge of its own, and the type is cut into the
+picture rather than raised off it.** It used to carry a groove at its floor — a light
+hairline over a 2px dark one — which drew a line clean across the hero at the header's
+bottom and made the nav read as a strip laid on the picture. That is gone; the type
+carries the whole treatment.
+
+The order of the two text shadows is the whole difference between the two readings.
+Light catches the **bottom** of an engraved glyph and its top edge sits in shadow, so
+the dark offset goes up (`0 -1px`) and the highlight down (`0 1px`). The pair this
+replaced was the other way round, which is the emboss recipe. Both are deepened, since
+there is no longer a groove doing part of the work. Scrolled, the header still becomes
+glass with its own border and drops the shadows entirely — engraving is the hero state
+only, because it needs the picture to be cut into.
+
 **`.nav-toggle span` needs `grid-area: 1 / 1`.** The toggle is a grid, so without it each
 bar lands in its own implicit row about 21px apart, and the open-state rotations — a few
 pixels of `translateY` — can never bring them together: the close icon rendered as two
@@ -412,7 +436,7 @@ instead of sliding away and leaving the band empty.
 ### Pricing
 
 Five `<details>` rows, matching the services section directly above it. Each row is a
-`.plan-summary` — numeral, name, scope line, figure, open/shut sign — over a
+`.plan-summary` — name, scope line, figure, open/shut sign — over a
 `.plan-detail` holding the list and the CTA.
 
 **This replaced a hover interaction**, and the reasons are worth keeping because the
@@ -437,8 +461,8 @@ glass pane in the same paper, tinted in **jade** and edged in it: enough to be f
 first, not enough to break the sequence. It keeps that tint when it lifts rather than
 washing out to its neighbours' white.
 
-Three things inside it follow the jade — the numeral, the "what is included" label and
-the tick marks. **The CTA does not.** A recommended package is still bought with the
+Two things inside it follow the jade — the "what is included" label and the tick
+marks. **The CTA does not.** A recommended package is still bought with the
 same blue button as every other one, and that split is the point: jade says *this is
 the one*, blue says *do it*.
 
@@ -451,8 +475,8 @@ competes with the title — the eye reads a coloured object before it can read t
 rounded, edge-lit and casting onto the rows behind it. One rule serves both `.plan` and
 `.svc`. Because nothing inside changes colour, every contrast ratio on the row survives
 untouched — which is exactly what the blue fill it replaced could not do: that version
-needed a block of token remapping under it to keep the numeral, ticks, scope line and
-buttons legible, and any element added to a row later would have missed it.
+needed a block of token remapping under it to keep the ticks, scope line and buttons
+legible, and any element added to a row later would have missed it.
 
 **Glass needs something behind it**, which is the part a first attempt at this got
 wrong. A frosted pane over a flat white band is a grey rectangle: the blur has nothing

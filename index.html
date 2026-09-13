@@ -54,7 +54,7 @@
        fold, so it is preloaded: discovered through the stylesheet it would not
        start downloading until the CSS had parsed. -->
   <link rel="preload" as="image" href="hero.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=80" />
+  <link rel="stylesheet" href="styles.css?v=81" />
 
   <!-- Entrance/reveal styles apply only when JS can undo them.
        Reload opens at the top: browsers default to restoring the previous
@@ -126,12 +126,12 @@
   <!-- MOBILE DRAWER -->
   <div class="drawer" id="mobileDrawer" hidden>
     <ul class="drawer-links">
-      <li><a href="#services"><span class="drawer-num">01</span><span data-i18n="navServices">Services</span></a></li>
-      <li><a href="#process"><span class="drawer-num">02</span><span data-i18n="navProcess">Process</span></a></li>
-      <li><a href="#pricing"><span class="drawer-num">03</span><span data-i18n="navPricing">Pricing</span></a></li>
-      <li data-partners-nav><a href="#partners"><span class="drawer-num">04</span><span data-i18n="navPartners">Partners</span></a></li>
-      <li><a href="#faq"><span class="drawer-num">05</span><span data-i18n="navFaq">FAQ</span></a></li>
-      <li><a href="#contact"><span class="drawer-num">06</span><span data-i18n="navContact">Contact</span></a></li>
+      <li><a href="#services"><span data-i18n="navServices">Services</span></a></li>
+      <li><a href="#process"><span data-i18n="navProcess">Process</span></a></li>
+      <li><a href="#pricing"><span data-i18n="navPricing">Pricing</span></a></li>
+      <li data-partners-nav><a href="#partners"><span data-i18n="navPartners">Partners</span></a></li>
+      <li><a href="#faq"><span data-i18n="navFaq">FAQ</span></a></li>
+      <li><a href="#contact"><span data-i18n="navContact">Contact</span></a></li>
     </ul>
     <!-- Three flat buttons rather than the header's dropdown. A dropdown inside
          a drawer is a menu inside a menu, and on a touch screen it also drags in
@@ -198,7 +198,6 @@
           <details class="svc reveal">
             <summary class="svc-summary">
               <span class="svc-rule" aria-hidden="true"></span>
-              <span class="svc-num" aria-hidden="true">01</span>
               <span class="svc-head">
                 <h3 data-i18n="s1title"></h3>
                 <p class="svc-lead" data-i18n="s1text"></p>
@@ -233,7 +232,6 @@
           <details class="svc reveal">
             <summary class="svc-summary">
               <span class="svc-rule" aria-hidden="true"></span>
-              <span class="svc-num" aria-hidden="true">02</span>
               <span class="svc-head">
                 <h3 data-i18n="s2title"></h3>
                 <p class="svc-lead" data-i18n="s2text"></p>
@@ -268,7 +266,6 @@
           <details class="svc reveal">
             <summary class="svc-summary">
               <span class="svc-rule" aria-hidden="true"></span>
-              <span class="svc-num" aria-hidden="true">03</span>
               <span class="svc-head">
                 <h3 data-i18n="s3title"></h3>
                 <p class="svc-lead" data-i18n="s3text"></p>
@@ -303,7 +300,6 @@
           <details class="svc reveal">
             <summary class="svc-summary">
               <span class="svc-rule" aria-hidden="true"></span>
-              <span class="svc-num" aria-hidden="true">04</span>
               <span class="svc-head">
                 <h3 data-i18n="s4title"></h3>
                 <p class="svc-lead" data-i18n="s4text"></p>
@@ -392,7 +388,6 @@
         <div class="plans">
           <details class="plan reveal">
             <summary class="plan-summary">
-              <span class="plan-num">01</span>
               <span class="plan-head">
                 <span class="plan-name" data-i18n="plan1name"></span>
                 <span class="plan-scope" data-i18n="plan1scope"></span>
@@ -413,7 +408,6 @@
 
           <details class="plan reveal">
             <summary class="plan-summary">
-              <span class="plan-num">02</span>
               <span class="plan-head">
                 <span class="plan-name" data-i18n="plan5name"></span>
                 <span class="plan-scope" data-i18n="plan5scope"></span>
@@ -435,7 +429,6 @@
 
           <details class="plan plan-featured reveal" open>
             <summary class="plan-summary">
-              <span class="plan-num">03</span>
               <span class="plan-head">
                 <span class="plan-tag" data-i18n="planBadge">Most Popular</span>
                 <span class="plan-name" data-i18n="plan2name"></span>
@@ -460,7 +453,6 @@
 
           <details class="plan reveal">
             <summary class="plan-summary">
-              <span class="plan-num">04</span>
               <span class="plan-head">
                 <span class="plan-name" data-i18n="plan3name"></span>
                 <span class="plan-scope" data-i18n="plan3scope"></span>
@@ -483,7 +475,6 @@
 
           <details class="plan reveal">
             <summary class="plan-summary">
-              <span class="plan-num">05</span>
               <span class="plan-head">
                 <span class="plan-name" data-i18n="plan4name"></span>
                 <span class="plan-scope" data-i18n="plan4scope"></span>
@@ -522,7 +513,6 @@
           <article class="partner" data-partner>
             <button class="partner-head" type="button" data-partner-toggle
                     aria-expanded="true" aria-controls="ptBody1">
-              <span class="partner-num">01</span>
               <span class="partner-name" data-partner-name><span data-i18n="pt1name"></span></span>
               <span class="partner-role"><span data-i18n="pt1role"></span></span>
             </button>
@@ -533,7 +523,6 @@
           <article class="partner" data-partner>
             <button class="partner-head" type="button" data-partner-toggle
                     aria-expanded="false" aria-controls="ptBody2">
-              <span class="partner-num">02</span>
               <span class="partner-name" data-partner-name><span data-i18n="pt2name"></span></span>
               <span class="partner-role"><span data-i18n="pt2role"></span></span>
             </button>
@@ -544,7 +533,6 @@
           <article class="partner" data-partner>
             <button class="partner-head" type="button" data-partner-toggle
                     aria-expanded="false" aria-controls="ptBody3">
-              <span class="partner-num">03</span>
               <span class="partner-name" data-partner-name><span data-i18n="pt3name"></span></span>
               <span class="partner-role"><span data-i18n="pt3role"></span></span>
             </button>
@@ -555,7 +543,6 @@
           <article class="partner" data-partner>
             <button class="partner-head" type="button" data-partner-toggle
                     aria-expanded="false" aria-controls="ptBody4">
-              <span class="partner-num">04</span>
               <span class="partner-name" data-partner-name><span data-i18n="pt4name"></span></span>
               <span class="partner-role"><span data-i18n="pt4role"></span></span>
             </button>
