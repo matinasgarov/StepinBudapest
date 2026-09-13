@@ -56,16 +56,19 @@ of gold, gradients or shadow, it is a survivor, not a decision.
 - **Sections have no eyebrow.** The mono kicker over every heading was removed;
   the headline and the marker under it carry the section on their own, and the
   `*Label` translation keys went with the markup.
-- **No listing is numbered.** Services, pricing, partners and the drawer nav
-  each used to open with a mono `01`/`02`. Five places counting in the same
-  voice made the numeral read as house style rather than as information, and
-  none of it was information: a reader scanning five packages does not need to
-  be told the third one is third. **The one survivor is `.process-num`**, which
-  is a stepper — there the number *is* the content, and below 720px, where the
-  spine is hidden, it is the only thing carrying the order. Note that each of
-  those numerals was a grid child in `.svc-summary` and `.plan-summary`:
-  removing one means dropping a track, or every sibling lands one column to the
-  left (the ≤720px pricing rule moves the figure to column 1 for that reason).
+- **Nothing on this page is numbered any more.** Services, pricing, partners,
+  the drawer nav, the three process steps and the `01/03` counter beside the
+  process heading all used to carry a mono numeral. Six places counting in the
+  same voice made the number read as house style rather than as information,
+  and almost none of it was information: a reader scanning five packages does
+  not need to be told the third one is third. **If a sequence needs showing,
+  draw it** — the process spine and its node dots do exactly that, and they
+  survived because they are structure rather than a label. Two things to know
+  before adding one back: each listing numeral was a **grid child** in
+  `.svc-summary` and `.plan-summary`, so it took a track with it (the ≤720px
+  pricing rule moves the figure to column 1 for that reason), and
+  `.process-head` no longer sets `position: relative`, which existed only to
+  be the counter's containing block.
 - **Every raised surface is one material.** The glass tokens
   (`--glass-*`, `--radius-glass`) are the whole system: services and pricing
   rows, FAQ cards, contact links, the partner portrait and the open partner
@@ -673,8 +676,10 @@ blurred, which is content hidden with no way back.
 **Below 720px the spine is hidden and the steps lose their horizontal padding.** The
 spine cost a 390px phone 92px of width — a 24px column, a 24px gap, 24px of step padding
 and the 20px gutter — which left the step text at **254px against 350px everywhere else
-on the page**, reading as a narrow ribbon. The numerals already carry the sequence, so
-on a phone the text gets the full measure instead.
+on the page**, reading as a narrow ribbon. Nothing else was carrying the order at that
+width once the step numerals went, and the section reads fine without it — three short
+blocks under a heading that says "simple from start to finish" are legibly three steps —
+so on a phone the text gets the full measure instead.
 
 ## Performance
 

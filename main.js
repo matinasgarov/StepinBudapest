@@ -689,7 +689,6 @@
   ------------------------------------------------------- */
   var processScroll = document.getElementById('processScroll');
   var spine = document.getElementById('processSpine');
-  var counter = document.getElementById('processCounter');
   var steps = Array.prototype.slice.call(document.querySelectorAll('.process-step'));
   var nodes = Array.prototype.slice.call(document.querySelectorAll('.process-node'));
 
@@ -735,8 +734,6 @@
     if (spine) spine.style.height = (progress * 100) + '%';
 
     setActiveStep(index);
-
-    if (counter) counter.textContent = '0' + (index + 1);
   }
 
   window.addEventListener('scroll', queueScroll, { passive: true });

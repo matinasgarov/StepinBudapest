@@ -1169,21 +1169,11 @@ h3 {
 
 .process-inner { width: min(1180px, calc(100% - 3rem)); }
 
+/* No position: relative any more -- it was only here to be the containing
+   block for the step counter that used to sit at its top right. */
 .process-head {
-  position: relative;
   margin-bottom: clamp(2rem, 1rem + 3vw, 3.5rem);
 }
-.process-counter {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  color: var(--gold);
-}
-.process-counter-total { color: var(--muted-ink); }
-
 .process-stage {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
@@ -1269,14 +1259,6 @@ h3 {
   }
 }
 
-.process-num {
-  margin-bottom: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--gold);
-}
 .process-step h3 { margin-bottom: 0.6rem; }
 .process-step p {
   max-width: 38rem;
@@ -2157,7 +2139,6 @@ h3 {
   .nav-right > .lang { display: none; }
   .process-scroll { height: auto; }
   .process-sticky { position: static; min-height: 0; }
-  .process-counter { display: none; }
   /* Dimmed but not blurred, and not displaced. This is what gives the phone
      something to animate: the observer moves `is-active` down the list as the
      reader scrolls, and the step in the middle of the screen lifts out of the
